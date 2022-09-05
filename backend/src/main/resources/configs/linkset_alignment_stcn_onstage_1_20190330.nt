@@ -1,0 +1,1357 @@
+### TRIPLE COUNT: 1574
+### LINKSET: <http://risis.eu/linkset/subset_OnStage_Ecartico_embededAlignment_Person_sameAs_P2002049750986899396>
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+	<http://www.vondel.humanities.uva.nl/onstage/persons/1> owl:sameAs <http://viaf.org/viaf/4099939> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070297193> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12237> , <http://www.biografischportaal.nl/persoon/14500594> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/10> owl:sameAs <http://www.biografischportaal.nl/persoon/48717777> , <http://www.vondel.humanities.uva.nl/ecartico/persons/17272> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069147957> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/100> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070305919> , <http://www.biografischportaal.nl/persoon/22288083> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/101> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06985839X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/102> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069904464> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/103> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/14110> , <https://rkd.nl/nl/artists/239999> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069924597> , <http://www.biografischportaal.nl/persoon/99588291> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/104> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069675104> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23710> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/105> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/14987> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070216568> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/106> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276153> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/107> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/26840> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070341206> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/108> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069924333> , <http://www.vondel.humanities.uva.nl/ecartico/persons/10482> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/109> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272476> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/11> owl:sameAs <http://www.biografischportaal.nl/persoon/15513562> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11827> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069341303> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/110> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070216185> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/111> owl:sameAs <http://www.dbnl.org/tekst/nooz002inek01_01/nooz002inek01_01_0002.php> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12159> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069890188> , <http://www.biografischportaal.nl/persoon/59721521> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/112> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071157719> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/113> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070235112> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/114> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069895090> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/115> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07027620X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/117> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069984840> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/118> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069828342> , <http://www.vondel.humanities.uva.nl/ecartico/persons/20681> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/119> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069983771> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/12> owl:sameAs <https://viaf.org/viaf/29614087> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/120> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068958528> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/121> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276056> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/122> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070275939> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/123> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/20921> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069341664> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/124> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069366268> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/125> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272441> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/126> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069924376> , <http://www.vondel.humanities.uva.nl/ecartico/persons/9697> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/127> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069297487> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/128> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272670> , <http://www.vondel.humanities.uva.nl/ecartico/persons/26725> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/13> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/21846> , <http://www.biografischportaal.nl/persoon/88888811> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069797447> , <http://www.dbnl.org/auteurs/auteur.php?id=rode001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/131> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07027617X> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12222> , <http://www.biografischportaal.nl/persoon/04280052> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/132> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073439797> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/133> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071536280> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/134> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070142939> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/135> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/21821> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068906889> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/136> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069889937> , <http://www.vondel.humanities.uva.nl/ecartico/persons/14972> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/137> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069799164> , <http://www.biografischportaal.nl/persoon/23679585> , <http://www.vondel.humanities.uva.nl/ecartico/persons/8155> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/139> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069142041> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/14> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23671> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069742510> , <http://www.biografischportaal.nl/persoon/74409131> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/140> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070047294> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/143> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071207058> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/144> owl:sameAs <http://www.biografischportaal.nl/persoon/46160524> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12211> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068254849> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/145> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069797692> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/15> owl:sameAs <http://www.biografischportaal.nl/persoon/81350722> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06824357X> , <http://www.vondel.humanities.uva.nl/ecartico/persons/1375> , <http://www.dbnl.org/auteurs/auteur.php?id=bred001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/16> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069102392> , <http://viaf.org/viaf/32127522> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/17> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071068341> , <https://viaf.org/viaf/95227533> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/18> owl:sameAs <http://www.biografischportaal.nl/persoon/18934062> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071441107> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12160> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/182> owl:sameAs <http://www.biografischportaal.nl/persoon/10304532> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075251779> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12142> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/183> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12144> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273553> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/184> owl:sameAs <http://viaf.org/viaf/88809641> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068605153> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/185> owl:sameAs <http://viaf.org/viaf/31996630> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069137552> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/187> owl:sameAs <http://www.wikidata.org/entity/Q687> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06841501X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/19> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12150> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070260974> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069030472> , <http://viaf.org/viaf/89773778> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/20> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069737363> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12149> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/21> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068364474> , <http://viaf.org/viaf/17233271> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/22> owl:sameAs <http://www.dbnl.org/auteurs/auteur.php?id=baro001> , <http://www.biografischportaal.nl/persoon/29752187> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2235> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07023339X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2236> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07220303X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2237> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072203269> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2238> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07220320X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2239> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072203137> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2240> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072203129> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2241> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072203285> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2242> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072606835> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2243> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073270415> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2244> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06928475X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2245> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06966613X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2246> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069164878> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2247> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07027309X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2248> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070793115> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2249> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067926851> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2250> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069979855> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2251> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068391455> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2252> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069044694> , <http://www.vondel.humanities.uva.nl/ecartico/persons/22716> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2253> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069029911> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2254> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068468482> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2255> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069087741> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2256> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074303511> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2257> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069239908> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2258> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068441118> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2259> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070100578> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2260> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068822898> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2261> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068574290> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2262> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073775304> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2263> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174008> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2264> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068875517> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2265> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068825048> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2266> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069398585> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2267> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068387172> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2268> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07112019X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2269> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074909967> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2270> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067717802> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2271> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068470444> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2272> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069394040> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2273> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069447632> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2274> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11925> , <http://www.biografischportaal.nl/persoon/97704074> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070110093> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2275> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070597472> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2276> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069294887> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2277> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069902550> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2278> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069334803> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2279> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06934132X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2280> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070624739> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2281> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07042781X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2282> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070761272> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2283> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068415176> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2284> owl:sameAs <http://data.bnf.fr/12097080/montfleury/> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070386471> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2285> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068808860> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2286> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071076247> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2287> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/25836> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072091339> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2288> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069281688> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2289> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07001468X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2290> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070499527> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2291> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068845383> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2292> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067586171> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2293> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069729050> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2294> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070305889> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2295> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06911692X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2296> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07051111X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2297> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069294658> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2298> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069491046> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2299> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069527792> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/23> owl:sameAs <http://viaf.org/viaf/61577828> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2300> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070235139> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2301> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070482128> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2302> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070235325> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2303> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/13213> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069857644> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2304> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069230927> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2305> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073823198> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2306> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/9459> , <http://www.biografischportaal.nl/persoon/53865864> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=095211551> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2307> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070269319> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2308> owl:sameAs <http://www.biografischportaal.nl/persoon/94157743> , <https://nl.wikipedia.org/wiki/Govert_Bidloo> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069677697> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2309> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069601909> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2310> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139652> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2311> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073802352> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2312> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068738234> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2313> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072743557> , <http://www.vondel.humanities.uva.nl/ecartico/persons/24271> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2314> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139679> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2315> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068852754> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2316> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073482439> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2317> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=102033757> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2318> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070543755> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2319> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069366187> , <http://www.vondel.humanities.uva.nl/ecartico/persons/24279> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2320> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073843547> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2321> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087328739> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2322> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069723613> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2323> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069905428> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2324> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073103462> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2325> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233195> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2326> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071084754> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2327> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/24822> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273065> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2328> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070069921> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2329> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070113343> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2330> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069071454> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2331> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070234507> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2332> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272557> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2333> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069589607> , <http://www.vondel.humanities.uva.nl/ecartico/persons/24521> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2334> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074170139> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2335> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069185247> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2336> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139962> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12662> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2337> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070203601> , <http://www.vondel.humanities.uva.nl/ecartico/persons/15162> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2338> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069385750> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2339> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070235368> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2340> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070761183> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2341> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072609133> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2342> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069946086> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2343> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068629230> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2344> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233187> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2345> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070404933> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2346> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=12153216X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2347> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070254273> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2348> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072398655> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2349> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069453918> , <https://fr.wikipedia.org/wiki/Jean-François_de_La_Harpe> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2350> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174849> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2351> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068228619> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2352> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073580511> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2353> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070075999> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2354> owl:sameAs <http://www.biografischportaal.nl/persoon/37125942> , <http://viaf.org/viaf/66835494> , <http://www.dbnl.org/auteurs/auteur.php?id=elve001> , <http://viaf.org/viaf/309674131> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072502924> , <http://viaf.org/viaf/39387418> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2355> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068457464> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2356> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071207023> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2357> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073846090> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2358> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071925139> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2359> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070087792> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2360> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073581240> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2361> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070431396> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2362> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069930295> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2363> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=123863384> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2364> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=142920223> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2365> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=11260630X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2366> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=143388509> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2367> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=137061374> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2368> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068383428> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2369> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=146000498> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2370> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069940738> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2371> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=142750689> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2372> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070018898> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2373> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07925862X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2374> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071401865> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2375> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=146720296> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2376> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06995528X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2377> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=090688848> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2378> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070466181> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2379> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=146953479> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2380> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=120344424> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2381> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071499202> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2382> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068310846> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2383> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073347124> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2384> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073889423> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2385> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070943710> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2386> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149739508> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2387> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=088859827> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2388> owl:sameAs <https://fr.wikipedia.org/wiki/Dorvigny> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071401911> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2389> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071767436> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2390> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068453701> , <http://www.wikidata.org/entity/Q49478> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2391> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151256012> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2392> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069742405> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2393> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074991922> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2394> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070032025> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2395> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=150271328> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2396> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=15174162X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2397> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074961519> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2398> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071398384> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2399> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087370204> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/24> owl:sameAs <http://viaf.org/viaf/32360> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2400> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149286694> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2401> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151416427> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2402> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156870215> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2403> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071900985> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2404> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071499113> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2405> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151554722> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2406> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151554994> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2407> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070843252> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2408> owl:sameAs <http://siefar.org/dictionnaire/fr/Madeleine-Angélique_Poisson> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072490314> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2409> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069450501> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2410> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=152520201> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2411> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073220035> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2412> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067814077> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2413> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069279705> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2414> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07377054X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2415> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071511148> , <http://www.wikidata.org/entity/Q517188> , <http://viaf.org/viaf/7408703> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2416> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07017475X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2417> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073766399> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2418> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156188937> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2419> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070997896> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2420> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069503109> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2421> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=15687833X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2422> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=094874719> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2423> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=102967857> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2424> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=154207918> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2425> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07108083X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2426> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=091448077> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2427> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=117819875> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2428> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=170381226> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2429> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068415001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2430> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070118000> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2431> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=112462464> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2432> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069968772> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2433> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=088684865> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2434> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069601712> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2435> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071867104> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2436> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067621910> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2437> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=094855560> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2438> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069805202> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2439> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06974887X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2440> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070210551> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2441> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=155569295> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2442> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=082530394> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2443> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=106546740> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2444> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070547203> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2445> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069281084> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2446> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07009506X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2447> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068418299> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2448> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06828151X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2449> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067676022> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2450> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070040826> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2451> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06828568X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2452> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072945214> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2453> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276242> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2454> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07142007X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2455> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068709331> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2456> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069509565> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2457> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=086976281> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2458> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101921594> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2459> owl:sameAs <https://fr.wikipedia.org/wiki/Louis-Sébastien_Mercier> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068435134> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2460> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068453698> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2461> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071691634> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2462> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070148724> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2463> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069582254> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2464> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276382> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2465> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087429624> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2466> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069828393> , <http://www.dbnl.org/auteurs/auteur.php?id=smid001> , <http://www.biografischportaal.nl/persoon/06475296> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2467> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071343342> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2468> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07376910X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2469> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087514915> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2470> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=160512298> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2471> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069122652> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2472> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070694796> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2473> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=118693417> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2474> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069620695> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2475> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=124900364> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2476> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072043784> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2477> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069683298> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2478> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073824216> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2479> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070240957> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2480> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=162615183> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2481> owl:sameAs <http://www.wikidata.org/entity/Q981902> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072484462> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2482> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071436111> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2483> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068358725> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2484> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071786341> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2485> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069395292> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2486> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069504172> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2487> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070441812> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2488> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073890979> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2489> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070203296> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2490> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070015651> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2491> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=079306055> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2492> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071498303> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2493> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070389187> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2494> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068797990> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2495> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06842423X> , <http://viaf.org/viaf/7413288> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2496> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070040745> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2497> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071749896> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2498> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073632457> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2499> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=121886239> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/25> owl:sameAs <http://viaf.org/viaf/4929501> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2500> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=086602756> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2501> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071499229> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2502> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070851662> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2503> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073715859> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2504> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273383> , <http://www.vondel.humanities.uva.nl/ecartico/persons/10769> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2505> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069937532> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2506> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069933111> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2507> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071543767> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2508> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071614214> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2509> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068350325> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2510> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163960186> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2511> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07005519X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2512> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163955794> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2513> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163957738> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2514> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=148257542> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2515> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070014590> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2516> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163891052> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2517> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068414056> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2518> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068880693> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2519> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073829838> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2520> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070409080> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2521> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071649115> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2522> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06981225X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2523> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06836363X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2524> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=158699394> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2525> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068743963> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2526> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071154256> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2527> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174997> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2528> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070123462> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2529> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072009535> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2530> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071257381> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2531> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=09713418X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2532> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070110026> , <http://www.vondel.humanities.uva.nl/ecartico/persons/8276> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2533> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=165489715> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2534> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151270880> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2535> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=14820564X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2536> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=172295416> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2537> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070646651> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2538> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087471221> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2539> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069978670> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2540> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073823686> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2541> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06837075X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2542> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071017437> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2543> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068798067> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2544> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072484438> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2545> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073333301> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2546> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068319088> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2547> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069863431> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2548> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069839409> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2549> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=15932131X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2550> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070467684> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2551> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070374392> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2552> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=159293138> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2553> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070131287> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2554> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071405046> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2555> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167649663> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2556> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071709371> , <http://www.wikidata.org/entity/Q551721> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2557> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167703803> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2558> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=105057924> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2559> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068632258> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2560> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=170982998> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2561> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069941807> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2562> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069129053> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2563> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169018318> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2564> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071511237> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2565> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068409907> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2566> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11824> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273464> , <http://www.biografischportaal.nl/persoon/42018756> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2567> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169287564> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2568> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087362457> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2569> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073280925> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2570> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=106602578> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2571> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=110239407> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2572> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071099557> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2573> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071068015> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2574> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=148614582> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2575> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07165450X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2576> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169339521> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2577> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169861414> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2578> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169922987> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2579> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070002878> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2580> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074943278> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2581> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071408444> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2582> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070191069> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2583> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12106> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072551313> , <http://www.biografischportaal.nl/persoon/08499098> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2584> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070813353> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2585> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069932603> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2586> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069956782> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2587> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068833466> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2588> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071105212> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2589> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169125726> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2590> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=119752921> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2591> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169340945> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2592> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069898138> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2593> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06868438X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2594> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=10192108X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2595> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070169330> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2596> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=174419767> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2597> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07159907X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2598> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=089418220> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2599> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071543635> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/26> owl:sameAs <http://viaf.org/viaf/7385599> , <http://viaf.org/viaf/100192419> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2600> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070335613> , <http://www.vondel.humanities.uva.nl/ecartico/persons/25376> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2601> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073848263> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2602> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072328762> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2603> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068388616> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2604> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070054681> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2605> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07352770X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2606> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070052212> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2607> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070613745> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2608> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068392427> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2609> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070011311> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2610> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101984979> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2611> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101954549> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2612> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069877777> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2613> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071401822> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2614> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273979> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2615> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070304580> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2616> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069422206> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2617> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07010414X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2618> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071436189> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2619> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070421188> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2620> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=171743563> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2621> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149334850> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2622> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169226409> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2623> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071251995> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2624> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068922396> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2625> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06839957X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2626> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=089251407> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2627> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=172284287> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2628> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087432471> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2629> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070504423> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2630> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=147834422> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2631> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=172299764> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2632> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163233365> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2633> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071233539> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2634> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071654666> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2635> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233578> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2636> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069932298> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2637> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071453067> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2638> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072502606> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2639> owl:sameAs <http://viaf.org/viaf/308695965> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139644> , <http://www.biografischportaal.nl/persoon/70298714> , <http://viaf.org/viaf/2458465> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2640> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070248923> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2641> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097462616> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2642> owl:sameAs <http://viaf.org/viaf/66468731> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069902380> , <http://www.wikidata.org/entity/Q216692> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2643> owl:sameAs <http://viaf.org/viaf/291844803> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=17304543X> , <http://www.biografischportaal.nl/persoon/15158338> , <http://www.dbnl.org/auteurs/auteur.php?id=lent003> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2644> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087442124> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2645> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073125474> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2646> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=079112625> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2647> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087372029> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2648> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06956972X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2649> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069104395> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2650> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069478716> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2651> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=08651833X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2652> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=152133917> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2653> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073586749> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2654> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072082933> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2655> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074941992> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2656> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070440425> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2657> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173784232> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2658> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173301584> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2659> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173474330> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2660> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071936637> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2661> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072682744> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2662> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06861246X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2663> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173860265> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2664> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073405078> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2665> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=108028917> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2666> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073769959> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2667> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07512274X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2668> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071384014> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2669> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069112967> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2670> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073828505> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2671> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070492506> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2672> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070026459> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2673> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=095347542> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2674> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071326561> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2675> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070417431> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2676> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071453024> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2677> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=174177747> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2678> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070455686> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2679> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=136941842> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2680> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071442723> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2681> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074752596> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2682> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=176468552> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2683> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074970755> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2684> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073769169> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2685> owl:sameAs <http://data.bnf.fr/12006128/francois-antoine_quetant/> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074752200> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2686> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074996460> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2687> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071572341> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2688> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=090688627> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2689> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=089611713> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2690> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=123226619> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2691> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069795495> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23813> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2692> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=175801754> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2693> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153584157> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2694> owl:sameAs <http://viaf.org/viaf/73876966> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=174003927> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2695> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07148857X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2696> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097748463> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2697> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=182001148> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2698> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=106519611> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2699> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=177239379> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/27> owl:sameAs <http://viaf.org/viaf/57504793> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2700> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07379273X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2701> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183428838> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2702> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183452704> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2703> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070369747> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2704> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087423928> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2705> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=140008640> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2706> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069945780> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2707> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=174395450> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2708> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069154570> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2709> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=165952830> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2710> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069966443> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2711> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174032> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2712> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153761350> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2713> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=117167320> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2714> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=18367054X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2715> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183670620> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2716> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=146546180> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2717> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=238481654> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2718> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073726575> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2719> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=16407810X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2720> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069684324> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2721> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183073908> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2722> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=148012612> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2723> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07138345X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2724> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183127501> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2725> owl:sameAs <http://www.biografischportaal.nl/persoon/19861794> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071649034> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2726> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07009683X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2727> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153576421> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2728> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183844025> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2729> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=157096688> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2730> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=18482575X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2731> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067728049> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2732> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=170650480> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2733> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073012017> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2734> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=18664079X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2735> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=186886446> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2736> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153545291> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2737> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070147949> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2738> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190088680> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2739> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190081716> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2740> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071453369> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2741> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070881537> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2742> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=082533156> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2743> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072031948> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2744> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189913770> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2745> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189792418> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2746> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190401753> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2747> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=19017546X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2748> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072040076> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2749> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072263660> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2750> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068565836> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2751> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190080019> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2752> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153443839> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2753> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189917741> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2754> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073179620> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2755> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189536764> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2756> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189834838> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2757> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190002956> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2758> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191877921> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2759> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190646772> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2760> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=079126189> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2761> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153545283> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2762> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070402000> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2763> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=119969521> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2764> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189503513> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2765> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190444460> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2766> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156730669> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2767> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190170379> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2768> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071081666> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2769> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=148672191> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2770> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=157145999> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2771> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067472486> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2772> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070660751> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2773> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073889466> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2774> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=112650449> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2775> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=124163211> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2776> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153614889> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2777> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072421533> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2778> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071529829> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2779> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=19015859X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2780> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156168456> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2781> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149186525> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2782> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074882414> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2783> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190139366> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2784> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190648619> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2785> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153600845> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2786> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156252945> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2787> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071515097> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2788> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=159661498> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2789> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190870354> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2790> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=142919845> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2791> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=134472578> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2792> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273456> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2793> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191728187> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2794> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=197136923> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2795> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070625379> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2796> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067473253> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2797> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073728764> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2798> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070635897> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2799> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191561851> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/28> owl:sameAs <http://viaf.org/viaf/22150620> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2800> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191700304> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2801> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167983075> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2802> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072421169> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2803> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149244401> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2804> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069387850> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2805> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069556474> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2806> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068426496> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2807> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=19153210X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2808> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=19485888X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2809> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191416517> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2810> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191422746> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2811> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=089530632> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2812> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070211442> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2813> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=157776948> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2814> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074871633> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2815> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069194939> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2816> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070761167> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2817> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070039321> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2818> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=215791037> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2819> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=198038941> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2820> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=198037759> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2821> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068375018> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2822> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=084278382> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2823> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068018541> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2824> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070255849> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2825> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=126827168> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2826> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067629903> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2827> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072540923> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2828> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070131325> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2829> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=194979954> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2830> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068651821> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2831> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074986716> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2832> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07154223X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2833> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069112762> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2834> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183192982> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2835> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069669066> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2836> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068923597> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2837> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067697453> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2838> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073447285> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2839> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070266948> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2840> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06867788X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2841> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068421044> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2842> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070425183> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2843> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07254094X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2844> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068815506> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2845> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=155346555> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2846> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073555010> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2847> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=217545637> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2848> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068401698> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2849> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069952442> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2850> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=22758273X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2851> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=226926842> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2852> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068416970> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2853> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190094931> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2854> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151814155> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2855> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153592869> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2856> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070147744> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2857> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068973349> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2858> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=227551397> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2859> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=22800392X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2860> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=237794268> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2861> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=230123236> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2862> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073623547> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2863> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06934342X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2864> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=138910030> , <http://www.vondel.humanities.uva.nl/ecartico/persons/24252> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2865> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070528535> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2866> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=236433865> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2867> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=239357272> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2868> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068490534> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2869> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073329541> , <https://fr.wikipedia.org/wiki/Jacob_Neyts> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2870> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069566283> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2871> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=154653195> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2872> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=240586603> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2873> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=240603257> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2874> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276544> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2875> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=240627679> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2876> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167964143> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2877> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=241531934> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2878> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075223260> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2879> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070607826> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2880> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071426914> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2881> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071178899> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2882> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074100173> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2883> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069032378> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2884> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101912293> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2885> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069701296> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2886> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068715617> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2887> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071520740> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2888> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071183248> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2889> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156222663> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2890> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=109956184> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2891> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=14669869X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2892> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069564124> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2893> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070216274> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2894> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069792534> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2895> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073748862> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2896> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068418655> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2897> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069021856> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2898> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=152085300> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2899> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07204151X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/29> owl:sameAs <http://viaf.org/viaf/4925340> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06979992X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2900> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069920109> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2901> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=15729787X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2902> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=165752084> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2903> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069858454> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2904> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067468837> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2905> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069384789> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2906> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070064601> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2907> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=150665393> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2908> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=161377491> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2909> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153884592> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2910> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173274773> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2911> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070630992> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2912> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=108756440> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2913> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070645647> , <https://fr.wikipedia.org/wiki/François-Benoît_Hoffmann> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2914> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070075956> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2915> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=157303233> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2916> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070040842> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2917> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070084742> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2918> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233225> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2919> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=185660924> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2920> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=300363710> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2921> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=102633703> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2922> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069212848> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2923> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=182548678> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2924> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068609027> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2925> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069676011> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2926> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074140639> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2927> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070177317> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2928> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=30270311X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2929> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=18566167X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2930> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070063729> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2931> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068961707> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2932> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=159209587> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2933> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174970> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2934> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=302556877> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2935> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068320825> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2936> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074313835> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2937> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=168903423> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2938> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069938326> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2939> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=147761956> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2940> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072213841> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2941> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=171980573> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2942> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072436506> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2943> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073523607> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2944> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071769633> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2945> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070079552> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2946> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068352239> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2947> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071658211> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2948> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073244945> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2949> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189613165> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2950> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069530211> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2951> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=227486013> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2952> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068624441> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2953> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071789308> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2954> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070232571> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2955> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073280895> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2956> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167717766> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2958> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139504> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2959> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068995806> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2960> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071658939> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2961> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07004077X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2962> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073766720> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2963> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=258162961> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2964> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=079351611> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2965> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073580767> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2966> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=167649124> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2967> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071348824> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2968> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070488002> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2969> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070959269> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2970> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/25994> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069221812> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2971> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=149191979> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2972> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=186699379> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2973> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=274542188> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2974> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=331695677> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2975> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=197147038> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2976> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07161396X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2977> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074935429> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2978> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069967679> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2979> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=345624998> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2980> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070699143> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2981> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174679> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2982> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069061165> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2983> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069114846> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2984> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069057613> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2985> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069129142> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2986> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074092863> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2987> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069134286> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2988> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069090157> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2989> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068761953> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2990> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069160880> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2991> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069160902> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2992> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=152017089> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2993> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=125449798> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2994> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069282064> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2995> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069281122> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2996> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06928136X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2997> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069272298> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2998> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06931604X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/2999> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06933112X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07021350X> , <http://www.biografischportaal.nl/persoon/78359625> , <http://www.biografischportaal.nl/persoon/85222711> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/30> owl:sameAs <http://viaf.org/viaf/88975006> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276099> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3000> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071584331> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3001> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069232148> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3002> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069381569> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3003> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06836914X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3004> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069397821> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3005> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071232958> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3006> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069409765> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3007> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069488975> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3008> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070603146> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3009> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068551959> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3010> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06972332X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3011> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/2807> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069723451> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3012> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071373381> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3013> owl:sameAs <http://www.wikidata.org/entity/Q1771506> , <http://viaf.org/viaf/52043147> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070528780> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3014> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=16598936X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3015> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069858276> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3016> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067708056> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3017> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070046646> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3018> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070044651> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3019> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070078254> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3020> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139415> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3021> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174822> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3022> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174865> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3023> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070174881> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3024> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070175012> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3025> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07017461X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3026> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070136149> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3027> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070163553> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3028> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233802> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3029> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068723407> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3030> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233276> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3031> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273197> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3032> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075268221> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3033> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191389951> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3034> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070497451> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3035> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070497494> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3036> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070418314> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3037> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068440154> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3038> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070629099> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3039> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070076723> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3040> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069420858> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3041> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072408448> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3042> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070726191> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3043> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070761086> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3044> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070795479> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3045> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069381291> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3046> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070674876> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3047> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069146810> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3048> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070985510> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3049> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069858284> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3050> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071154191> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3051> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071359494> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3052> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068764448> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3053> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06923681X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3054> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067469930> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3055> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=067676162> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3056> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068074387> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3057> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068348746> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3058> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068381050> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3059> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068382472> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3060> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068403356> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3061> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068421087> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3062> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068426488> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3063> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068437978> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3064> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068443854> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3065> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068454155> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3066> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06847685X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3067> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068556225> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3068> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068584520> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3069> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068678037> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3070> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068871309> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3071> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068881924> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3072> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068948727> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3073> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068971907> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3074> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069049157> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3075> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069089086> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3076> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069135843> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3077> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06915435X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3078> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069164916> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3079> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069192847> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3080> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069219702> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3081> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069281408> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3082> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069378673> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3083> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069381305> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3084> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069403511> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3085> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069419248> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3086> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069449724> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3087> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069537399> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3088> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/24241> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069595461> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3089> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069638764> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3090> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069644233> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3091> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069662177> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3092> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06979202X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3093> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069820457> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3094> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069826277> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3095> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069854688> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3096> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069854912> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3097> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069855862> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3098> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069869375> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3099> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069878218> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/31> owl:sameAs <http://viaf.org/viaf/56619774> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070152802> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3100> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069889538> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3101> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06989843X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3102> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069899827> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3103> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069902593> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3104> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069904677> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3105> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069905231> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3106> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069906009> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3107> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069906033> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3108> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069916969> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3109> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069922489> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3110> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069939179> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3111> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069940711> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3112> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069950199> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3113> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069965234> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3114> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069967652> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3115> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069970742> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3116> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069998833> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3117> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070016178> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3118> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070021678> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3119> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070033889> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3120> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070040583> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3121> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070054797> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3122> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070063834> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3123> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070069492> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3124> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070071101> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3125> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070079390> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3126> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070079498> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3127> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07008694X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3128> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070087822> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3129> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070090017> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3130> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07009022X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3131> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070108560> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3132> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070110743> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3133> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070112304> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3134> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07012227X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3135> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070122520> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3136> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07012471X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3137> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070171211> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3138> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070202702> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3139> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070202761> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3140> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070216304> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3141> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233683> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3142> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070249059> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3143> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070253838> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3144> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070265461> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3145> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272425> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3146> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272433> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3147> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/26714> , <http://www.dbnl.org/auteurs/auteur.php?id=have011> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070274096> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3148> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070305803> , <http://www.biografischportaal.nl/persoon/35072185> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3149> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070339449> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3150> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070351104> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3151> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070385696> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3152> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070421633> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3153> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070430748> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3154> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070559120> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3155> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070733538> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3156> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070795258> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3157> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070812926> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3158> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070941866> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3159> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07095769X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3160> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070978190> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3161> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070993505> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3162> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070993564> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3163> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071061231> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3164> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071070079> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3165> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071081682> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3166> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071097473> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3167> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071155600> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3168> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071161716> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3169> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071408495> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3170> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071419500> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3171> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071480463> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3172> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071489320> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3173> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071501169> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3174> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071506691> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3175> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071610715> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3176> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071719431> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3177> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07185178X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3178> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071880496> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3179> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071885471> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3180> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=071991913> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3181> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072185163> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3182> owl:sameAs <http://viaf.org/viaf/305855772> , <https://www.wikidata.org/wiki/Q3442663> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072203242> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3183> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072223022> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3184> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072665920> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3186> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072865350> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3187> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073035076> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3188> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073125482> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3189> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07320448X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3190> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073313068> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3191> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073396931> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3192> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073527882> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3193> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073769002> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3194> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073771554> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3195> owl:sameAs <http://viaf.org/viaf/285597643> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073830631> , <http://www.biografischportaal.nl/persoon/61061261> , <http://www.dbnl.org/auteurs/auteur.php?id=japi004> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3196> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=073896241> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3197> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07414958X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3198> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074364294> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3199> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074412752> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/32> owl:sameAs <http://www.biografischportaal.nl/persoon/19821402> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139474> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11918> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3200> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07473105X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3201> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074806378> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3202> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074943448> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3203> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=074982443> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3204> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075197456> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3205> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=079082815> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3206> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=080593798> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3207> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=082113556> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3208> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=085723436> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3209> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=086517813> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3210> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=086858203> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3211> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=087328771> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3212> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=089513452> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3213> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=091361036> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3214> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=091448174> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3215> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=096969555> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3216> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=096984201> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3217> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=09708199X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3218> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097258946> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3219> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=09726525X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3220> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097285714> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3221> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097310271> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3222> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=097679372> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3223> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=100019560> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3224> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101298951> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3225> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101445520> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3226> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=101880030> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3227> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=102620881> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3228> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=104850434> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3229> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=114132925> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3230> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=114785902> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3231> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=114861900> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3232> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=117816930> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3233> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=11857602X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3234> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=119459779> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3235> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=119746654> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3236> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=124287751> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3237> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=127516727> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3238> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=128526971> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3239> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12186> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=141579153> , <http://www.biografischportaal.nl/persoon/03393968> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3240> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=143226630> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3241> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=144409593> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3242> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=150276702> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3243> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=150682417> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3244> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=151923086> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3245> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153545305> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3246> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153600306> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3247> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=153877952> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3248> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=155361163> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3249> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156163128> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3250> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156488035> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3251> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=156733188> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3252> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=162677723> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3253> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163007616> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3254> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163696659> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3255> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=163963819> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3256> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=164347046> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3257> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=165619694> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3258> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=165660422> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3259> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=168005638> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3260> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=168361809> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3261> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=169332632> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3262> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=170553108> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3263> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=170567001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3264> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=17252010X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3265> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=172947472> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3266> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=173740812> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3267> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=180855271> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3268> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=18135344X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3269> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=182297098> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3270> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=182954285> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3271> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183654374> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3272> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=183768310> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3273> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=189861916> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11938> , <http://www.biografischportaal.nl/persoon/84281595> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3274> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190100605> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3275> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190437251> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3276> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=190438762> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3277> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=191536814> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3278> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=238343235> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3279> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=238693430> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3280> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=240325222> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3281> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=241635780> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3282> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=244684618> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3283> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=258309385> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3284> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=274721635> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3285> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=303807075> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3286> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=324960085> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3287> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=324960328> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3289> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23811> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3290> owl:sameAs <http://viaf.org/viaf/3269517> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3291> owl:sameAs <http://viaf.org/viaf/61547823> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3292> owl:sameAs <https://en.wikipedia.org/wiki/George_Chapman> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3293> owl:sameAs <http://www.vondel.humanities.uva.nl/onstage/persons/-> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3297> owl:sameAs <http://viaf.org/viaf/87464366> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3298> owl:sameAs <http://viaf.org/viaf/220297099> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/33> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069334706> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3300> owl:sameAs <http://bsbndb.bsb.lrz-muenchen.de/artikelNDB_pnd118718622.html> , <http://viaf.org/viaf/44395488> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3301> owl:sameAs <http://www.biografischportaal.nl/persoon/06777527> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12207> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3310> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11817> , <http://www.biografischportaal.nl/persoon/06386855> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3311> owl:sameAs <http://www.biografischportaal.nl/persoon/48178620> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3312> owl:sameAs <http://www.biografischportaal.nl/persoon/11080383> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3313> owl:sameAs <http://www.biografischportaal.nl/persoon/61005150> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11644> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3314> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11645> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3315> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12221> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3316> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11936> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3317> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12139> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3318> owl:sameAs <http://www.biografischportaal.nl/persoon/53686954> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12162> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3319> owl:sameAs <http://www.biografischportaal.nl/persoon/00457041> , <http://www.vondel.humanities.uva.nl/ecartico/persons/13176> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3320> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12219> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3321> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12233> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3322> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12235> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3323> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12173> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3324> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12201> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3325> owl:sameAs <http://www.biografischportaal.nl/persoon/59458528> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12241> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3326> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12107> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3327> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11829> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3328> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12181> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3329> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12236> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3330> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/9359> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3331> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12185> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3332> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12220> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3333> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/22289> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3334> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12194> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3335> owl:sameAs <http://www.biografischportaal.nl/persoon/96779632> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11641> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3336> owl:sameAs <http://www.biografischportaal.nl/persoon/49361369> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11642> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3337> owl:sameAs <http://www.biografischportaal.nl/persoon/18841975> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12135> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3338> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12136> , <http://www.biografischportaal.nl/persoon/50803657> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3339> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11840> , <http://www.biografischportaal.nl/persoon/44801225> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3340> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11841> , <http://www.biografischportaal.nl/persoon/14149186> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3341> owl:sameAs <http://www.biografischportaal.nl/persoon/16900157> , <http://www.vondel.humanities.uva.nl/ecartico/persons/11826> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3342> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12165> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3343> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12166> , <http://www.biografischportaal.nl/persoon/52571808> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3344> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11843> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3345> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12170> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3346> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12108> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3347> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12125> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3348> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12105> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3349> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12137> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3350> owl:sameAs <http://www.biografischportaal.nl/persoon/70967880> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3351> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11842> , <http://www.biografischportaal.nl/persoon/53835399> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3352> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12153> , <http://www.biografischportaal.nl/persoon/47812300> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3353> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11909> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3354> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11914> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3355> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12141> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3356> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12146> , <http://www.biografischportaal.nl/persoon/02476195> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3371> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11816> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/34> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069799946> , <http://www.vondel.humanities.uva.nl/ecartico/persons/8617> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3420> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11820> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3423> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11838> , <http://www.biografischportaal.nl/persoon/42856585> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3424> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12177> , <http://www.biografischportaal.nl/persoon/01560311> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3425> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/7855> , <http://www.biografischportaal.nl/persoon/56573302> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3426> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11894> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3427> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12117> , <http://www.biografischportaal.nl/persoon/38768033> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3428> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12154> , <http://www.biografischportaal.nl/persoon/68413880> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3429> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12111> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075549417> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3430> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11931> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3431> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11937> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3432> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12128> , <http://www.biografischportaal.nl/persoon/14038368> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3434> owl:sameAs <http://www.biografischportaal.nl/persoon/03982113> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12195> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3435> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12183> , <http://www.biografischportaal.nl/persoon/24396250> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3436> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12130> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3437> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11933> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3438> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/4774> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3439> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12109> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3440> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12122> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3441> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12112> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075571463> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3442> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12216> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3443> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12204> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3444> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11839> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3446> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12158> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3447> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12116> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=075549441> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3448> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12223> , <http://www.biografischportaal.nl/persoon/02055245> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3449> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11832> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3450> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12168> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3451> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11836> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3453> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12113> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3454> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12191> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3455> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12224> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3456> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12210> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3457> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/7854> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3458> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11830> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3459> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12215> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3460> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12115> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3461> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12129> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3462> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11911> , <http://www.biografischportaal.nl/persoon/32138094> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3464> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11822> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3465> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12203> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3466> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=175480184> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3468> owl:sameAs <https://de.wikisource.org/wiki/ADB:Treu,_Michael_Daniel> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3470> owl:sameAs <https://nl.wikipedia.org/wiki/Dirck_Strijcker> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3471> owl:sameAs <https://nl.wikipedia.org/wiki/Pietro_Andrea_Ziani> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3472> owl:sameAs <https://it.wikipedia.org/wiki/Aurelio_Aureli> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3473> owl:sameAs <http://www.biografischportaal.nl/persoon/57143080> , <http://www.dbnl.org/auteurs/auteur.php?id=kaar001> , <http://www.vondel.humanities.uva.nl/ecartico/persons/4215> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3474> owl:sameAs <https://en.wikipedia.org/wiki/Samuel_Chappuzeau> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3475> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/16465> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3476> owl:sameAs <https://de.wikipedia.org/wiki/David_Elias_Heidenreich> , <https://en.wikipedia.org/wiki/David_Elias_Heidenreich> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3479> owl:sameAs <http://www.cervantesvirtual.com/obras/autor/86/Torres%20Villarroel,%20Diego%20de,%201693-1770> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3480> owl:sameAs <http://www.biografischportaal.nl/persoon/50539263> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3484> owl:sameAs <https://it.wikipedia.org/wiki/Giuseppe_Sellitto> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3490> owl:sameAs <https://fr.wikipedia.org/wiki/Adolphe_Blaise> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3491> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068643047> , <https://en.wikipedia.org/wiki/François-André_Danican_Philidor> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3493> owl:sameAs <https://it.wikipedia.org/wiki/Pietro_Auletta> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3494> owl:sameAs <http://data.bnf.fr/14784753/josef_kohaut/> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3495> owl:sameAs <https://fr.wikipedia.org/wiki/Antoine_Dauvergne> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3496> owl:sameAs <http://viaf.org/viaf/148309742> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/35> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070293988> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3501> owl:sameAs <http://data.bnf.fr/11906331/nicolas-francois_guillard/> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3502> owl:sameAs <http://data.bnf.fr/12079224/nicolas-etienne_framery/> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3503> owl:sameAs <http://www.biografischportaal.nl/en/persoon/28235087> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3509> owl:sameAs <http://picarta.pica.nl/DB=3.11/SET=1/TTL=1/SHW?FRST=3> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3510> owl:sameAs <http://www.biografischportaal.nl/persoon/06740242> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3512> owl:sameAs <http://viaf.org/viaf/46761920> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3513> owl:sameAs <http://viaf.org/viaf/32107149> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3514> owl:sameAs <http://data.bnf.fr/12462190/jean-baptiste_dubois/> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3532> owl:sameAs <http://picarta.nl/DB=3.11/SET=14/TTL=1/PPN?PPN=070053111> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3536> owl:sameAs <http://data.bnf.fr/13893235/francois_devienne/> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3537> owl:sameAs <http://www.dbnl.org/tekst/aa__001biog21_01/aa__001biog21_01_0637.php> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3538> owl:sameAs <https://fr.wikipedia.org/wiki/Jean-Pierre_Solié> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3540> owl:sameAs <http://www.biografischportaal.nl/persoon/43848415> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3544> owl:sameAs <https://en.wikipedia.org/wiki/Giacomo_Meyerbeer> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3545> owl:sameAs <https://en.wikipedia.org/wiki/Eug%C3%A8ne_Scribe> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3546> owl:sameAs <https://en.wikipedia.org/wiki/%C3%89mile_Deschamps> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3549> owl:sameAs <https://fr.wikisource.org/wiki/Auteur:Adolphe_d%E2%80%99Ennery> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3552> owl:sameAs <http://www.dbnl.org/tekst/laan005lett01_01/laan005lett01_01_6306.php> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3553> owl:sameAs <https://de.wikipedia.org/wiki/Wilhelmine_von_Hillern> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3554> owl:sameAs <https://nl.wikipedia.org/wiki/Justus_van_Maurik_jr.> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3555> owl:sameAs <http://www.dbnl.org/tekst/laan005lett01_01/laan005lett01_01_6260.php> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3556> owl:sameAs <https://fr.wikipedia.org/wiki/Auguste_Anicet-Bourgeois> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3557> owl:sameAs <https://fr.wikipedia.org/wiki/Alexandre-Joseph_Le_Roy_de_Bacre> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3560> owl:sameAs <https://de.wikipedia.org/wiki/Charlotte_Birch-Pfeiffer> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3561> owl:sameAs <https://sv.wikipedia.org/wiki/Fredrika_Bremer> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3562> owl:sameAs <https://en.wikipedia.org/wiki/Charles_Desnoyer> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3564> owl:sameAs <https://fr.wikipedia.org/wiki/Joseph_Bouchardy> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3567> owl:sameAs <http://picarta.nl/DB=3.11/SET=5/TTL=1/PPN?PPN=070873984> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3569> owl:sameAs <http://picarta.nl/DB=3.11/SET=11/TTL=1/PPN?PPN=07078485X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3572> owl:sameAs <https://fr.wikipedia.org/wiki/Rodolphe_Kreutzer> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3573> owl:sameAs <https://en.wikipedia.org/wiki/Paul_Wranitzky> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3577> owl:sameAs <https://www.britannica.com/biography/Gioachino-Rossini> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3578> owl:sameAs <http://www.dbnl.org/tekst/bran038biog01_01/bran038biog01_01_3185.php> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3591> owl:sameAs <http://www.dbnl.org/auteurs/auteur.php?id=vijv001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3596> owl:sameAs <https://fr.wikipedia.org/wiki/Étienne-Joseph-Bernard_Delrieu> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3597> owl:sameAs <http://picarta.nl/DB=3.11/SET=7/TTL=1/PPN?PPN=071750169> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/36> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/12213> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069798745> , <http://www.biografischportaal.nl/persoon/41956173> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3610> owl:sameAs <http://catalogue.bnf.fr/ark:/12148/cb12443000p> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3611> owl:sameAs <http://www.dbnl.org/auteurs/auteur.php?id=greb001> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3612> owl:sameAs <http://isni.org/isni/0000000083925295> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3613> owl:sameAs <http://www.isni.org/isni/0000000121015410> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3614> owl:sameAs <http://www.isni.org/isni/0000000083955419> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3615> owl:sameAs <http://isni.org/isni/0000000115072347> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3616> owl:sameAs <http://www.isni.org/isni/0000000108926658> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/3618> owl:sameAs <https://en.wikipedia.org/wiki/Fromental_Hal%C3%A9vy> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/37> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070761221> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/38> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070140146> , <http://www.biografischportaal.nl/persoon/43145030> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23653> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/39> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/6180> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070271720> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/4> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068449941> , <https://viaf.org/viaf/73850932> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/40> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070189765> , <http://www.vondel.humanities.uva.nl/ecartico/persons/25531> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/41> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139695> , <http://www.vondel.humanities.uva.nl/ecartico/persons/13250> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/42> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070305404> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/43> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233160> , <http://www.biografischportaal.nl/persoon/35546930> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/44> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272603> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/45> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070489610> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/46> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272522> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23658> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/47> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/9360> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070139717> , <http://www.biografischportaal.nl/persoon/96241086> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/48> owl:sameAs <http://viaf.org/viaf/9853373> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069280290> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/49> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272468> , <http://www.vondel.humanities.uva.nl/ecartico/persons/9576> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/5> owl:sameAs <http://viaf.org/viaf/61555829> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068423667> , <http://www.vondel.humanities.uva.nl/ecartico/persons/9696> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/50> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069829748> , <http://www.biografischportaal.nl/persoon/70443480> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/51> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07027603X> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12202> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/52> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068478445> , <http://viaf.org/viaf/96994048> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/53> owl:sameAs <http://viaf.org/viaf/22157363> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/54> owl:sameAs <http://www.biografischportaal.nl/persoon/32064147> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068407017> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/55> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23704> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070233748> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/56> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23707> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069890064> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/57> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069800022> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/58> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=412884313> , <http://www.dbnl.org/auteurs/auteur.php?id=bare007> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/59> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/21496> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070235287> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/6> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068453361> , <http://viaf.org/viaf/41838293> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/60> owl:sameAs <http://www.biografischportaal.nl/persoon/64962817> , <http://www.dbnl.org/auteurs/auteur.php?id=berg072> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=07049780X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/61> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/15232> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069616000> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/62> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068685858> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/63> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/1034> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/64> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070063974> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/65> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069420920> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/66> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23828> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069894604> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/67> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069164983> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/68> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23688> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=273440519> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/69> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/17196> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068386346> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/7> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=072855606> , <http://viaf.org/viaf/286731338> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068684398> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/70> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070253544> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/71> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070667152> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/72> owl:sameAs <https://nl.wikipedia.org/wiki/Dirk_Buysero> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23666> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069739544> , <http://www.biografischportaal.nl/persoon/49087207> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/73> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069112894> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12828> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/74> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069890056> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/75> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069985499> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/76> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069030855> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/77> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070305838> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/78> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069925925> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/79> owl:sameAs <http://www.biografischportaal.nl/persoon/84760964> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=154087351> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/8> owl:sameAs <http://www.biografischportaal.nl/persoon/70392845> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070273103> , <http://www.vondel.humanities.uva.nl/ecartico/persons/20712> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/80> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069894531> , <http://www.vondel.humanities.uva.nl/ecartico/persons/16268> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/81> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/8594> , <http://www.biografischportaal.nl/persoon/20139466> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/82> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070272581> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/83> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/11712> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/84> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069797633> , <http://www.vondel.humanities.uva.nl/ecartico/persons/23686> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/85> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068048262> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/86> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/9764> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069890153> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/87> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069798184> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/88> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070077576> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/89> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/3577> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069737339> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/9> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/13550> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=068339135> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/90> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069858306> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/92> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070276005> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/93> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069889929> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/94> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=06989017X> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/95> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069222096> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/96> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070270937> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/97> owl:sameAs <http://www.vondel.humanities.uva.nl/ecartico/persons/23694> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070497923> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/98> owl:sameAs <http://www.biografischportaal.nl/persoon/01233073> , <http://www.vondel.humanities.uva.nl/ecartico/persons/12123> , <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=070497907> .
+	<http://www.vondel.humanities.uva.nl/onstage/persons/99> owl:sameAs <http://picarta.pica.nl/DB=3.11/XMLPRS=Y/PPN?PPN=069158584> .

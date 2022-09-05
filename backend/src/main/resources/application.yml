@@ -1,0 +1,50 @@
+
+debug : false
+trace : false
+golden-agents-version: 0.0.2-alpha
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  devtools:
+    restart:
+      enabled: true
+  ouput:
+    ansi:
+      enabled: ALWAYS
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,platform
+      base-path: /actuator
+      cors:
+        allowed-origins: ${ALLOWED_ORIGINS:http://localhost:4200}
+        allowed-methods: GET
+        allowed-headers: '*'
+        allow-credentials: false
+    enabled-by-default: true
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+server:
+  error:
+    whitelabel:
+      enabled: false
+      
+logging:
+  level:
+    root: INFO
+    org.apache.jena.arq.exec: DEBUG
+    org.apache.jena: DEBUG
+    org.apache.jena.riot: DEBUG
+  path: log
+
+stacktrace:
+  swallow: false
+  filter: true
+
+   

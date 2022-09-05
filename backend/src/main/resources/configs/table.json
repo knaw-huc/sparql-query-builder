@@ -1,0 +1,84 @@
+[
+	{
+		"id": 1,
+		"sources":
+		[
+			{
+				"name": "Onstage", 
+				"uri": "<http://www.vondel.humanities.uva.nl/onstage/persons/1>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName","ga:authorOf", "ga:hasMatch"]}]
+			},
+			{
+				"name": "Ecartico", 
+				"uri": "<http://www.vondel.humanities.uva.nl/ecartico/persons/12237>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:deathDate", "ga:hasMatch"]}]
+			},
+			{
+				"name": "STCN", 
+				"uri": "<http://data.bibliotheken.nl/doc/thes/p070297193>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:deathDate", "ga:writerOf"]}]
+			}
+		]
+	},
+ 
+	{
+		"id": 2,
+		"sources":
+		[
+			{
+				"name": "Onstage", 
+				"uri": "<http://www.vondel.humanities.uva.nl/onstage/persons/103>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName","ga:authorOf", "ga:hasMatch"]}]
+			},
+			{
+				"name": "Ecartico", 
+				"uri": "<http://www.vondel.humanities.uva.nl/ecartico/persons/14110>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:birthDate", "ga:deathDate", "ga:hasMatch"]}]
+			},
+			{
+				"name": "STCN", 
+				"uri": "<http://data.bibliotheken.nl/doc/thes/p069924597>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:birthDate", "ga:deathDate", "ga:writerOf"]}]
+			}
+		]
+	},
+	
+	{
+		"id": 3,
+		"sources":
+		[
+			{
+				"name": "Onstage", 
+				"uri": "<http://www.vondel.humanities.uva.nl/onstage/persons/126>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName","ga:authorOf", "ga:hasMatch"]}]
+			},
+			{
+				"name": "Ecartico", 
+				"uri": "<http://www.vondel.humanities.uva.nl/ecartico/persons/9697>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:birthDate", "ga:deathDate", "ga:hasMatch"]}]
+			},
+			{
+				"name": "STCN", 
+				"uri": "<http://data.bibliotheken.nl/doc/thes/p069924376>", 
+				"matches": [{"type":"ga:CreativeAgent", "properties":["ga:hasName", "ga:birthDate", "ga:deathDate", "ga:writerOf"]}]
+			}
+		]
+	},
+	
+	{
+		"id": 4,
+		"sources":
+		[
+			{
+				"name": "Onstage", 
+				"uri": "<http://www.vondel.humanities.uva.nl/onstage/plays/323>", 
+				"matches": [{"type":"ga:Story", "properties":["ga:hasName", "ga:authoredBy", "ga:isPrintedAs", "ga:creationDate", "ga:inLanguage"]}]
+			},
+			{
+				"name": "STCN", 
+				"uri": "<http://data.bibliotheken.nl/doc/nbt/p120621487>", 
+				"matches": [{"type":"ga:Book", "properties":["ga:hasName", "ga:isPrintedAs", "ga:inLanguage"]}]
+			}
+		]
+	}
+ ]
