@@ -5,7 +5,7 @@ export const serverStatusApi = createApi({
   reducerPath: 'serverStatusApi',
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API }),
   endpoints: (builder) => ({
-    serverStatus: builder.query({
+    serverStatus: builder.query<{online: boolean}, void>({
       query: () => 'actuator/platform',
     }),
   }),

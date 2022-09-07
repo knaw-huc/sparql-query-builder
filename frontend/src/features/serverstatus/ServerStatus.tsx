@@ -9,17 +9,17 @@ export function ServerStatus() {
   const {
     data,
     error,
-    isLoading,
-    isFetching,
-    refetch,
   } = useServerStatusQuery(undefined, {
     pollingInterval: interval,
   });
 
+  console.log(error)
+  console.log(data)
+
   return (
     <div>
       <p>Server status test</p>
-      { data?.online ? <p>Server online</p> : <p>Server offline</p> }
+      { data?.online && !error ? <p>Server online</p> : <p>Server offline</p> }
     </div>
   );
 }

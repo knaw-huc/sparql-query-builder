@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './images/logo.svg';
+import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import { ServerStatus } from './features/serverstatus/ServerStatus';
 import './styles/App.scss';
@@ -12,7 +12,7 @@ function App() {
         <ServerStatus />
         <Counter />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/App.tsx</code> and save to reload.
         </p>
         <span>
           <span>Learn </span>
