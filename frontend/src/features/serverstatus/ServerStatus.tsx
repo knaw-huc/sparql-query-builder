@@ -2,10 +2,10 @@ import React from 'react';
 import { useServerStatusQuery } from './serverStatusApi';
 import styles from './ServerStatus.module.scss';
 
-// Polling interval for getting server status
+// Polling interval for getting backend server status
 const interval = 10000;
 
-export function ServerStatus() {
+export const ServerStatus = () => {
   const {
     data,
     error,
@@ -13,13 +13,9 @@ export function ServerStatus() {
     pollingInterval: interval,
   });
 
-  console.log(error)
-  console.log(data)
-
   return (
-    <div>
-      <p>Server status test</p>
-      { data?.online && !error ? <p>Server online</p> : <p>Server offline</p> }
-    </div>
+    <p>
+      { data?.online && !error ? 'Backend online' : 'Backend offline' }
+    </p>
   );
 }

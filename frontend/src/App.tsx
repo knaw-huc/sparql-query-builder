@@ -1,58 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import { ServerStatus } from './features/serverstatus/ServerStatus';
+import { Sse } from './features/sse/Sse';
+import { 
+  useSseRegisterQuery, 
+  useSseSubscribeAgentStateQuery, 
+  useSseSubscribeMessagesQuery } from './features/sse/sseApi';
 import './styles/App.scss';
+import { useAppSelector } from './app/hooks';
+import { getUuid } from './features/uuid/uuidSlice';
+import { Query } from './features/query/Query';
+import { useGetAgentQuery, useGetAgentListQuery } from './features/agent/agentApi';
 
 function App() {
+  const uuid = useAppSelector(getUuid);
+  const agent = useGetAgentQuery(undefined).data;
+  const agentList = useGetAgentListQuery(undefined).data;
+  const sseRegister = useSseRegisterQuery({uuid: uuid, userAgentId: agent?.uuid}, {skip: agent ? false : true});
+  const sseAgentStatus = useSseSubscribeAgentStateQuery({uuid: uuid}, {skip: agent ? false : true});
+  const sseAgentMessages = useSseSubscribeMessagesQuery({uuid: uuid, userAgentId: agent?.uuid}, {skip: agent ? false : true});
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ServerStatus />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <ServerStatus />
+      <Counter />
+      <p>UUID: {uuid}</p>
+      <h5>Agent</h5>
+      <div><pre>{JSON.stringify(agent, null, 2) }</pre></div>
+      <h5>Agent List</h5>
+      <div><pre>{JSON.stringify(agentList, null, 2) }</pre></div>
+      <Query />
     </div>
   );
 }
