@@ -11,6 +11,8 @@ import { useAppSelector } from './app/hooks';
 import { getUuid } from './features/uuid/uuidSlice';
 import { Query } from './features/query/Query';
 import { useGetAgentQuery, useGetAgentListQuery } from './features/agent/agentApi';
+import { Topbar } from './features/topbar/Topbar';
+import { Querybar } from './features/querybar/Querybar';
 
 function App() {
   const uuid = useAppSelector(getUuid);
@@ -22,6 +24,9 @@ function App() {
 
   return (
     <div className="App">
+      <Topbar />
+      <Querybar />
+
       <ServerStatus />
       <Counter />
       <p>UUID: {uuid}</p>
