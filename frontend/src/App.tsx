@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Counter } from './features/counter/Counter';
 import { ServerStatus } from './features/serverstatus/ServerStatus';
 import { Sse } from './features/sse/Sse';
@@ -11,8 +12,14 @@ import { useAppSelector } from './app/hooks';
 import { getUuid } from './features/uuid/uuidSlice';
 import { Query } from './features/query/Query';
 import { useGetAgentQuery, useGetAgentListQuery } from './features/agent/agentApi';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { Topbar } from './features/topbar/Topbar';
-import { Querybar } from './features/querybar/Querybar';
+import { QueryBar } from './features/querybar/QueryBar';
+import { TabsPanel } from './features/tabs/TabsPanel';
+import { QueryBuilder } from './features/querybuilder/QueryBuilder';
 
 function App() {
   const uuid = useAppSelector(getUuid);
@@ -25,8 +32,22 @@ function App() {
   return (
     <div className="App">
       <Topbar />
-      <Querybar />
+      {/*<QueryBar />*/}
+      <Container>
+        <Row>
+          <Col>
+            <QueryBuilder />
+          </Col>
+          <Col>
+            <TabsPanel />
+          </Col>
+        </Row>
+      </Container>
 
+
+
+      {/* Just for testing purposes */}
+      {/*<h3>Testing stuff</h3>
       <ServerStatus />
       <Counter />
       <p>UUID: {uuid}</p>
@@ -34,7 +55,7 @@ function App() {
       <div><pre>{JSON.stringify(agent, null, 2) }</pre></div>
       <h5>Agent List</h5>
       <div><pre>{JSON.stringify(agentList, null, 2) }</pre></div>
-      <Query />
+      <Query />*/}
     </div>
   );
 }
