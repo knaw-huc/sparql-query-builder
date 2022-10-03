@@ -1,38 +1,20 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/_breakpoints";
-
 .nav {
-  border: 0;
+  border-bottom: 4px solid var(--bs-gray-300);
+  margin-bottom: 2rem;
 }
 
-.item {
+.item,
+.activeItem  {
+  border: 0 !important;
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  margin-bottom: -4px !important;
+  position: relative;
+  z-index: 2;
 }
 
 .activeItem {
   background: var(--bs-light) !important;
-  border-color: transparent !important;
-}
-
-.pane {
-  background: var(--bs-light);
-  padding: 1rem 2rem;
-}
-
-.tabContent {
-  position: relative;
-
-  @include media-breakpoint-up(md) {
-    &::after {
-      display: block;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: -1;
-      width: 50vw;
-      height: 100vh;
-      background: var(--bs-light);
-    }
-  }
+  border-bottom: 4px solid var(--bs-gray-500) !important;
 }

@@ -3,48 +3,89 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useCookies } from 'react-cookie';
 import styles from './QueryBuilder.module.scss';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectQuery, setActiveQuery } from './queryBuilderSlice';
+import { addNotification } from '../notifications/notificationsSlice';
+
+/* 
+ * Getter and setter for query cookies.
+ * Saves a max of 10 queries in a cookie 'querylist'
+ * Save: gets the currently entered query from the Sparql query editor (from redux store) and adds this to the cookie list
+ * Load: gets the value of the selected query, and saves this to the redux store
+*/
 
 export function QueryCookies() {
   const [cookies, setCookie] = useCookies(['querylist']);
+  const currentQuery = useAppSelector(selectQuery);
+  const dispatch = useAppDispatch();
 
   function onSave() {
-    // todo: get query from redux store and save to cookie
-    // 10 queries max
-    const newQuery = 'testquery';
-    console.log(`saving cookie with: ${newQuery}`);
-    console.log(cookies)
-
     const newList = !cookies.hasOwnProperty('querylist') ? 
       [] :
       ( cookies.querylist.length < 10 ?
         cookies.querylist :
         cookies.querylist.slice(0, -1)
-      ) ;
+      );
+
+    if ( newList.indexOf( currentQuery ) !== -1 ) {
+      // query already in list, show notice and do nothing
+      dispatch(
+        addNotification({
+          message: `Query already in list as Query #${ newList.indexOf( currentQuery ) + 1 }`,
+          type: 'warning',
+        })
+      );
+      return;
+    }
 
     setCookie(
       'querylist', 
-      [ newQuery, ...newList ],
+      [ currentQuery, ...newList ],
       { path: '/' }
+    );
+
+    dispatch(
+      addNotification({
+        message: `Query succesfully saved as Query #1`,
+        type: 'info',
+      })
     );
   }
 
   function onLoad(query: string) {
-    // set selected query in redux store
+    dispatch(setActiveQuery(query));
+    dispatch(
+      addNotification({
+        message: `Query succesfully loaded into the code editor. Hit Run Query to execute.`,
+        type: 'info',
+      })
+    );
   }
 
   return (
     <ButtonGroup>
-      <Button variant="light" className={styles.groupButton} onClick={ () => onSave() }>Save Query</Button>
+      <Button 
+        variant="dark" 
+        className={styles.groupButton} 
+        onClick={ () => onSave() }>
+        Save Query
+      </Button>
       <Dropdown as={ButtonGroup}>
-        <Dropdown.Toggle variant="light">
+        <Dropdown.Toggle variant="dark">
           Load Query
         </Dropdown.Toggle>
-        <Dropdown.Menu>
+        <Dropdown.Menu className={styles.loadQuery} variant="dark">
           { cookies.hasOwnProperty('querylist') ?
             cookies.querylist.map( (query: string, i: number) => 
-              <Dropdown.Item href="#" key={`query-${i}`}>Query #{i + 1}</Dropdown.Item>)
+              <Dropdown.Item 
+                key={`query-${i}`} 
+                onClick={ () => onLoad(query) }
+                className={currentQuery === query ? styles.loadQueryItemActive : styles.loadQueryItem}
+              >
+                Query #{i + 1}
+              </Dropdown.Item>)
             :
-            <Dropdown.Item href="#">No saved queries</Dropdown.Item>
+            <Dropdown.Item>No saved queries</Dropdown.Item>
           }
         </Dropdown.Menu>
       </Dropdown>

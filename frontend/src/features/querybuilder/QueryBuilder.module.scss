@@ -3,11 +3,47 @@
 }
 
 .buttonBar {
-  margin-top: 2rem;
+  margin: 2rem 0;
   justify-content: space-between;
+
+  :global {
+    .btn {
+      margin-bottom: 1rem;
+    }
+  }
 }
 
 .groupButton {
   border-right: 1px solid var(--bs-gray-400);
   margin-right: 1px;
+}
+
+.nav {
+  border-bottom: 4px solid var(--bs-gray-300);
+  margin-bottom: 2rem;
+}
+
+.item,
+.activeItem  {
+  border: 0 !important;
+  margin-right: 1rem;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  margin-bottom: -4px !important;
+  position: relative;
+  z-index: 2;
+}
+
+.activeItem {
+  background: none !important;
+  border-bottom: 4px solid var(--bs-gray-500) !important;
+}
+
+.loadQuery {
+  border-radius: var(--bs-border-radius);
+}
+
+.loadQueryItemActive {
+  background: var(--bs-primary) !important;
+  color: var(--bs-dark);
 }

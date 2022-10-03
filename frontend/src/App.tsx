@@ -20,6 +20,7 @@ import { Topbar } from './features/topbar/Topbar';
 import { QueryBar } from './features/querybar/QueryBar';
 import { TabsPanel } from './features/tabs/TabsPanel';
 import { QueryBuilder } from './features/querybuilder/QueryBuilder';
+import { Notifications } from './features/notifications/Notifications';
 
 function App() {
   const uuid = useAppSelector(getUuid);
@@ -33,16 +34,18 @@ function App() {
     <div className="App">
       <Topbar />
       {/*<QueryBar />*/}
-      <Container>
+      <Container fluid="lg">
         <Row>
-          <Col>
+          <Col lg={6}>
             <QueryBuilder />
           </Col>
-          <Col>
+          <Col lg={6} className="right-column">
             <TabsPanel />
           </Col>
         </Row>
       </Container>
+
+      <Notifications />
 
 
 

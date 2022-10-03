@@ -9,7 +9,7 @@ export function Datasets() {
         {[1,2,3].map((set) => (
           <Form.Check 
             key={`dataset-${set}`} 
-            type="checkbox"
+            type="switch"
             id={`dataset-${set}`}
             label={`Dataset ${set}`}
           />

@@ -4,7 +4,16 @@
 
 html, body {
   min-height: 100vh;
-  overflow: hidden;
+}
+
+.right-column {
+  background: $gray;
+}
+
+@include media-breakpoint-up(lg) {
+  body {
+    background: linear-gradient(90deg, $white 50%, $gray 50%);
+  }
 }
 
 .btn {
