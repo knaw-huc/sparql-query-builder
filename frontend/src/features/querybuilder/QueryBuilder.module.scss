@@ -41,9 +41,14 @@
 
 .loadQuery {
   border-radius: var(--bs-border-radius);
+  box-shadow: 2px 2px 7px rgba(0,0,0,0.3);
 }
 
 .loadQueryItemActive {
   background: var(--bs-primary) !important;
   color: var(--bs-dark);
+}
+
+.select {
+  margin-bottom: 1rem;
 }

@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
-import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import Dropdown from 'react-bootstrap/Dropdown';
 import styles from './QueryBuilder.module.scss';
 import { Builder } from './Builder';
 import { Editor } from './Editor';

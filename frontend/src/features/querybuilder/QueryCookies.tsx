@@ -46,7 +46,7 @@ export function QueryCookies() {
 
     dispatch(
       addNotification({
-        message: `Query succesfully saved as Query #1`,
+        message: `Query succesfully saved`,
         type: 'info',
       })
     );
@@ -56,7 +56,7 @@ export function QueryCookies() {
     dispatch(setActiveQuery(query));
     dispatch(
       addNotification({
-        message: `Query succesfully loaded into the code editor. Hit Run Query to execute.`,
+        message: `Query succesfully loaded into the code editor. Click <b>Run Query</b> to execute.`,
         type: 'info',
       })
     );

@@ -1,6 +1,6 @@
 import CodeMirror from '@uiw/react-codemirror';
 import { langs } from '@uiw/codemirror-extensions-langs';
-import { githubLight, githubDark } from '@uiw/codemirror-theme-github';
+import { gaDark } from './helpers/CodemirrorTheme';
 import styles from './QueryBuilder.module.scss';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -18,7 +18,7 @@ export function Editor() {
         value={query}
         height="20rem"
         extensions={[langs.sparql()]}
-        theme={githubDark}
+        theme={gaDark}
         onChange={ (value: string) => dispatch(setActiveQuery(value)) }
       />
     </div>
