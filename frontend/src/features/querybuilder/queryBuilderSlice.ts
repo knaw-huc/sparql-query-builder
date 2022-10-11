@@ -1,18 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import Cookies from 'universal-cookie';
 
-const placeholder = 
-  "PREFIX ga: <http://www.goldenagents.org/ontology>\n"+
-  "  SELECT * where\n"+
-  "  ?a ga:CreativeAgent\n"+
-  "  ?a ga:hasName";
+const cookies = new Cookies();
 
 export interface QueryState {
-  value: string;
+  active: string;
+  sent: string;
 }
 
 const initialState: QueryState = {
-  value: placeholder,
+  active: cookies.get('querylist')[0] || '',
+  sent: '',
 };
 
 export const queryBuilderSlice = createSlice({
@@ -21,16 +20,20 @@ export const queryBuilderSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     setActiveQuery: (state, action: PayloadAction<string>) => {
-      state.value = action.payload;
+      state.active = action.payload;
+    },
+    setSentQuery: (state, action: PayloadAction<string>) => {
+      state.sent = action.payload;
     },
   },
 });
 
-export const { setActiveQuery } = queryBuilderSlice.actions;
+export const { setActiveQuery, setSentQuery } = queryBuilderSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectQuery = (state: RootState) => state.queryBuilder.value;
+export const selectActiveQuery = (state: RootState) => state.queryBuilder.active;
+export const selectSentQuery = (state: RootState) => state.queryBuilder.sent;
 
 export default queryBuilderSlice.reducer;

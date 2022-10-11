@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
@@ -8,9 +9,12 @@ import styles from './QueryBuilder.module.scss';
 import { Builder } from './Builder';
 import { Editor } from './Editor';
 import { QueryCookies } from './QueryCookies';
+import { selectActiveQuery, setSentQuery } from './queryBuilderSlice';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
+  const currentQuery = useAppSelector(selectActiveQuery);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
@@ -44,7 +48,10 @@ export function QueryBuilder() {
       </Tab.Container>
       <ButtonToolbar className={styles.buttonBar}>
         <ButtonGroup>
-          <Button variant="primary" size="lg">Run Query</Button>
+          <Button 
+            variant="primary"
+            size="lg"
+            onClick={ () => dispatch(setSentQuery(currentQuery)) }>Run Query</Button>
         </ButtonGroup>
         <QueryCookies />
       </ButtonToolbar>

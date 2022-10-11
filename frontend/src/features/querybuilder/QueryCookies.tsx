@@ -4,7 +4,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { useCookies } from 'react-cookie';
 import styles from './QueryBuilder.module.scss';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectQuery, setActiveQuery } from './queryBuilderSlice';
+import { selectActiveQuery, setActiveQuery } from './queryBuilderSlice';
 import { addNotification } from '../notifications/notificationsSlice';
 
 /* 
@@ -16,7 +16,7 @@ import { addNotification } from '../notifications/notificationsSlice';
 
 export function QueryCookies() {
   const [cookies, setCookie] = useCookies(['querylist']);
-  const currentQuery = useAppSelector(selectQuery);
+  const currentQuery = useAppSelector(selectActiveQuery);
   const dispatch = useAppDispatch();
 
   function onSave() {

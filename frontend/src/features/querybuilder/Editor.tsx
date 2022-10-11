@@ -1,14 +1,15 @@
 import CodeMirror from '@uiw/react-codemirror';
 import { langs } from '@uiw/codemirror-extensions-langs';
+import { useCookies } from 'react-cookie';
 import { gaDark } from './helpers/CodemirrorTheme';
 import styles from './QueryBuilder.module.scss';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setActiveQuery, selectQuery } from './queryBuilderSlice';
+import { setActiveQuery, selectActiveQuery } from './queryBuilderSlice';
 
 export function Editor() {
-
-  const query = useAppSelector(selectQuery);
+  const [cookies] = useCookies(['querylist']);
+  const query = useAppSelector(selectActiveQuery);
   const dispatch = useAppDispatch();
 
   return (
