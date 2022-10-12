@@ -1,0 +1,16 @@
+.container {
+  background: var(--bs-light);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.filter {
+}
+
+.spinner {
+  width: 100%;
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
