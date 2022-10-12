@@ -9,6 +9,10 @@ import { RootState } from '../../app/store';
 // Default Sparql URL
 const rawBaseQuery = fetchBaseQuery({
   baseUrl: 'https://api.druid.datalegend.net/datasets/AdamNet/all/services/endpoint/sparql',
+  prepareHeaders: (headers) => {
+    headers.set('Accept', 'application/sparql-results+json');
+    return headers;
+  },
 });
 
 // Get dynamic Sparql URL from selected dataset

@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Topbar } from './features/topbar/Topbar';
-import { TabsPanel } from './features/tabs/TabsPanel';
+import { Results } from './features/results/Results';
 import { QueryBuilder } from './features/querybuilder/QueryBuilder';
 import { Notifications } from './features/notifications/Notifications';
 
@@ -14,16 +14,8 @@ function App() {
     <div className="App">
       <Topbar />
       {/*<QueryBar />*/}
-      <Container fluid="lg">
-        <Row>
-          <Col lg={6}>
-            <QueryBuilder />
-          </Col>
-          <Col lg={6} className="right-column">
-            <TabsPanel />
-          </Col>
-        </Row>
-      </Container>
+      <QueryBuilder />
+      <Results />
       <Notifications />
     </div>
   );
