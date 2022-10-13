@@ -1,0 +1,68 @@
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import styles from './Download.module.scss';
+import { useDownloadFileMutation } from './downloadApi';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { selectSentQuery } from '../querybuilder/queryBuilderSlice';
+import { selectDataType, setDataType } from './downloadSlice';
+
+export const Download = () => {
+  const currentQuery = useAppSelector(selectSentQuery);
+  const dispatch = useAppDispatch();
+  const activeDataType = useAppSelector(selectDataType);
+
+  const [ downloadFile, { isLoading } ] = useDownloadFileMutation();
+
+  const handleDownload = async (type: string) => {
+    dispatch(setDataType(type));
+    try {
+      await downloadFile(currentQuery);
+      // reset datatype
+      dispatch(setDataType('json'));
+    } catch {
+      console.log('error downloading');
+    }
+  }
+
+  return (
+    <ButtonGroup className={styles.resultsButtons}>
+      <DownloadButton 
+        download="xml" 
+        onClick={handleDownload} 
+        isLoading={isLoading}
+        activeType={activeDataType}/>
+      <DownloadButton 
+        download="csv" 
+        onClick={handleDownload} 
+        isLoading={isLoading}
+        activeType={activeDataType}/>
+    </ButtonGroup>
+  )
+}
+
+interface DownloadProps {
+  download: string;
+  onClick: any;
+  isLoading: boolean;
+  activeType: string;
+};
+
+const DownloadButton = ({download, onClick, isLoading, activeType}: DownloadProps) =>
+  <Button 
+    variant="secondary" 
+    size="sm" 
+    className={styles.download}
+    onClick={() => onClick(download)}>
+    {isLoading && download === activeType ?
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+      /> 
+      :
+      download
+    }
+  </Button>
