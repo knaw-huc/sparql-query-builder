@@ -35,6 +35,23 @@
       background: var(--bs-warning);
     }
   }
+
+  &.error {
+    border-color: var(--bs-danger);
+    color: var(--bs-white);
+
+    &::after {
+      background: var(--bs-danger);
+    }
+  }
+
+  &.success {
+    border-color: var(--bs-success);
+
+    &::after {
+      background: var(--bs-success);
+    }
+  }
 }
 
 .text {

@@ -23,7 +23,7 @@ export function QueryBuilder() {
   return (
     <Container fluid="lg">
       <Row className="justify-content-md-center">
-        <Col lg={8}>
+        <Col md={8}>
           <Tab.Container 
             activeKey={key}
             onSelect={ (k) => setKey(k!) }>
@@ -62,7 +62,7 @@ export function QueryBuilder() {
             <QueryCookies />
           </ButtonToolbar>
         </Col>
-        <Col lg={4}>
+        <Col md={4}>
           <Datasets />
         </Col>
       </Row>

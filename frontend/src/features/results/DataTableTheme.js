@@ -9,15 +9,10 @@ createTheme('huc', {
   background: {
     default: '#f2f2f2',
   },
-  context: {
-    background: '#cb4b16',
-    text: '#3e3e3e',
-  },
   divider: {
-    default: '#dee2e6',
+    default: '#e9e9e9',
   },
   highlightOnHover: {
-    default: '#3e3e3e',
-    text: '#ffffff'
+    default: '#e1e1e1',
   },
 }, 'light');

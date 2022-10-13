@@ -65,16 +65,16 @@ export function QueryCookies() {
   return (
     <ButtonGroup>
       <Button 
-        variant="dark" 
+        variant="secondary" 
         className={styles.groupButton} 
         onClick={ () => onSave() }>
         Save Query
       </Button>
       <Dropdown as={ButtonGroup}>
-        <Dropdown.Toggle variant="dark">
+        <Dropdown.Toggle variant="secondary">
           Load Query
         </Dropdown.Toggle>
-        <Dropdown.Menu className={styles.loadQuery} variant="dark">
+        <Dropdown.Menu className={styles.loadQuery} variant="secondary">
           { cookies.hasOwnProperty('querylist') ?
             cookies.querylist.map( (query: string, i: number) => 
               <Dropdown.Item 

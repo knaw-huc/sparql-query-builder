@@ -2,6 +2,7 @@
 $body-bg: #fff;
 $black: #3e3e3e;
 $primary: #efc501;
+$secondary: #e1e1e1;
 $danger: #c54a11;
 $warning: #ff8707;
 $success: #52b682;
@@ -9,6 +10,10 @@ $info: #77d7ea;
 $light: #f2f2f2;
 $gray: #f2f2f2;
 $gray-dark: darken($gray, 10%);
+
+$link-color: #086391;
+
+$border-radius: 4px;
 
 $grid-gutter-width: 3rem;
 
@@ -24,6 +29,10 @@ $navbar-light-toggler-border-color: transparent;
 $navbar-nav-link-padding-x: 1rem;
 $nav-link-padding-y: 0.8rem;
 $nav-link-padding-x: 1rem;
+$nav-link-color: $primary;
+$nav-link-hover-color: darken($primary, 5%);
 
 $dropdown-border-radius: 0;
 $dropdown-border-width: 0;
+
+$card-border-width: 0;

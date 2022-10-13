@@ -4,7 +4,7 @@ import styles from './QueryBuilder.module.scss';
 
 export function Datasets() {
   return (
-    <Card bg="light">
+    <Card bg="light" className={styles.card}>
       <Card.Header as="h5">Data sets</Card.Header>
       <Card.Body>
         <Card.Title as="h6">Select the data sets you wish to use</Card.Title>
