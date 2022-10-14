@@ -2,17 +2,28 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Download.module.scss';
-import { useDownloadFileMutation } from './downloadApi';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectSentQuery } from '../querybuilder/queryBuilderSlice';
-import { selectDataType, setDataType } from './downloadSlice';
+import {useDownloadFileMutation} from './downloadApi';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
+import {selectDataType, setDataType} from './downloadSlice';
 
-export const Download = () => {
+interface DownloadFn {
+    (subString: string): Promise<void>;
+}
+
+interface DownloadProps {
+  download: string;
+  onClick: DownloadFn;
+  isLoading: boolean;
+  activeType: string;
+};
+
+export function Download() {
   const currentQuery = useAppSelector(selectSentQuery);
   const dispatch = useAppDispatch();
   const activeDataType = useAppSelector(selectDataType);
 
-  const [ downloadFile, { isLoading } ] = useDownloadFileMutation();
+  const [ downloadFile, {isLoading} ] = useDownloadFileMutation();
 
   const handleDownload = async (type: string) => {
     dispatch(setDataType(type));
@@ -41,18 +52,12 @@ export const Download = () => {
   )
 }
 
-interface DownloadProps {
-  download: string;
-  onClick: any;
-  isLoading: boolean;
-  activeType: string;
-};
-
 const DownloadButton = ({download, onClick, isLoading, activeType}: DownloadProps) =>
   <Button 
     variant="secondary" 
     size="sm" 
     className={styles.download}
+    disabled={isLoading && download === activeType}
     onClick={() => onClick(download)}>
     {isLoading && download === activeType ?
       <Spinner

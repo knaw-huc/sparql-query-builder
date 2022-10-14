@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../../app/store';
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -28,7 +28,7 @@ export const queryBuilderSlice = createSlice({
   },
 });
 
-export const { setActiveQuery, setSentQuery } = queryBuilderSlice.actions;
+export const {setActiveQuery, setSentQuery} = queryBuilderSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

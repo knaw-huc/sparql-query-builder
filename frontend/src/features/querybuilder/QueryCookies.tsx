@@ -1,11 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { useCookies } from 'react-cookie';
+import {useCookies} from 'react-cookie';
 import styles from './QueryBuilder.module.scss';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectActiveQuery, setActiveQuery } from './queryBuilderSlice';
-import { addNotification } from '../notifications/notificationsSlice';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import {selectActiveQuery, setActiveQuery} from './queryBuilderSlice';
+import {addNotification} from '../notifications/notificationsSlice';
 
 /* 
  * Getter and setter for query cookies.
@@ -27,11 +27,11 @@ export function QueryCookies() {
         cookies.querylist.slice(0, -1)
       );
 
-    if ( newList.indexOf( currentQuery ) !== -1 ) {
+    if (newList.indexOf(currentQuery) !== -1) {
       // query already in list, show notice and do nothing
       dispatch(
         addNotification({
-          message: `Query already in list as Query #${ newList.indexOf( currentQuery ) + 1 }`,
+          message: `Query already in list as Query #${newList.indexOf(currentQuery) + 1}`,
           type: 'warning',
         })
       );
@@ -40,8 +40,8 @@ export function QueryCookies() {
 
     setCookie(
       'querylist', 
-      [ currentQuery, ...newList ],
-      { path: '/' }
+      [currentQuery, ...newList],
+      {path: '/' }
     );
 
     dispatch(
@@ -67,7 +67,7 @@ export function QueryCookies() {
       <Button 
         variant="secondary" 
         className={styles.groupButton} 
-        onClick={ () => onSave() }>
+        onClick={() => onSave() }>
         Save Query
       </Button>
       <Dropdown as={ButtonGroup}>
@@ -75,11 +75,11 @@ export function QueryCookies() {
           Load Query
         </Dropdown.Toggle>
         <Dropdown.Menu className={styles.loadQuery} variant="secondary">
-          { cookies.hasOwnProperty('querylist') ?
+          {cookies.hasOwnProperty('querylist') ?
             cookies.querylist.map( (query: string, i: number) => 
               <Dropdown.Item 
                 key={`query-${i}`} 
-                onClick={ () => onLoad(query) }
+                onClick={() => onLoad(query) }
                 className={currentQuery === query ? styles.loadQueryItemActive : styles.loadQueryItem}
               >
                 Query #{i + 1}

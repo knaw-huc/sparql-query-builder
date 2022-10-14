@@ -4,14 +4,14 @@ import {
   Action, 
   isRejectedWithValue 
 } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit';
+import {setupListeners} from '@reduxjs/toolkit/query';
+import type {MiddlewareAPI, Middleware} from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
 import queryBuilderReducer from '../features/querybuilder/queryBuilderSlice';
 import downloadReducer from '../features/download/downloadSlice';
-import notificationsReducer, { addNotification } from '../features/notifications/notificationsSlice';
-import { sparqlApi } from '../features/sparql/sparqlApi';
-import { downloadApi } from '../features/download/downloadApi';
+import notificationsReducer, {addNotification} from '../features/notifications/notificationsSlice';
+import {sparqlApi} from '../features/sparql/sparqlApi';
+import {downloadApi} from '../features/download/downloadApi';
 
 /**
  * Log a warning and show a toast!

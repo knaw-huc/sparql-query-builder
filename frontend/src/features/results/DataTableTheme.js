@@ -1,4 +1,4 @@
-import { createTheme } from 'react-data-table-component';
+import {createTheme} from 'react-data-table-component';
 
 // Creates a new theme named huc that overrides the build in light theme
 createTheme('huc', {

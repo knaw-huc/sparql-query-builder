@@ -1,9 +1,9 @@
-import { useNotifications } from './notificationsSlice';
-import { NotificationItem } from './NotificationItem';
-import { NotificationList } from './NotificationList';
-import type { Notification } from './NotificationItem';
+import {useNotifications} from './notificationsSlice';
+import {NotificationItem} from './NotificationItem';
+import {NotificationList} from './NotificationList';
+import type {Notification} from './NotificationItem';
 
-export const Notifications = () => {
+export function Notifications() {
   const notifications = useNotifications();
 
   return (

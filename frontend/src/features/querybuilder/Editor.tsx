@@ -1,14 +1,11 @@
 import CodeMirror from '@uiw/react-codemirror';
-import { langs } from '@uiw/codemirror-extensions-langs';
-import { useCookies } from 'react-cookie';
-import { gaDark } from './helpers/CodemirrorTheme';
+import {langs} from '@uiw/codemirror-extensions-langs';
+import {gaDark} from './helpers/CodemirrorTheme';
 import styles from './QueryBuilder.module.scss';
-
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setActiveQuery, selectActiveQuery } from './queryBuilderSlice';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import {setActiveQuery, selectActiveQuery} from './queryBuilderSlice';
 
 export function Editor() {
-  const [cookies] = useCookies(['querylist']);
   const query = useAppSelector(selectActiveQuery);
   const dispatch = useAppDispatch();
 
@@ -20,7 +17,7 @@ export function Editor() {
         height="20rem"
         extensions={[langs.sparql()]}
         theme={gaDark}
-        onChange={ (value: string) => dispatch(setActiveQuery(value)) }
+        onChange={(value: string) => dispatch(setActiveQuery(value))}
       />
     </div>
   );

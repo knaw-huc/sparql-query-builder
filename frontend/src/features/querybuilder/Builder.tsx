@@ -29,26 +29,23 @@ const options3 = [
   {label: 'Joost Vondel', value: 'vondel'},
 ];
 
-export function Builder() {
-  return (
-    <div>
-      <h5 className={styles.header}>Build your query</h5>
-      <p>Just placeholder selectboxes for now</p>
-      <Select 
-        className={styles.select}
-        options={options} 
-        placeholder="Give me every..."
-        theme={theme} />
-      <Select 
-        className={styles.select}
-        options={options2} 
-        placeholder="Who has..."
-        theme={theme} />
-      <Select 
-        className={styles.select}
-        options={options3} 
-        placeholder="To..."
-        theme={theme} />
-    </div>
-  );
-}
+export const Builder = () =>
+  <div>
+    <h5 className={styles.header}>Build your query</h5>
+    <p>Just placeholder selectboxes for now</p>
+    <Select 
+      className={styles.select}
+      options={options} 
+      placeholder="Give me every..."
+      theme={theme} />
+    <Select 
+      className={styles.select}
+      options={options2} 
+      placeholder="Who has..."
+      theme={theme} />
+    <Select 
+      className={styles.select}
+      options={options3} 
+      placeholder="To..."
+      theme={theme} />
+  </div>

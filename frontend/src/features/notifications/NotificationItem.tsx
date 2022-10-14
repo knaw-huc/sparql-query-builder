@@ -1,25 +1,25 @@
-import { motion, useIsPresent } from 'framer-motion';
-import { useTimeoutFn, useUpdateEffect } from 'react-use';
-import { dismissNotification } from './notificationsSlice';
-import { useAppDispatch } from '../../app/hooks';
+import {motion, useIsPresent} from 'framer-motion';
+import {useTimeoutFn, useUpdateEffect} from 'react-use';
+import {dismissNotification} from './notificationsSlice';
+import {useAppDispatch} from '../../app/hooks';
 import styles from './Notifications.module.scss';
 
 export type NotificationTypes = 'success' | 'error' | 'warning' | 'info';
 
-export type Notification = {
+export interface Notification {
   id: string
   message: string
   type?: NotificationTypes
   onClose?: () => void
 }
 
-type Props = {
+interface NotificationProps {
   notification: Notification
 }
 
-export const NotificationItem = ({
-  notification: { id, message, onClose, type = 'info' },
-}: Props) => {
+export function NotificationItem({
+  notification: {id, message, onClose, type = 'info'},
+}: NotificationProps) {
   const dispatch = useAppDispatch()
   const isPresent = useIsPresent()
 
@@ -50,10 +50,10 @@ export const NotificationItem = ({
   return (
     <motion.li
       layout
-      initial={{ opacity: 0, y: 50, scale: 0.3 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-      className={ [styles.listItem, styles[type]].join(' ') }
+      initial={{opacity: 0, y: 50, scale: 0.3}}
+      animate={{opacity: 1, y: 0, scale: 1}}
+      exit={{opacity: 0, scale: 0.5, transition: {duration: 0.2}}}
+      className={[styles.listItem, styles[type]].join(' ') }
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}>
       <div className={styles.text}>

@@ -1,10 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import { RootState } from '../../app/store';
-import { useAppSelector } from '../../app/hooks';
-import type { Notification } from './NotificationItem';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {nanoid} from 'nanoid';
+import {RootState} from '../../app/store';
+import {useAppSelector} from '../../app/hooks';
+import type {Notification} from './NotificationItem';
 
-type NotificationsState = {
+interface NotificationsState {
   notifications: Notification[]
 }
 
@@ -18,7 +18,7 @@ const notificationsSlice = createSlice({
   reducers: {
     addNotification: (
       state,
-      { payload }: PayloadAction<Omit<Notification, 'id'>>
+      {payload}: PayloadAction<Omit<Notification, 'id'>>
     ) => {
       const notification: Notification = {
         id: nanoid(),
@@ -29,7 +29,7 @@ const notificationsSlice = createSlice({
     },
     dismissNotification: (
       state,
-      { payload }: PayloadAction<Notification['id']>
+      {payload }: PayloadAction<Notification['id']>
     ) => {
       const index = state.notifications.findIndex(
         (notification) => notification.id === payload
@@ -42,7 +42,7 @@ const notificationsSlice = createSlice({
   },
 })
 
-const { reducer, actions } = notificationsSlice
+const {reducer, actions } = notificationsSlice
 
 export const {
   addNotification,

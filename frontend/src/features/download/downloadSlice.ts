@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../../app/store';
 
 export interface RequestedData {
   dataType: string;
@@ -19,7 +19,7 @@ export const downloadSlice = createSlice({
   },
 });
 
-export const { setDataType } = downloadSlice.actions;
+export const {setDataType} = downloadSlice.actions;
 
 export const selectDataType = (state: RootState) => state.download.dataType;
 

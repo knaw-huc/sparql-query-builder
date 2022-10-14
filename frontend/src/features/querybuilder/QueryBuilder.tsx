@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import React, {useState} from 'react';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import Tab from 'react-bootstrap/Tab';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
@@ -9,11 +9,11 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import styles from './QueryBuilder.module.scss';
-import { Builder } from './Builder';
-import { Editor } from './Editor';
-import { QueryCookies } from './QueryCookies';
-import { Datasets } from './Datasets';
-import { selectActiveQuery, setSentQuery } from './queryBuilderSlice';
+import {Builder} from './Builder';
+import {Editor} from './Editor';
+import {QueryCookies} from './QueryCookies';
+import {Datasets} from './Datasets';
+import {selectActiveQuery, setSentQuery} from './queryBuilderSlice';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
@@ -26,7 +26,7 @@ export function QueryBuilder() {
         <Col md={8}>
           <Tab.Container 
             activeKey={key}
-            onSelect={ (k) => setKey(k!) }>
+            onSelect={(k) => setKey(k!) }>
             <Nav variant="tabs" className={styles.nav} >
               <Nav.Item>
                 <Nav.Link 
@@ -57,7 +57,9 @@ export function QueryBuilder() {
               <Button 
                 variant="primary"
                 size="lg"
-                onClick={ () => dispatch(setSentQuery(currentQuery)) }>Run Query</Button>
+                onClick={() => dispatch(setSentQuery(currentQuery))}>
+                Run Query
+              </Button>
             </ButtonGroup>
             <QueryCookies />
           </ButtonToolbar>
