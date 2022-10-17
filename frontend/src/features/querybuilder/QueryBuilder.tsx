@@ -12,12 +12,13 @@ import styles from './QueryBuilder.module.scss';
 import {Builder} from './Builder';
 import {Editor} from './Editor';
 import {QueryCookies} from './QueryCookies';
-import {Datasets} from './Datasets';
-import {selectActiveQuery, setSentQuery} from './queryBuilderSlice';
+import {Datasets} from '../datasets/Datasets';
+import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
   const currentQuery = useAppSelector(selectActiveQuery);
+  const sentQuery = useAppSelector(selectSentQuery);
   const dispatch = useAppDispatch();
 
   return (
@@ -57,6 +58,7 @@ export function QueryBuilder() {
               <Button 
                 variant="primary"
                 size="lg"
+                disabled={currentQuery === sentQuery || !currentQuery}
                 onClick={() => dispatch(setSentQuery(currentQuery))}>
                 Run Query
               </Button>
