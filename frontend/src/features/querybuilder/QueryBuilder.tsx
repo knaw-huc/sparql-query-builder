@@ -14,12 +14,25 @@ import {Editor} from './Editor';
 import {QueryCookies} from './QueryCookies';
 import {Datasets} from '../datasets/Datasets';
 import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
+import {addNotification} from '../notifications/notificationsSlice';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
   const currentQuery = useAppSelector(selectActiveQuery);
   const sentQuery = useAppSelector(selectSentQuery);
   const dispatch = useAppDispatch();
+
+  function sendQuery() {
+    if (currentQuery === sentQuery || !currentQuery) {
+      dispatch(addNotification({
+        message: !currentQuery ? 'Create a query first' : 'Results for current query are already shown',
+        type: 'warning',
+      }));
+    }
+    else {
+      dispatch(setSentQuery(currentQuery))
+    }
+  }
 
   return (
     <Container fluid="lg">
@@ -58,8 +71,7 @@ export function QueryBuilder() {
               <Button 
                 variant="primary"
                 size="lg"
-                disabled={currentQuery === sentQuery || !currentQuery}
-                onClick={() => dispatch(setSentQuery(currentQuery))}>
+                onClick={sendQuery}>
                 Run Query
               </Button>
             </ButtonGroup>
