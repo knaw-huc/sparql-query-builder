@@ -10,7 +10,7 @@ export interface QueryState {
 }
 
 const initialState: QueryState = {
-  active: cookies.get('querylist')[0] || '',
+  active: cookies.get('querylist') && cookies.get('querylist')[0],
   sent: '',
 };
 
