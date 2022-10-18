@@ -2,11 +2,6 @@
   margin: 1rem 0;
 }
 
-.card {
-  margin-bottom: 2rem;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
-}
-
 .buttonBar {
   margin: 2rem 0;
   justify-content: space-between;
@@ -58,4 +53,15 @@
 
 .select {
   margin-bottom: 1rem;
+}
+
+.cookieQueryHeader {
+  display: block;
+  font-weight: 700;
+}
+
+.cookieQueryDescription {
+  display: block;
+  font-size: 0.8rem;
+  opacity: 0.7;
 }

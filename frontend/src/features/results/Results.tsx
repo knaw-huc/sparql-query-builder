@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useState, useMemo, useRef, useEffect} from 'react';
 import {motion, AnimatePresence} from "framer-motion"
 import DataTable from 'react-data-table-component';
 import Container from 'react-bootstrap/Container';
@@ -15,7 +15,7 @@ import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {Download} from '../download/Download';
 import './DataTableTheme';
 
-interface ResultsObject {
+type ResultsObject = {
   [key: string]: any
 }
 
@@ -25,9 +25,15 @@ export function Results() {
 
   const currentQuery = useAppSelector(selectSentQuery);
 
-  const {data, isFetching, isError} = useSendSparqlQuery(currentQuery, {
+  const {data, isFetching, isError, error} = useSendSparqlQuery(currentQuery, {
     skip: !currentQuery,
   });
+
+  // makes sure results scroll into view when new results are available/query has been run
+  const resultsRef = useRef<null | HTMLDivElement>(null);
+  useEffect(() => {
+    resultsRef.current && resultsRef.current.scrollIntoView()
+  }, [data, isError])
 
   // Get table headers from returned JSON. 
   // Some basic cell formatting.
@@ -102,26 +108,27 @@ export function Results() {
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}
                 exit={{opacity: 0}}
-                key="results-table">
-                {isError ?
-                  <p className={styles.error}>Oh no, something has gone wrong.</p> 
-                  :
-                  <DataTable
-                    columns={columns}
-                    data={filteredItems}
-                    pagination 
-                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                    title={<h5>Results</h5>}
-                    subHeader
-                    subHeaderComponent={headerComponentMemo}
-                    subHeaderWrap
-                    theme="huc"
-                    striped
-                    highlightOnHover
-                    paginationPerPage={20}
-                    paginationRowsPerPageOptions={[20, 50, 100]} 
-                  />
-                }
+                key="results-table"
+                ref={resultsRef}>
+                  {isError ?
+                    <p className={styles.error}>Oh no, something has gone wrong.</p>
+                    :
+                    <DataTable
+                      columns={columns}
+                      data={filteredItems}
+                      pagination 
+                      paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                      title={<h5>Results</h5>}
+                      subHeader
+                      subHeaderComponent={headerComponentMemo}
+                      subHeaderWrap
+                      theme="huc"
+                      striped
+                      highlightOnHover
+                      paginationPerPage={20}
+                      paginationRowsPerPageOptions={[20, 50, 100]} 
+                    />
+                  }
               </motion.div>
               }
             </Col>

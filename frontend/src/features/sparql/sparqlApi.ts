@@ -31,7 +31,7 @@ export const sparqlApi = createApi({
     sendSparql: build.query({
       query: (arg) => {
         return ({
-          url: '',
+          url: 'sparql', // to change, see datasets api and .env files
           method: 'POST',
           body: {query: arg},
         })

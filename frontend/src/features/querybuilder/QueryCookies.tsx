@@ -6,6 +6,12 @@ import styles from './QueryBuilder.module.scss';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {selectActiveQuery, setActiveQuery} from './queryBuilderSlice';
 import {addNotification} from '../notifications/notificationsSlice';
+import moment from 'moment';
+
+export interface QueryCookieObject {
+  query: string;
+  date: string;
+}
 
 /* 
  * Getter and setter for query cookies.
@@ -27,11 +33,20 @@ export function QueryCookies() {
         cookies.querylist.slice(0, -1)
       );
 
-    if (newList.indexOf(currentQuery) !== -1) {
-      // query already in list, show notice and do nothing
+    if (!currentQuery) {
       dispatch(
         addNotification({
-          message: `Query already in list as Query #${newList.indexOf(currentQuery) + 1}`,
+          message: 'Build a query first',
+          type: 'warning',
+        })
+      );
+      return;
+    }
+
+    if (newList.filter( (q: QueryCookieObject) => q.query === currentQuery).length > 0) {
+      dispatch(
+        addNotification({
+          message: `Query already in list`,
           type: 'warning',
         })
       );
@@ -40,7 +55,13 @@ export function QueryCookies() {
 
     setCookie(
       'querylist', 
-      [currentQuery, ...newList],
+      [
+        {
+          query: currentQuery,
+          date: moment().format('D-M-YYYY H:mm'),
+        }, 
+        ...newList
+      ],
       {path: '/' }
     );
 
@@ -76,13 +97,16 @@ export function QueryCookies() {
         </Dropdown.Toggle>
         <Dropdown.Menu className={styles.loadQuery} variant="secondary">
           {cookies.hasOwnProperty('querylist') ?
-            cookies.querylist.map( (query: string, i: number) => 
+            cookies.querylist.map( (query: QueryCookieObject, i: number) => 
               <Dropdown.Item 
                 key={`query-${i}`} 
-                onClick={() => onLoad(query) }
-                className={currentQuery === query ? styles.loadQueryItemActive : styles.loadQueryItem}
+                onClick={() => onLoad(query.query) }
+                className={currentQuery === query.query ? styles.loadQueryItemActive : styles.loadQueryItem}
               >
-                Query #{i + 1}
+                <div>
+                  <span className={styles.cookieQueryHeader}>Query #{i + 1}</span>
+                  <span className={styles.cookieQueryDescription}>Saved on {query.date}</span>
+                </div>
               </Dropdown.Item>)
             :
             <Dropdown.Item>No saved queries</Dropdown.Item>

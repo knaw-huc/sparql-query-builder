@@ -11,6 +11,7 @@ import queryBuilderReducer from '../features/querybuilder/queryBuilderSlice';
 import downloadReducer from '../features/download/downloadSlice';
 import notificationsReducer, {addNotification} from '../features/notifications/notificationsSlice';
 import {sparqlApi} from '../features/sparql/sparqlApi';
+import {datasetsApi} from '../features/datasets/datasetsApi';
 import {downloadApi} from '../features/download/downloadApi';
 
 /**
@@ -21,8 +22,9 @@ export const rtkQueryErrorLogger: Middleware =
     // RTK Query uses `createAsyncThunk` from redux-toolkit under the hood, 
     // so we're able to utilize these matchers!
     if (isRejectedWithValue(action)) {
+      console.log(action)
       api.dispatch(addNotification({
-        message: action.payload.error || action.payload.data.message,
+        message: action.meta.arg.endpointName + ': ' + (action.payload.error || action.payload.data.message),
         type: 'error',
       }));
       console.warn('We got a rejected action!')
@@ -37,14 +39,16 @@ export const store = configureStore({
     queryBuilder: queryBuilderReducer,
     notifications: notificationsReducer,
     [sparqlApi.reducerPath]: sparqlApi.reducer,
+    [datasetsApi.reducerPath]: datasetsApi.reducer,
     counter: counterReducer,
     download: downloadReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
-      .concat(sparqlApi.middleware)
       .concat(rtkQueryErrorLogger)
+      .concat(sparqlApi.middleware)
       .concat(downloadApi.middleware)
+      .concat(datasetsApi.middleware)
 });
 
 setupListeners(store.dispatch);
