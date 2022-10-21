@@ -15,17 +15,26 @@ import {QueryCookies} from './QueryCookies';
 import {Datasets} from '../datasets/Datasets';
 import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
 import {addNotification} from '../notifications/notificationsSlice';
+import {selectedDatasets} from '../datasets/datasetsSlice';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
   const currentQuery = useAppSelector(selectActiveQuery);
   const sentQuery = useAppSelector(selectSentQuery);
+  const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
 
   function sendQuery() {
     if (currentQuery === sentQuery || !currentQuery) {
       dispatch(addNotification({
         message: !currentQuery ? 'Create a query first' : 'Results for current query are already shown',
+        type: 'warning',
+      }));
+    }
+    // TODO: Remove this optional check?
+    else if (currentDatasets.length === 0) {
+      dispatch(addNotification({
+        message: 'Select one or more data sets',
         type: 'warning',
       }));
     }

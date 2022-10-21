@@ -14,9 +14,10 @@ export function Datasets() {
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
 
+  // enable all datasets by default/on load
   useEffect(() => {
     data?.length > 0 && dispatch(setSelectedDatasets(data));
-  }, [data]);
+  }, [data, dispatch]);
 
   function toggleDataset(set: Dataset){
     const filteredSets = currentDatasets.filter( (activeSet: Dataset) => activeSet.id !== set.id);

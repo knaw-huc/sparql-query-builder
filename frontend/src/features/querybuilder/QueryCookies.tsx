@@ -7,22 +7,30 @@ import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {selectActiveQuery, setActiveQuery} from './queryBuilderSlice';
 import {addNotification} from '../notifications/notificationsSlice';
 import moment from 'moment';
+import {setSelectedDatasets, selectedDatasets} from '../datasets/datasetsSlice';
+import type {Dataset} from '../datasets/datasetsSlice';
+
+// TODO: 
+// later: querybuilder in cookie
 
 export interface QueryCookieObject {
   query: string;
-  date: string;
+  datetime: string;
+  datasets: Dataset[];
 }
 
 /* 
  * Getter and setter for query cookies.
  * Saves a max of 10 queries in a cookie 'querylist'
- * Save: gets the currently entered query from the Sparql query editor (from redux store) and adds this to the cookie list
- * Load: gets the value of the selected query, and saves this to the redux store
+ * Save: gets the currently entered query from the Sparql query editor (from redux store) and adds this to the cookie list, 
+ * with current datetime and selected data sets
+ * Load: gets the value of the selected query, selected data sets, and saves this to the redux store
 */
 
 export function QueryCookies() {
   const [cookies, setCookie] = useCookies(['querylist']);
   const currentQuery = useAppSelector(selectActiveQuery);
+  const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
 
   function onSave() {
@@ -58,7 +66,8 @@ export function QueryCookies() {
       [
         {
           query: currentQuery,
-          date: moment().format('D-M-YYYY H:mm'),
+          datetime: moment().format('D-M-YYYY H:mm'),
+          datasets: currentDatasets,
         }, 
         ...newList
       ],
@@ -73,8 +82,9 @@ export function QueryCookies() {
     );
   }
 
-  function onLoad(query: string) {
-    dispatch(setActiveQuery(query));
+  function onLoad(query: QueryCookieObject) {
+    dispatch(setActiveQuery(query.query));
+    dispatch(setSelectedDatasets(query.datasets));
     dispatch(
       addNotification({
         message: `Query succesfully loaded into the code editor. Click <b>Run Query</b> to execute.`,
@@ -100,12 +110,12 @@ export function QueryCookies() {
             cookies.querylist.map( (query: QueryCookieObject, i: number) => 
               <Dropdown.Item 
                 key={`query-${i}`} 
-                onClick={() => onLoad(query.query) }
+                onClick={() => onLoad(query) }
                 className={currentQuery === query.query ? styles.loadQueryItemActive : styles.loadQueryItem}
               >
                 <div>
                   <span className={styles.cookieQueryHeader}>Query #{i + 1}</span>
-                  <span className={styles.cookieQueryDescription}>Saved on {query.date}</span>
+                  <span className={styles.cookieQueryDescription}>Saved on {query.datetime}</span>
                 </div>
               </Dropdown.Item>)
             :

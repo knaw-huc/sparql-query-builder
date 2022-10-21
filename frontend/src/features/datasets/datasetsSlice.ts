@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
+import Cookies from 'universal-cookie';
 
 export interface Dataset {
   id: string;
@@ -10,8 +11,10 @@ export interface DatasetsState {
   sets: Dataset[];
 }
 
+const cookies = new Cookies();
+
 const initialState: DatasetsState = {
-  sets: []
+  sets: cookies.get('querylist') ? cookies.get('querylist')[0].datasets : [],
 };
 
 export const datasetsSlice = createSlice({

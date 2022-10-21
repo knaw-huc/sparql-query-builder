@@ -10,6 +10,7 @@ export interface QueryState {
 }
 
 const initialState: QueryState = {
+  // set latest saved query to active
   active: cookies.get('querylist') && cookies.get('querylist')[0].query,
   sent: '',
 };
