@@ -43,7 +43,7 @@ def get_resources():
             for agent in all_agents 
             if agent['agentType'] == 'DB'
         ]
-        return resources
+        return jsonify(resources)
     except:
         return []
 
