@@ -138,3 +138,5 @@ venv.bak/
 # mkdocs documentation
 /site
 
+/net2apl
+

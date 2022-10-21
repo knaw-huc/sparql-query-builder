@@ -1,10 +1,11 @@
+import json
 import logging
+import requests
+import sys
 
+from logging.config import dictConfig
 from flask import Flask, jsonify
 from flask_cors import CORS
-
-import sys
-from logging.config import dictConfig
 
 dictConfig({
     'version': 1,
@@ -28,22 +29,30 @@ cors = CORS(app, resources={r'/ga/*': {
     'origins': '*'
 }})
 
-API_URL = 'https://localhost:8080'
+API_URL = 'http://127.0.0.1:8080'
 
-@app.route('/', methods=['GET', 'OPTIONS', 'POST'])
+
+@app.route('/ga/getresources', methods=['GET'])
+def get_resources():
+    """This route gets all resources from the backend"""
+    try:
+        response = requests.get(f'{API_URL}/api/agent/list')
+        all_agents = json.loads(response.text)
+        resources = [
+            { 'id': agent['uuid'], 'name': agent['nickname'] } 
+            for agent in all_agents 
+            if agent['agentType'] == 'DB'
+        ]
+        return resources
+    except:
+        return []
+
+@app.route('/ga/', methods=['GET', 'OPTIONS', 'POST'])
 def agent():
-    response = jsonify({'data': 'agent'})
+    response = jsonify({'data': ['url_1', 'url_2']})
     return response
 
-@app.route('/actuator/platform', methods=['GET', 'OPTIONS'])
-def platform():
-    response = jsonify({'data': 'actuator'})
-    return response
 
-@app.route('/api/agent/list', methods=['GET', 'OPTIONS'])
-def agent_list():
-    response = jsonify({'data': 'agent_list'})
-    return response
 
 # http://127.0.0.1:5000/api/agent
 # http://127.0.0.1:5000/api/agent/list
