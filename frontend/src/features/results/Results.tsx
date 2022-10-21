@@ -12,6 +12,7 @@ import styles from './Results.module.scss';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
 import {useAppSelector} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
+import {selectedDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
 import './DataTableTheme';
 
@@ -24,8 +25,9 @@ export function Results() {
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 
   const currentQuery = useAppSelector(selectSentQuery);
+  const currentDatasets = useAppSelector(selectedDatasets);
 
-  const {data, isFetching, isError, error} = useSendSparqlQuery(currentQuery, {
+  const {data, isFetching, isError, error} = useSendSparqlQuery({query: currentQuery, datasets: currentDatasets}, {
     skip: !currentQuery,
   });
 

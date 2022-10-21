@@ -29,11 +29,14 @@ export const sparqlApi = createApi({
   endpoints: (build) => ({
     // Send Sparql query to server and save results to state
     sendSparql: build.query({
-      query: (arg) => {
+      query: ({query, datasets}) => {
         return ({
           url: 'sparql', // to change, see datasets api and .env files
           method: 'POST',
-          body: {query: arg},
+          body: {
+            query: query,
+            datasets: datasets,
+          },
         })
       },
     }),

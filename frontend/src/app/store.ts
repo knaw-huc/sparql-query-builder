@@ -12,6 +12,7 @@ import downloadReducer from '../features/download/downloadSlice';
 import notificationsReducer, {addNotification} from '../features/notifications/notificationsSlice';
 import {sparqlApi} from '../features/sparql/sparqlApi';
 import {datasetsApi} from '../features/datasets/datasetsApi';
+import datasetsReducer from '../features/datasets/datasetsSlice';
 import {downloadApi} from '../features/download/downloadApi';
 
 /**
@@ -40,6 +41,7 @@ export const store = configureStore({
     notifications: notificationsReducer,
     [sparqlApi.reducerPath]: sparqlApi.reducer,
     [datasetsApi.reducerPath]: datasetsApi.reducer,
+    selectedDatasets: datasetsReducer,
     counter: counterReducer,
     download: downloadReducer,
   },

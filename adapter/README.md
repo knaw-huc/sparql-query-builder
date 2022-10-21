@@ -12,7 +12,7 @@ $ pip3 install flask_cors
 
 ```
 # make sure it is executable
-# chmod u+x ./runs.sh
+# chmod u+x ./run.sh
 $ ./run.sh
 ```
 
