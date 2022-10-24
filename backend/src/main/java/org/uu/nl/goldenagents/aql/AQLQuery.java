@@ -1,13 +1,17 @@
 package org.uu.nl.goldenagents.aql;
 
+import org.apache.jena.atlas.logging.Log;
 import org.apache.jena.shared.PrefixMapping;
 import org.apache.jena.shared.impl.PrefixMappingImpl;
 import org.springframework.lang.Nullable;
 import org.uu.nl.goldenagents.aql.complex.*;
+import org.uu.nl.goldenagents.aql.feature.TypeSpecification;
 import org.uu.nl.goldenagents.aql.feature.hasResource;
 import org.uu.nl.goldenagents.aql.misc.Exclusion;
 import org.uu.nl.goldenagents.netmodels.angular.AQLResource;
 import org.uu.nl.goldenagents.netmodels.angular.AQLSuggestions;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLJsonBuilder;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLJsonObject;
 import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
 import org.uu.nl.net2apl.core.platform.Platform;
@@ -25,10 +29,10 @@ public class AQLQuery implements FIPASendableObject {
     private AQLTree queryTree;
 
     /** The subtree of @ref{this.queryTree} that has the current focus. Focus cannot be null **/
-    private UUID focus;
+    private AQLTree.ID focus;
 
     /** Available foci */
-    private HashMap<UUID, AQLTree> foci;
+    private HashMap<AQLTree.ID, AQLTree> foci;
 
     /** Suggestions for classes, properties and instances for this query **/
     private AQLSuggestions suggestions = null;
@@ -43,8 +47,34 @@ public class AQLQuery implements FIPASendableObject {
         foci = new HashMap<>();
         this.prefixMap = prefixMap;
         this.queryTree = new MostGeneralQuery();
-        this.focus = this.queryTree.getFocusID();
+        this.focus = this.queryTree.getFocusName();
         foci.put(this.focus, this.queryTree);
+    }
+
+    public static void constructSampleAQLQuery(AQLQuery query) {
+        SerializableResourceImpl author = new SerializableResourceImpl("https://goldenagents.com/ontology#Author");
+        SerializableResourceImpl book = new SerializableResourceImpl("https://goldenagents.com/ontology#Book");
+
+        query.intersection(new TypeSpecification(author));
+        AQLTree.ID startFocus = query.getFocus().getFocusName();
+
+        AQLResource authorOf = new AQLResource();
+        authorOf.uri = "https://goldenagents.com/ontology#authorOf";
+        authorOf.label = "authorOf";
+        query.cross(authorOf, false);
+
+        query.intersection(new TypeSpecification(book));
+
+        AQLResource hasPublished = new AQLResource();
+        hasPublished.uri = "https://goldenagents.com/ontology#hasPublished";
+        hasPublished.label = "hasPublished";
+        query.cross(hasPublished, false);
+
+        query.setFocus(startFocus);
+        AQLResource hasName = new AQLResource();
+        hasName.uri = "https://goldenagents.com/ontology#hasName";
+        hasName.label = "hasName";
+        query.cross(hasName, false);
     }
 
     /**
@@ -63,12 +93,12 @@ public class AQLQuery implements FIPASendableObject {
         return this.getNode(this.getFocusName());
     }
 
-    public UUID getFocusName() {
+    public AQLTree.ID getFocusName() {
         return this.focus;
     }
 
-    @Nullable public AQLTree getNode(UUID nodeName) {
-        if(this.foci.containsKey(nodeName)) return this.foci.get(nodeName);
+    @Nullable public AQLTree getNode(AQLTree.ID focusName) {
+        if(this.foci.containsKey(focusName)) return this.foci.get(focusName);
         return null;
     }
 
@@ -77,7 +107,7 @@ public class AQLQuery implements FIPASendableObject {
      * @param newFocus  The node ID of node, contained in this query, that should get the active focus
      * @return      True iff focus could be shifted to this node, false if the node does not exist in the query tree
      */
-    public boolean setFocus(UUID newFocus) {
+    boolean setFocus(AQLTree.ID newFocus) {
         if(this.foci.containsKey(newFocus)) {
             this.focus = newFocus;
         }
@@ -102,6 +132,10 @@ public class AQLQuery implements FIPASendableObject {
         return new SPARQLTranslation(this);
     }
 
+    public AQLJsonObject getJson(UUID conversationID) {
+        return new AQLJsonBuilder(this, conversationID).build();
+    }
+
     /**
      * Convert this query to an AQL string representation
      * @return  String representation of AQL query
@@ -118,17 +152,17 @@ public class AQLQuery implements FIPASendableObject {
         return this.queryTree.toNLQuery();
     }
 
-    public void intersection(AQLTree feature) {
+    void intersection(AQLTree feature) {
         if(feature.nSubtrees() != 0) {
             throw new IllegalArgumentException("Do not intersect with complex trees! Features only");
         }
 
         // Add the new feature as a focus point to existing foci
-        this.foci.put(feature.getFocusID(), feature);
+        this.foci.put(feature.getFocusName(), feature);
 
         if(this.intersectFocusWith(feature)) {
             // Set the focus to that of the new feature
-            this.focus = feature.getFocusID();
+            this.focus = feature.getFocusName();
         }
     }
 
@@ -151,14 +185,14 @@ public class AQLQuery implements FIPASendableObject {
         Intersection intersection = new Intersection(this.getFocus(), newNode);
 
         // Add the new intersection as a focus point to existing foci
-        this.foci.put(intersection.getFocusID(), intersection);
+        this.foci.put(intersection.getFocusName(), intersection);
 
         boolean success = false;
         // Try to replace the child of the parent with the new intersection
         if(parent != null) {
             parent.replaceChild(this.focus, intersection);
             success = true;
-        } else if (this.focus == this.queryTree.getFocusID()) {
+        } else if (this.focus.equals(this.queryTree.getFocusName())) {
             // Node to replace is root
             this.queryTree = intersection;
             success = true;
@@ -167,7 +201,7 @@ public class AQLQuery implements FIPASendableObject {
         }
 
         // Log the new query as AQL
-        Platform.getLogger().log(getClass(), this.getAqlString());
+        Platform.getLogger().log(getClass(), this.getAqlString() == null ? "No AQL string provided" : this.getAqlString());
 
         return success;
     }
@@ -177,7 +211,7 @@ public class AQLQuery implements FIPASendableObject {
      * @param aqlResource       Resource representing property to cross
      * @param crossForward      True iff crossing should be forward (e.g. p of q1); false otherwise (e.g. p : q1)
      */
-    public void cross(AQLResource aqlResource, boolean crossForward) {
+    void cross(AQLResource aqlResource, boolean crossForward) {
         MostGeneralQuery newGeneralQuery = new MostGeneralQuery();
         SerializableResourceImpl resource = new SerializableResourceImpl(aqlResource.uri);
         CrossingOperator crossingOperator = crossForward ?
@@ -185,56 +219,88 @@ public class AQLQuery implements FIPASendableObject {
                 new CrossingBackwards(resource, newGeneralQuery, aqlResource.label);
 
         // Add new query elements as focus points to existing foci
-        this.foci.put(crossingOperator.getFocusID(), crossingOperator);
-        this.foci.put(newGeneralQuery.getFocusID(), newGeneralQuery);
+        this.foci.put(crossingOperator.getFocusName(), crossingOperator);
+        this.foci.put(newGeneralQuery.getFocusName(), newGeneralQuery);
 
         if(this.intersectFocusWith(crossingOperator)) {
-            this.focus = newGeneralQuery.getFocusID();
+            this.focus = newGeneralQuery.getFocusName();
         }
     }
 
-    public void removeIntersect() {
-        // TODO, create inverse of intersection(AQLTree feature);
-    }
-
-    public void negativeLookup() {
+    void negativeLookup() {
         // TODO add all to tree
         AQLTree newFocus = new MostGeneralQuery();
         Exclusion newExclusion = new Exclusion(newFocus);
         Intersection newNode = new Intersection(this.getFocus(), newExclusion);
 
         if(this.replaceFocusWith(newNode))
-            this.focus = newFocus.getFocusID();
+            this.focus = newFocus.getFocusName();
     }
 
-    public void union() {
-        // TODO add all to tree
+    void union() {
+        // Find parent of current focus, for replacement
+        AQLTree parent = this.foci.get(this.getFocus().getParentID());
+
+        // Create a new union with the current focus on the left and the new focus (most general query) on the right
         AQLTree newFocus = new MostGeneralQuery();
-        Union newNode = new Union(this.getFocus(), newFocus);
-        if(this.replaceFocusWith(newNode))
-            this.focus = newFocus.getFocusID();
+        Union union = new Union(this.getFocus(), newFocus);
+
+        // Add the new intersection as a focus point to existing foci
+        this.foci.put(union.getFocusName(), union);
+
+        if (parent != null) {
+            parent.replaceChild(this.focus, union);
+        } else if (this.focus.equals(this.queryTree.getFocusName())) {
+            this.queryTree = union;
+        } else {
+            Platform.getLogger().log(getClass(), this.getAqlString() == null ? "No AQL string provided" : this.getAqlString());
+        }
     }
 
-    public void name() {
+    void name() {
 
     }
 
-    public void reference() {
+    void reference() {
 
     }
 
-    public void delete() {
-        // Remove old from tree
-        AQLTree newFocus = new MostGeneralQuery();
-        if(this.replaceFocusWith(newFocus))
-            this.focus = newFocus.getFocusID();
+    void delete() {
+        AQLTree parent = getNode(getFocus().getParentID());
+        if (parent == null) {
+            this.foci.clear();
+            this.queryTree = new MostGeneralQuery();
+            this.foci.put(this.queryTree.getFocusName(), this.queryTree);
+            setFocus(this.queryTree.getFocusName());
+        } else {
+            MostGeneralQuery replacement = new MostGeneralQuery();
+            this.foci.put(replacement.getFocusName(), replacement);
+            parent.replaceChild(this.focus, replacement);
+            removeFocusIds(getFocus());
+            setFocus(replacement.getFocusName());
+            if (parent instanceof BinaryAQLInfixOperator) {
+                BinaryAQLInfixOperator tParent = (BinaryAQLInfixOperator) parent;
+                if (tParent.getLeftChild() instanceof MostGeneralQuery && tParent.getRightChild() instanceof MostGeneralQuery) {
+                    Log.info(getClass().getName(), "Removing parent as well");
+                    setFocus(parent.getFocusName());
+                    delete();
+                }
+            }
+        }
+    }
+
+    private void removeFocusIds(AQLTree tree) {
+        this.foci.remove(tree.getFocusName());
+        for(AQLTree child : tree.getSubqueries()) {
+            removeFocusIds(child);
+        }
     }
 
     /**
      * Overload method to ensure the right focus is removed
      * @param newFocus Focus to remove
      */
-    public void delete(UUID newFocus) {
+    void delete(AQLTree.ID newFocus) {
         // TODO, this method should call the inverse of methods to add stuff to the query, e.g. inverse of Intersect() if parent is intersection
         this.focus = newFocus;
         delete();
@@ -244,8 +310,8 @@ public class AQLQuery implements FIPASendableObject {
     @Deprecated
     // TODO, this method is deprecated. Look at Intersect(). For deleting, inverse of methods that elaborate the query should be used
     private boolean replaceFocusWith(AQLTree newFocus) {
-        if(!this.foci.containsKey(newFocus.getFocusID()))
-            this.foci.put(newFocus.getFocusID(), newFocus);
+        if(!this.foci.containsKey(newFocus.getFocusName()))
+            this.foci.put(newFocus.getFocusName(), newFocus);
 
         AQLTree focusParent = this.foci.get(this.getFocus().getParentID());
         if (focusParent != null) {
@@ -253,7 +319,7 @@ public class AQLQuery implements FIPASendableObject {
             focusParent.replaceChild(this.focus, newFocus);
             Platform.getLogger().log(getClass(), Level.SEVERE, "After putting child new parent is " + newFocus.getParentID());
             return true;
-        } else if (this.queryTree.getFocusID() == this.focus) {
+        } else if (this.queryTree.getFocusName() == this.focus) {
             // Current focus is the root. Replace entire tree
             this.queryTree = newFocus;
             return true;
@@ -274,8 +340,8 @@ public class AQLQuery implements FIPASendableObject {
         mapping.setNsPrefixes(this.prefixMap);
         PrefixMapping newMapping = new PrefixMappingImpl();
 
-        for(String uri : uris) {
-            if(mapping.getNsURIPrefix(uri) != null) {
+        for (String uri : uris) {
+            if (uri != null && mapping.getNsURIPrefix(uri) != null) {
                 newMapping.setNsPrefix(mapping.getNsURIPrefix(uri), uri);
             }
         }
@@ -305,5 +371,48 @@ public class AQLQuery implements FIPASendableObject {
 
     public void setSuggestions(AQLSuggestions suggestions) {
         this.suggestions = suggestions;
+    }
+
+    public HashMap<AQLTree.ID, AQLTree> getFoci() {
+        return new HashMap<>(foci);
+    }
+
+    public AQLQuery copy() {
+        AQLQuery copy = new AQLQuery(this.prefixMap); // Copy by reference is fine in this case
+        copy.foci = new HashMap<>();
+        copy.queryTree = this.queryTree.copy(null, copy.foci);
+        copy.suggestions = null;
+        copy.focus = this.focus;
+        return copy;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AQLQuery aqlQuery = (AQLQuery) o;
+        return
+                this.queryTree.equals(aqlQuery.queryTree) &&
+                this.getFocus().equals(aqlQuery.getFocus()) &&
+                nodesAreSameBranch(getFocus(), aqlQuery.getFocus(), aqlQuery);
+    }
+
+    private boolean nodesAreSameBranch(AQLTree t1, AQLTree t2, AQLQuery otherQuery) {
+        if (!t1.equals(t2)) return false;
+        if (t1.getParentID() == null && t2.getParentID() == null) return true;
+        if (t1.getParentID() == null || t2.getParentID() == null) return false;
+        AQLTree p1 = this.getNode(t1.getParentID());
+        AQLTree p2 = otherQuery.getNode(t2.getParentID());
+        return nodesAreSameBranch(p1, p2, otherQuery);
+    }
+
+    @Override
+    public int hashCode() {
+        return getFocus().hashCode() * 10 + queryTree.hashCode() * 101;
+    }
+
+    @Override
+    public String toString() {
+        return this.hashCode() + ": " + getAqlString();
     }
 }

@@ -27,9 +27,11 @@ public class ProcessQueryResultPlan extends MessagePlan {
 		
 		// Store results in a separate context
 		QueryResultContext results = planInterface.getContext(QueryResultContext.class);
-		String queryID = results.getQueryIDForConversation(receivedMessage.getConversationId());
-
 		QueryResult result = (QueryResult) content;
+		String queryID = result.getQueryID();
+		if (result.getTargetAqlQueryID() != null) {
+			queryID = Integer.toString(result.getTargetAqlQueryID());
+		}
 		
 		CachedQueryInfo cachedQueryInfo = results.addResults(queryID, result);
 		

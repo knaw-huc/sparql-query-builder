@@ -1,9 +1,13 @@
 package org.uu.nl.goldenagents.agent.plan.user;
 
-import org.apache.jena.sparql.core.Var;
+import org.uu.nl.goldenagents.agent.context.DirectSsePublisher;
+import org.uu.nl.goldenagents.agent.context.query.AQLQueryContext;
+import org.uu.nl.goldenagents.agent.context.query.QueryResultContext;
 import org.uu.nl.goldenagents.agent.context.registration.DFRegistrationContext;
 import org.uu.nl.goldenagents.agent.trigger.user.AQLQueryChangedExternalTrigger;
+import org.uu.nl.goldenagents.aql.AQLQuery;
 import org.uu.nl.goldenagents.aql.MostGeneralQuery;
+import org.uu.nl.goldenagents.netmodels.angular.AQLSuggestions;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
 import org.uu.nl.goldenagents.netmodels.fipa.UserQueryTrigger;
@@ -28,6 +32,8 @@ import java.util.logging.Level;
  */
 public class RequestSuggestionsPlan extends RunOncePlan {
 
+    private static final boolean FORCE_IGNORE_DATA = false; // For hacky debugging purposes
+
     AQLQueryChangedExternalTrigger trigger;
 
     private Set<AgentID> availableBrokers;
@@ -38,27 +44,64 @@ public class RequestSuggestionsPlan extends RunOncePlan {
 
     @Override
     public void executeOnce(PlanToAgentInterface planInterface) throws PlanExecutionError {
+        boolean suggestionsDone = getSuggestionsFromCache(planInterface);
+        if (suggestionsDone) {
+            Platform.getLogger().log(getClass(), "Suggestions for same query already present! Skipping broker for now");
+        } else {
+            Platform.getLogger().log(getClass(), "Suggestions for query not yet available. Contacting brokers");
+            requestFromBroker(planInterface);
+        }
+    }
+
+    private boolean getSuggestionsFromCache(PlanToAgentInterface planInterface) {
+        AQLQueryContext context = planInterface.getContext(AQLQueryContext.class);
+        AQLQuery query = context.getCurrentQuery().queryContainer.getQuery(trigger.getQuery().hashCode());
+        if (query != null && query.getSuggestions() != null) {
+            AQLSuggestions suggestions = query.getSuggestions();
+            DirectSsePublisher publisher = planInterface.getContext(DirectSsePublisher.class);
+            publisher.publishSuggestionsReady(planInterface.getAgentID(), suggestions);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void requestFromBroker(PlanToAgentInterface planInterface) {
         // Find available brokers
         DFRegistrationContext context = planInterface.getContext(DFRegistrationContext.class);
         this.availableBrokers = context.getSubscriptions();
 
+        GAMessageHeader header;
+
+        if (FORCE_IGNORE_DATA) {
+            header = GAMessageHeader.REQUEST_SUGGESTIONS;
+        } else {
+            header = this.trigger.getQueryTree() instanceof MostGeneralQuery ?
+                    GAMessageHeader.REQUEST_SUGGESTIONS :
+                    GAMessageHeader.REQUEST_DATA_BASED_SUGGESTIONS;
+        }
+
+        UserQueryTrigger t = new UserQueryTrigger(
+                this.trigger.getQuery(),
+                GAMessageHeader.REQUEST_SUGGESTIONS,
+                Integer.toString(this.trigger.getQuery().hashCode())
+        );
+
+        planInterface.getContext(QueryResultContext.class).addQuery(t);
+
         ACLMessage msg = new ACLMessage(Performative.REQUEST);
+        msg.setConversationId(this.trigger.getConversationID().toString());
         Envelope envelope = new Envelope();
         envelope.setFrom(planInterface.getAgentID());
         availableBrokers.forEach(envelope::addTo);
         msg.setEnvelope(envelope);
         msg.setReceivers(availableBrokers);
 
-        GAMessageContentWrapper messageContent;
-        // TODO just for testing interface
-        if(this.trigger.getQueryTree() instanceof MostGeneralQuery) {
-            messageContent = createSimpleSuggestionRequest();
-        } else {
-            messageContent = requestQueryBasedSuggestions();
-        }
+        GAMessageContentWrapper messageContent = new GAMessageContentWrapper(header, t);
 
         try {
             msg.setContentObject(messageContent);
+            Platform.getLogger().log(getClass(), "Set content object for suggestion request");
         } catch (IOException e) {
             Platform.getLogger().log(getClass(), Level.SEVERE, "Error serializing object of type " + messageContent.getContent().getClass());
             Platform.getLogger().log(getClass(), e);
@@ -66,17 +109,13 @@ public class RequestSuggestionsPlan extends RunOncePlan {
 
         try {
             planInterface.getAgent().sendMessage(msg);
+            Platform.getLogger().log(getClass(), String.format(
+                    " suggestions request to %d brokers",
+                    this.availableBrokers.size()
+            ));
         } catch (MessageReceiverNotFoundException | PlatformNotFoundException e) {
             Platform.getLogger().log(getClass(), e);
         }
     }
 
-    private GAMessageContentWrapper createSimpleSuggestionRequest() {
-        return new GAMessageContentWrapper(GAMessageHeader.REQUEST_SUGGESTIONS, this.trigger.getQueryTree());
-    }
-
-    private GAMessageContentWrapper requestQueryBasedSuggestions() {
-        UserQueryTrigger t = new UserQueryTrigger(this.trigger.getQuery(), GAMessageHeader.REQUEST_DATA_BASED_SUGGESTIONS);
-        return new GAMessageContentWrapper(GAMessageHeader.REQUEST_DATA_BASED_SUGGESTIONS, t);
-    }
 }

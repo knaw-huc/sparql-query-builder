@@ -54,15 +54,23 @@ public abstract class MessagePlan extends RunOncePlan {
 	 * @param errorMessage	Error occurred in the execution of the plan.
 	 */
 	protected void sendErrorMessage(PlanToAgentInterface planInterface, String errorMessage) {
-		
+		FIPASendableObject contentObject = new GAMessageContentString("Unable to execute query! Reason: " + errorMessage);
+		sendErrorMessage(planInterface, contentObject);
+	}
+
+	/**
+	 * Sends an error with a custom object back to the sender
+	 * @param planInterface An interface to the agent in order to access context, etc
+	 * @param contentObject	Error object.
+	 */
+	protected void sendErrorMessage(PlanToAgentInterface planInterface, FIPASendableObject contentObject) {
 		try {
 			ACLMessage response = this.message.createReply(planInterface.getAgentID(), Performative.FAILURE);
-			response.setContentObject(new GAMessageContentWrapper(GAMessageHeader.DB_ERROR,
-					new GAMessageContentString("Unable to execute query! Reason: " + errorMessage)));
+			response.setContentObject(new GAMessageContentWrapper(GAMessageHeader.DB_ERROR, contentObject));
 
 			AgentID aid = this.message.getSender();
 			logger.log(QueryDbPlan.class, Level.WARNING, "Sending error message to " + aid.getUuID()
-				+ " in conversation " + response.getConversationId());
+					+ " in conversation " + response.getConversationId());
 			planInterface.getAgent().sendMessage(response);
 		} catch (MessageReceiverNotFoundException | PlatformNotFoundException | IOException ex) {
 			logger.log(QueryDbPlan.class, ex);

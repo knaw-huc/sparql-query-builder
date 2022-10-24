@@ -36,7 +36,9 @@ import java.util.Set;
 public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 
 	private final LoadConceptsGoal goal;
-
+	private BrokerContext brokerContext;
+	private BrokerPrefixNamespaceContext prefixContext;
+	private OntModel model;
 	public FindOntologyConceptsPlan(LoadConceptsGoal goal) {
 		this.goal = goal;
 	}
@@ -52,43 +54,40 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 	 */
 	@Override
 	public void executeOnce(PlanToAgentInterface planInterface) throws PlanExecutionError {
-		BrokerContext brokerContext = planInterface.getAgent().getContext(BrokerContext.class);
-		OntModel model;
-//<<<<<<< HEAD
+		this.brokerContext = planInterface.getAgent().getContext(BrokerContext.class);
+
+		boolean shouldUpdatePrefixes = false;
+
+		this.prefixContext = planInterface.getContext(BrokerPrefixNamespaceContext.class);
+
 		if(!brokerContext.isAllOntologiesLoaded()) {
-			BrokerPrefixNamespaceContext prefixContext = planInterface.getContext(BrokerPrefixNamespaceContext.class);
-			if ((model = brokerContext.getOntology()) == null) {
+			if ((this.model = brokerContext.getOntology()) == null) {
 				model = ModelFactory.createOntologyModel();
 				brokerContext.setOntology(model);
 			}
 			loadModel(planInterface, model, brokerContext.getOntologyConfigs());
-			boolean shouldUpdatePrefixes = findPreferredPrefix(prefixContext, model);
-			shouldUpdatePrefixes |= storePrefixesFromSourceConfiguration(brokerContext, prefixContext);
+			shouldUpdatePrefixes = findPreferredPrefix();
+			shouldUpdatePrefixes |= storePrefixesFromSourceConfiguration();
 			SparqlUtils.updatePrefixesInModel(model, prefixContext.getOntologyPrefixes());
 
-			Map<String, String> modelPrefixes = model.getNsPrefixMap();
-			shouldUpdatePrefixes |= addMissingPrefixesToMap(model, prefixContext);
-			Map<String, String> updatedModelPrefixes = model.getNsPrefixMap();
-
-			if(shouldUpdatePrefixes) {
-				planInterface.adoptPlan(new SendPreferredNamespacePrefixesPlan());
-			}
-
+			shouldUpdatePrefixes |= addMissingPrefixesToMap();
 		} else {
-			model = brokerContext.getOntology();
+			this.model = brokerContext.getOntology();
 		}
 
-		processOntology(brokerContext, model);
+		if (goal.getUsedPrefixes() != null) {
+			SparqlUtils.updatePrefixesInModel(model, goal.getUsedPrefixes());
+			shouldUpdatePrefixes |= addMissingPrefixesToMap();
+		}
 
-//=======
-//		if((model = brokerContext.getOntology()) == null) {
-//			model = createOntModel(planInterface, c);
-//			brokerContext.setOntology(model);
-//		}
-//
-//		processOntology(c, model);
-//>>>>>>> feature/UI
+		if(shouldUpdatePrefixes) {
+			planInterface.adoptPlan(new SendPreferredNamespacePrefixesPlan());
+		}
+
+		processOntology();
+
 		// TODO somehow re-trigger the SimpleSuggestSearchOptionsPlan? If it had already been triggered? If so, with what query?
+		planInterface.adoptPlan(new UpdateSearchSuggestionsPlan());
 
 		// Done!
 		this.goal.setAchieved(true);
@@ -96,12 +95,10 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 
 	/**
 	 * Store all prefixes specified in the configuration of this RDF source in the broker NS prefix map
-	 * @param brokerContext	Broker context
-	 * @param prefixContext Broker NS prefix context
 	 * @return 	True iff the prefix map has been updated, indicating subscribing agents should be updated with the
 	 * new NS map
 	 */
-	private boolean storePrefixesFromSourceConfiguration(BrokerContext brokerContext, BrokerPrefixNamespaceContext prefixContext) {
+	private boolean storePrefixesFromSourceConfiguration() {
 		boolean shouldUpdatePrefixes = false;
 		for(RdfSourceConfig conf : brokerContext.getOntologyConfigs()) {
 			shouldUpdatePrefixes |= prefixContext.addAllPrefixes(conf.getPrefixes());
@@ -112,11 +109,9 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 	/**
 	 * The model may contain prefixes not officially specified as core prefixes. To ensure data source agents use
 	 * the same prefixes for the same IRI's, add those prefixes and namespaces to the NS prefix map
-	 * @param model			Model with prefixes and namespaces
-	 * @param prefixContext Broker NS prefix context
 	 * @return 	True iff the broker NS prefix map has changed
 	 */
-	private boolean addMissingPrefixesToMap(Model model, BrokerPrefixNamespaceContext prefixContext) {
+	private boolean addMissingPrefixesToMap() {
 		Map<String, String> prefixMap = model.getNsPrefixMap();
 		boolean shouldUpdate = false;
 		for(String prefix : prefixMap.keySet()) {
@@ -129,17 +124,15 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 
 	/**
 	 * If the ontology specifies the preferred prefix using the PURL vocab, try to extract it
-	 * @param prefixContext Prefix context of broker agent
-	 * @param model		The loaded ontology
 	 */
-	private boolean findPreferredPrefix(BrokerPrefixNamespaceContext prefixContext, OntModel model) {
+	private boolean findPreferredPrefix() {
 		Query preferredNsQuery = SparqlUtils.createPreferredPrefixQuery("prefix", "ns");
 		ResultSet result = QueryExecutionFactory.create(preferredNsQuery, model).execSelect();
 		boolean shouldUpdatePrefixes = false;
 		while(result.hasNext()) {
 			QuerySolution solution = result.next();
 			String prefix = solution.get("?prefix").asLiteral().getString();
-			String namespace = ensureNamespaceComplete(model, solution.get("?ns").asResource().getURI());;
+			String namespace = ensureNamespaceComplete(solution.get("?ns").asResource().getURI());;
 			shouldUpdatePrefixes |= prefixContext.setPrefix(prefix, namespace);
 		}
 		return shouldUpdatePrefixes;
@@ -151,11 +144,10 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 	 * This method tries to complete the namespace with the trailing character if missing, by finding a resource
 	 * that starts with the provided namespace, and getting the official namespace for that IRI.
 	 *
-	 * @param model		Model with resources from the namespace
 	 * @param namespace The namespace to complete
 	 * @return	Namespace with trailing character added if missing
 	 */
-	private String ensureNamespaceComplete(OntModel model, String namespace) {
+	private String ensureNamespaceComplete(String namespace) {
 		if(SparqlUtils.NAMESPACE_ENDS_WITH.contains(namespace.charAt(namespace.length() - 1))) {
 			return namespace;
 		}
@@ -184,34 +176,41 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 		return null;
 	}
 
-	private void processOntology(BrokerContext c, OntModel model) {
+	private void processOntology() {
+		Map<String, String> prefixes = model.getNsPrefixMap();
+
 		// Prepare aggregators for classes and properties used in ontology
-		Set<String> mappedClassLabels = new HashSet<>();
-		Set<String> mappedPropertyLabels = new HashSet<>();
+		Set<OntClass> availableClasses = new HashSet<>();
+		Set<OntProperty> availableProperties = new HashSet<>();
 
 		// Find classes and properties that actually have a mapping to some database
-		for(DbAgentExpertise expertise : c.getDbAgentExpertises().values()) {
+		for(DbAgentExpertise expertise : brokerContext.getDbAgentExpertises().values()) {
 			ExpertiseModel[] netmodel = expertise.toNetModel();
 			for(ExpertiseModel expertiseModel : netmodel) {
 				if(expertiseModel.isClass()) {
-					mappedClassLabels.add(expertiseModel.getLabel());
+					OntClass clazz = model.getOntClass(expertiseModel.getLabel());
+					if (clazz == null) {
+						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes);
+						clazz = model.getOntClass(uri);
+						if (clazz == null) {
+							clazz = model.createClass(uri);
+						}
+					}
+					availableClasses.add(clazz);
 				} else {
-					mappedPropertyLabels.add(expertiseModel.getLabel());
+					OntProperty property = model.getOntProperty(expertiseModel.getLabel());
+					if (property == null) {
+						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes);
+						property = model.getOntProperty(uri);
+						if (property == null) {
+							property = model.createOntProperty(uri);
+						}
+					}
+					availableProperties.add(property);
 				}
 			}
 		}
-
-		if(mappedClassLabels.isEmpty() && mappedPropertyLabels.isEmpty()) {
-			// If no mapping is available, display everything as a suggestion
-			c.setClassesAndProperties(model.listClasses().toSet(), model.listAllOntProperties().toSet());
-		} else {
-			// Filter classes and properties from the ontology that do not have a mapping to any database in the final list
-			Set<OntClass> availableClasses = extractAvailableOntologyResources(model, model.listClasses(), mappedClassLabels);
-			Set<OntProperty> availableProperties = extractAvailableOntologyResources(model, model.listAllOntProperties(), mappedPropertyLabels);
-
-			// Set the remaining classes and properties as potential suggestions for this query
-			c.setClassesAndProperties(availableClasses, availableProperties);
-		}
+		brokerContext.setClassesAndProperties(availableClasses, availableProperties);
 	}
 
 	/**
@@ -221,7 +220,7 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 	 * @param <T>				Ontology resource type
 	 * @return					Set of ontology resources
 	 */
-	private <T extends OntResource> Set<T> extractAvailableOntologyResources(Model model, ExtendedIterator<T> iterator, Set<String> mappedLabels) {
+	private <T extends OntResource> Set<T> extractAvailableOntologyResources(ExtendedIterator<T> iterator, Set<String> mappedLabels) {
 		Set<T> availableClasses = new HashSet<>();
 		while(iterator.hasNext()) {
 			T nextOntResource = iterator.next();

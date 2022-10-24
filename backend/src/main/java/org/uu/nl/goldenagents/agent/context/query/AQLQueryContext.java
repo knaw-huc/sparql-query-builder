@@ -1,91 +1,81 @@
 package org.uu.nl.goldenagents.agent.context.query;
 
 import org.uu.nl.goldenagents.aql.AQLQuery;
+import org.uu.nl.goldenagents.aql.AQLQueryContainer;
 import org.uu.nl.goldenagents.netmodels.angular.AQLQueryObject;
 import org.uu.nl.goldenagents.netmodels.angular.AQLSuggestions;
 import org.uu.nl.net2apl.core.agent.Context;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+// User agent
 public class AQLQueryContext implements Context {
-    private final List<AQLQuery> queries;
-    private int currentQueryIndex;
+    private final Map<UUID, AQLQueryContainer> queries;
+    private UUID currentQuery;
 
     public AQLQueryContext() {
-        this.queries = new ArrayList<>();
-        this.currentQueryIndex = -1;
+        this.queries = new HashMap<>();
+        this.currentQuery = null;
     }
 
-    public synchronized AQLQuery createQuery(Map<String, String> prefixMap) {
-        AQLQuery newQuery = new AQLQuery(prefixMap);
+    public synchronized QueryWrapper createQuery(Map<String, String> prefixMap) {
+        AQLQuery query = new AQLQuery(prefixMap);
+//        AQLQuery.constructSampleAQLQuery(query);
+        AQLQueryContainer container = new AQLQueryContainer(query);
+        this.queries.put(container.getConversationID(), container);
+        this.currentQuery = container.getConversationID();
+        return new QueryWrapper(container, query);
+    }
+
+    public UUID getCurrentQueryID() {
+        return this.currentQuery;
+    }
+
+    public synchronized boolean changeCurrentQuery(UUID queryID) {
         synchronized (this.queries) {
-            this.queries.add(newQuery);
-            this.currentQueryIndex = this.queries.lastIndexOf(newQuery);
-        }
-        return newQuery;
-    }
-
-    public synchronized int getCurrentQueryIndex() {
-        return this.currentQueryIndex;
-    }
-
-    public synchronized boolean changeCurrentQuery(AQLQuery query) {
-        synchronized (this.queries) {
-            if (this.queries.contains(query)) {
-                this.currentQueryIndex = this.queries.indexOf(query);
+            if (this.queries.containsKey(queryID)) {
+                this.currentQuery = queryID;
                 return true;
             }
         }
         return false;
     }
 
-    public synchronized AQLQuery getCurrentQuery() {
-        synchronized (this.queries) {
-            return this.queries.get(this.currentQueryIndex);
-        }
+    public synchronized QueryWrapper getCurrentQuery() {
+        AQLQueryContainer activeContainer = this.queries.get(this.currentQuery);
+        if (activeContainer == null) return null;
+        return new QueryWrapper(
+                activeContainer,
+                activeContainer.getActiveQuery()
+        );
     }
 
-    public AQLQuery getQueryForIndex(int index) {
-        synchronized (this.queries) {
-            if(index < 0 || index > this.queries.size())
-                throw new IndexOutOfBoundsException();
-            return this.queries.get(index);
-        }
+    public synchronized QueryWrapper getQuery(UUID conversationID) {
+        AQLQueryContainer container = this.queries.get(conversationID);
+        if (container == null) return null;
+
+        return new QueryWrapper(
+                container,
+                container.getActiveQuery()
+        );
     }
 
+    @Deprecated
     public AQLQueryObject serializeCurrentQuery() {
-//        return new AQLQueryObject(getCurrentQuery().getQueryTree(), getCurrentQuery().getFocusName());
-        return new AQLQueryObject(getCurrentQuery());
+        return new AQLQueryObject(getCurrentQuery().query);
     }
 
-    public AQLQueryObject serializeQuery(int index) {
-        AQLQuery q = this.getQueryForIndex(index);
-        return new AQLQueryObject(q);
-    }
+    public static class QueryWrapper {
+        public final AQLQueryContainer queryContainer;
+        public final AQLQuery query;
+        public final UUID conversationID;
 
-    /**
-     * Find the query object for the root node ID
-     * @param nodeID
-     * @return
-     */
-    public AQLQuery getQueryObjectForNodeID(UUID nodeID) {
-        synchronized (this.queries) {
-            if (this.getCurrentQuery().getQueryTree().getFocusID().equals(nodeID)) {
-                return this.getCurrentQuery();
-            } else {
-                for(AQLQuery q : this.queries) {
-                    if(q.getQueryTree().getFocusID().equals(nodeID))
-                        return q;
-                }
-            }
+        public QueryWrapper(AQLQueryContainer container, AQLQuery query) {
+            this.queryContainer = container;
+            this.query = query;
+            this.conversationID = container.getConversationID();
         }
-        return null;
-    }
-
-    public void setSuggestionsForNodeID(AQLSuggestions suggestions) {
-        this.getQueryObjectForNodeID(suggestions.getFocusID()).setSuggestions(suggestions);
     }
 }

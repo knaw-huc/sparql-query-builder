@@ -1,13 +1,6 @@
 package org.uu.nl.goldenagents.netmodels.fipa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.jena.query.Query;
-import org.apache.jena.query.Syntax;
-import org.apache.jena.shared.PrefixMapping;
-import org.apache.jena.sparql.algebra.Algebra;
-import org.apache.jena.sparql.algebra.Op;
-import org.apache.jena.sparql.algebra.OpAsQuery;
-import org.apache.jena.sparql.core.Var;
 import org.springframework.util.DigestUtils;
 import org.uu.nl.goldenagents.aql.AQLQuery;
 import org.uu.nl.goldenagents.aql.SPARQLTranslation;
@@ -21,9 +14,9 @@ public class UserQueryTrigger implements FIPASendableObject, Trigger {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String query;
-    private GAMessageHeader queryType;
-    private String[] selectedSources;
+	private final String query;
+    private final GAMessageHeader queryType;
+    private final String[] selectedSources;
     private final String queryID;
 
     private AQLQuery aql;
@@ -40,11 +33,11 @@ public class UserQueryTrigger implements FIPASendableObject, Trigger {
         this.queryID = this.generateQueryID();
     }
 
-    public UserQueryTrigger(AQLQuery query, GAMessageHeader queryType) {
+    public UserQueryTrigger(AQLQuery query, GAMessageHeader queryType, String queryID) {
         this.aql = query;
         this.sparqlTranslation = query.getSparqlAlgebra();
         this.query = this.sparqlTranslation.getQueryString();
-        this.queryID = this.generateQueryID();
+        this.queryID = queryID;
         this.selectedSources = new String[0];
         this.queryType = queryType;
     }
@@ -76,7 +69,9 @@ public class UserQueryTrigger implements FIPASendableObject, Trigger {
 
     public static UserQueryTrigger fromACLMessage(ACLMessage messageWithQueryTrigger) {
         try {
-            return (UserQueryTrigger) ((GAMessageContentWrapper) messageWithQueryTrigger.getContentObject()).getContent();
+            GAMessageContentWrapper contentWrapper = (GAMessageContentWrapper) messageWithQueryTrigger.getContentObject();
+            FIPASendableObject content = contentWrapper.getContent();
+            return (UserQueryTrigger) content;
         } catch (UnreadableException e) {
             Platform.getLogger().log(UserQueryTrigger.class, e);
             return null;

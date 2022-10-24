@@ -54,7 +54,11 @@ public class QueryDecomposer {
 	
 	protected AgentQuery initAgentQuery(AgentID queryOwner) {
 		clearWhereClause();
-		AgentQuery aq = new AgentQuery(queryOwner);
+		Integer targetAqlQueryID = null;
+		if (this.qi.getQueryRequest().getAql() != null) {
+			targetAqlQueryID = this.qi.getQueryRequest().getAql().hashCode();
+		}
+		AgentQuery aq = new AgentQuery(queryOwner, targetAqlQueryID);
 		//Load the prefixes coming from query info
 		HashMap<String, String> prefixes = new HashMap<>(this.qi.getAliasedJenaQuery().getPrefixMapping().getNsPrefixMap());
 		aq.setPrefixMap(prefixes);

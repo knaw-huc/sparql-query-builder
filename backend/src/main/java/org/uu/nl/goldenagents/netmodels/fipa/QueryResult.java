@@ -34,6 +34,8 @@ public class QueryResult implements FIPASendableObject {
 	private Map<String, Set<AgentID>> mappedSources;
 	private transient JsonArray headers;
 	private transient JsonArray resultJson;
+	private Integer targetAqlQueryID;
+	private String queryID;
 	
 	/**
 	 * Empty constructor not to get an error from the methods of this class
@@ -186,7 +188,23 @@ public class QueryResult implements FIPASendableObject {
 	private ResultSet getResultAsTemporaryResultSet() {
 		return ResultSetFactory.fromJSON(new ByteArrayInputStream(this.results));
 	}
-	
+
+	public void setQueryID(String queryID) {
+		this.queryID = queryID;
+	}
+
+	public void setQueryID(Integer targetAqlQueryID) {
+		this.targetAqlQueryID = targetAqlQueryID;
+	}
+
+	public Integer getTargetAqlQueryID() {
+		return targetAqlQueryID;
+	}
+
+	public String getQueryID() {
+		return queryID;
+	}
+
 	@Override
 	public String toString() {
 		JsonObject jo = new JsonObject();

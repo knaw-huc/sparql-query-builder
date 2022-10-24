@@ -1,30 +1,43 @@
 package org.uu.nl.goldenagents.aql;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.core.Var;
+import org.uu.nl.goldenagents.util.AQLTreeIdDeserializer;
+import org.uu.nl.goldenagents.util.AQLTreeIdSerializer;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Node for an Agent Query Language (AQL) tree. The AQL query is built up of these nodes
  */
 public abstract class AQLTree implements FIPASendableObject {
 
-    private final UUID id = UUID.randomUUID();
+    // TODO, we need to go back to using UUID. But use the above object to distinguish from conversationID or agentID, because that is just confusing!
+    private final ID focusName;
 
-    private UUID parent;
+    private ID parent = null;
 
-    public UUID getParentID() {
+    public ID getParentID() {
         return this.parent;
     }
 
     public TYPE type = TYPE.UNMARKED;
 
-    public void setParent(UUID parent) {
+    protected AQLTree() {
+        this.focusName = ID.random();
+    }
+
+    protected AQLTree(ID focusName, ID parent) {
+        this.focusName = focusName;
         this.parent = parent;
-        if(this.parent == this.id) try {
+    }
+
+    public void setParent(ID parent) {
+        this.parent = parent;
+        if(this.parent == this.focusName) try {
             throw new Exception("Setting this random ID as parent of itself!");
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,10 +77,10 @@ public abstract class AQLTree implements FIPASendableObject {
 
     /**
      * Replace a child of this node with a new sub tree
-     * @param childFocusID         FocusID of child to be replaced
+     * @param childFocusName         FocusID of child to be replaced
      * @param newChild      New sub tree
      */
-    public abstract void replaceChild(UUID childFocusID, AQLTree newChild) throws IllegalArgumentException;
+    public abstract void replaceChild(ID childFocusName, AQLTree newChild) throws IllegalArgumentException;
 
     /**
      * Get the subqueries for this tree. Subqueries are the edges of this node.
@@ -75,8 +88,8 @@ public abstract class AQLTree implements FIPASendableObject {
      */
     public abstract List<AQLTree> getSubqueries();
 
-    public UUID getFocusID() {
-        return this.id;
+    public ID getFocusName() {
+        return focusName;
     }
 
     /**
@@ -98,7 +111,7 @@ public abstract class AQLTree implements FIPASendableObject {
         MODIFIER("modifier"),
         UNMARKED("");
 
-        private String label;
+        private final String label;
 
         TYPE(String label) {
             this.label = label;
@@ -111,8 +124,56 @@ public abstract class AQLTree implements FIPASendableObject {
     }
 
     protected void checkIfFocus(Var var, VariableController controller) {
-        if(this.id.equals(controller.getQueryFocusID())) {
+        if(this.hashCode() == controller.getFocusName()) {
             controller.setFocusVariable(var);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getClass().getName().hashCode();
+        result += 20 * type.hashCode();
+
+        for (int i = 0; i < getSubqueries().size(); i++) {
+            result += Math.pow(10, i+1) * getSubqueries().get(i).hashCode();
+        }
+        return result;
+    }
+
+    public abstract AQLTree copy(ID parent, HashMap<ID, AQLTree> foci);
+
+    @JsonDeserialize(using = AQLTreeIdDeserializer.class)
+    @JsonSerialize(using = AQLTreeIdSerializer.class)
+    public static final class ID implements FIPASendableObject {
+
+        private final UUID _id;
+
+        private ID(UUID _id) {
+            this._id = _id;
+        }
+
+        public static ID random() {
+            return new ID(UUID.randomUUID());
+        }
+
+        public static ID fromString(String string) {
+            return new ID(UUID.fromString(string));
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(!(obj instanceof ID)) return false;
+            return this._id.equals(((ID) obj)._id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this._id);
+        }
+
+        @Override
+        public String toString() {
+            return _id.toString();
         }
     }
 }

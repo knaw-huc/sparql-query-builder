@@ -18,7 +18,7 @@ public class TripleInfo implements Serializable {
 		static NodeType fromString(String s) {
 			if(s.startsWith("?")) return NodeType.VARIABLE;
 			if(s.startsWith("_:")) return NodeType.BLANK;
-			if(s.contains(":")) return NodeType.URI;
+			if(s.contains(":") || (s.startsWith("<") && s.endsWith(">"))) return NodeType.URI;
 			return NodeType.LITERAL;
 		}
 	}
@@ -32,17 +32,19 @@ public class TripleInfo implements Serializable {
 	private Set<AgentID> chosenSources = new HashSet<>();
 	private Set<String> ontologicalConcepts = new HashSet<>();
 	
-	public TripleInfo(String subject, String predicate, String object) {
+	public TripleInfo(String subject, PathInfo predicate, String object) {
 		this.subject = subject;
 		this.subjectType = NodeType.fromString(this.subject);
 		this.object = object;
 		this.objectType = NodeType.fromString(this.object);
-		
-		if(predicate.equals("a")) {
-			predicate = "rdf:type";
+
+		for(String predicateElement : predicate.getPredicates()) {
+			if(predicateElement.equals("a")) {
+				predicate.update(predicateElement, "rdf:type");
+			}
 		}
-		
-		this.predicate = new PathInfo(predicate);
+
+		this.predicate = predicate;
 		this.predicateType = NodeType.PATH;
 	}
 	
@@ -91,7 +93,7 @@ public class TripleInfo implements Serializable {
 	public String getPredicate() {
 		return predicate.toString();
 	}
-	
+
 	public PathInfo getPredicatePath() {
 		return predicate;
 	}

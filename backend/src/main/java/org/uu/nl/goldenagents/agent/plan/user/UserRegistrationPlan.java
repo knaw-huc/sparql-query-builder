@@ -1,9 +1,13 @@
 package org.uu.nl.goldenagents.agent.plan.user;
 
+import org.uu.nl.goldenagents.agent.context.query.AQLQueryContext;
 import org.uu.nl.goldenagents.agent.plan.registration.SubmitRegistrationPlan;
+import org.uu.nl.goldenagents.agent.trigger.user.AQLQueryChangedExternalTrigger;
+import org.uu.nl.goldenagents.aql.AQLQuery;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentString;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
+import org.uu.nl.goldenagents.netmodels.fipa.UserQueryTrigger;
 import org.uu.nl.net2apl.core.agent.AgentID;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.defaults.messenger.MessageReceiverNotFoundException;
@@ -19,6 +23,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 public class UserRegistrationPlan extends SubmitRegistrationPlan {
@@ -41,6 +46,22 @@ public class UserRegistrationPlan extends SubmitRegistrationPlan {
                 ACLMessage forward = receivedMessage.createForward(Performative.REQUEST, planInterface.getAgentID(), brokerAgent);
                 forward.setContentObject(new GAMessageContentWrapper(GAMessageHeader.REQUEST_PREFIX_MAPPING));
                 planInterface.getAgent().sendMessage(forward);
+
+                AQLQueryContext c = planInterface.getContext(AQLQueryContext.class);
+                AQLQueryContext.QueryWrapper activeQueryWrapper = c.getCurrentQuery();
+                if (activeQueryWrapper == null) return;
+
+                AQLQuery q = activeQueryWrapper.queryContainer.getQuery(new AQLQuery(new HashMap<>()).hashCode());
+                if (q == null) return;
+
+                AQLQueryChangedExternalTrigger t = new AQLQueryChangedExternalTrigger(
+                        new AQLQueryContext.QueryWrapper(
+                                c.getCurrentQuery().queryContainer,
+                                q
+                        )
+                );
+                planInterface.adoptPlan(new RequestSuggestionsPlan(t));
+
             } catch (URISyntaxException | IOException | MessageReceiverNotFoundException | PlatformNotFoundException e) {
                 logger.log(getClass(), Level.SEVERE, "Failed to request prefix mapping from broker agent");
                 logger.log(getClass(), Level.SEVERE, e);

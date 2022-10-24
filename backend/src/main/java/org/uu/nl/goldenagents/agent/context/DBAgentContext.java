@@ -12,6 +12,7 @@ import org.uu.nl.goldenagents.util.agentconfiguration.RdfSourceConfig;
 import org.uu.nl.net2apl.core.agent.AgentID;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class DBAgentContext extends MinimalFunctionalityContext {
 
@@ -21,6 +22,7 @@ public class DBAgentContext extends MinimalFunctionalityContext {
 	private Dataset localModel;
 	private DbAgentExpertise expertise;
 	private final Map<String, CachedQuery> cachedQueries;
+	private final Map<String, Map<Integer, CachedQuery>> cachedAqlQueries;
 
 	// Entity loading takes a long time. Don't load entities when building expertise for larger sources
 	private boolean loadEntitiesForExpertise;
@@ -30,6 +32,7 @@ public class DBAgentContext extends MinimalFunctionalityContext {
 		this.mappingFiles = mappingFiles;
 		this.ontologyModel = ModelFactory.createDefaultModel();
 		this.cachedQueries = new HashMap<>();
+		this.cachedAqlQueries = new HashMap<>();
 	}
 
 	public String getRdfDataURI() {
@@ -108,7 +111,7 @@ public class DBAgentContext extends MinimalFunctionalityContext {
 				if(config.getDefaultGraph() != null)
 					ex.setDefaultGraphURIs(Collections.singletonList(config.getDefaultGraph()));
 
-				ex.setTimeout(10000L);
+				ex.setTimeout(1, TimeUnit.MINUTES);
 				return ex;
 			}
 		}
@@ -133,8 +136,28 @@ public class DBAgentContext extends MinimalFunctionalityContext {
 		return cachedQueries.get(conversationId);
 	}
 
+	public CachedQuery getCachedQuery(String conversationId, Integer targetAqlQueryId) {
+		if (targetAqlQueryId == null || !this.cachedAqlQueries.containsKey(conversationId))
+			return this.getCachedQuery(conversationId);
+		else
+			return this.cachedAqlQueries.get(conversationId).get(targetAqlQueryId);
+	}
+
 	public void addCachedQuery(String conversationId, CachedQuery query) {
 		this.cachedQueries.put(conversationId, query);
+	}
+
+	public void addCachedQuery(String conversationID, Integer targetAqlQueryId, CachedQuery query) {
+		if (targetAqlQueryId == null) {
+			addCachedQuery(conversationID, query);
+		} else {
+			Map<Integer, CachedQuery> queryMap = this.cachedAqlQueries.get(conversationID);
+			if (queryMap == null) {
+				queryMap = new HashMap<>();
+			}
+			queryMap.put(targetAqlQueryId, query);
+			this.cachedAqlQueries.put(conversationID, queryMap);
+		}
 	}
 
 	public void removeCachedQuery(String conversationId) {

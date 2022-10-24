@@ -4,18 +4,15 @@ import ch.rasc.sse.eventbus.SseEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
-import org.tomlj.Toml;
-import org.tomlj.TomlParseResult;
-import org.tomlj.TomlTable;
 import org.uu.nl.goldenagents.agent.context.PrefixNSListenerContext;
 import org.uu.nl.goldenagents.agent.context.query.AQLQueryContext;
 import org.uu.nl.goldenagents.agent.context.query.QueryResultContext;
 import org.uu.nl.goldenagents.agent.trigger.user.AQLQueryChangedExternalTrigger;
-import org.uu.nl.goldenagents.aql.AQLQuery;
 import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.SPARQLTranslation;
 import org.uu.nl.goldenagents.exceptions.AgentNotFoundException;
 import org.uu.nl.goldenagents.netmodels.angular.*;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLJsonObject;
 import org.uu.nl.goldenagents.netmodels.datatables.DataTableRequest;
 import org.uu.nl.goldenagents.netmodels.datatables.DataTableResult;
 import org.uu.nl.goldenagents.netmodels.fipa.QueryResult;
@@ -132,7 +129,6 @@ public class UserAgentService {
     public DataTableResult getPaginatedQueryResults(HttpServletRequest request) {
         DataTableRequest dtRequest = new DataTableRequest(request);
 
-        Agent agent = getUserAgentFromUUID(dtRequest.getAgentUUID());
         QueryResultContext context = getQueryResultContextForAgentID(dtRequest.getAgentUUID());
         if(context == null) throw new IllegalArgumentException();
 
@@ -147,82 +143,85 @@ public class UserAgentService {
         return context.queryHistory();
     }
 
+    @Deprecated
     public AQLQueryObject getCurrentQuery(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        if(context.getCurrentQueryIndex() < 0) {
+        if(context.getCurrentQueryID() == null) {
             // TODO, ideally only use the prefixes of the broker agent that will answer this query?
-            AQLQuery newQuery = context.createQuery(getPrefixContextForAgentID(agentID).getPrefixMap());
+            AQLQueryContext.QueryWrapper newQuery = context.createQuery(getPrefixContextForAgentID(agentID).getPrefixMap());
             notifyAQLQueryChanged(agentID, newQuery);
         }
         return context.serializeCurrentQuery();
     }
 
+    public AQLJsonObject getCurrentQueryAsJson(UUID agentID) {
+        AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
+        if(context.getCurrentQueryID() == null) {
+            AQLQueryContext.QueryWrapper newQuery = context.createQuery(getPrefixContextForAgentID(agentID).getPrefixMap());
+            notifyAQLQueryChanged(agentID, newQuery);
+        }
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery();
+        return wrapper.query.getJson(wrapper.conversationID);
+    }
+
     public AQLSuggestions getSuggestions(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        return context.getCurrentQuery().getSuggestions();
+        return context.getCurrentQuery().query.getSuggestions();
     }
 
     public String getSparqlTranslation(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-//        Op algebra = context.getCurrentQuery().getSparqlAlgebra();
-//
-//        Op op = Algebra.optimize(algebra);
-//        Query q = OpAsQuery.asQuery(op);
-//        PrefixMapping mapping = context.getCurrentQuery().getPrefixMapping();
-//        q.setPrefixMapping(mapping);
-//
-//        return q.toString(Syntax.syntaxSPARQL_11);
-        SPARQLTranslation translation = context.getCurrentQuery().getSparqlAlgebra();
+        SPARQLTranslation translation = context.getCurrentQuery().query.getSparqlAlgebra();
         return translation.getQueryString();
     }
 
-    public AQLQueryObject intersect(UUID agentID, AQLTree transformation) {
+    public AQLJsonObject intersect(UUID agentID, AQLTree transformation) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().intersection(transformation);
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.intersection(transformation);
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject cross(UUID agentID, AQLResource property, boolean crossForward) {
+    public AQLJsonObject cross(UUID agentID, AQLResource property, boolean crossForward) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().cross(property, crossForward);
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.cross(property, crossForward);
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject exclude(UUID agentID) {
+    public AQLJsonObject exclude(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().negativeLookup();
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.negativeLookup();
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject union(UUID agentID) {
+    public AQLJsonObject union(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().union();
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.union();
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject changeFocus(UUID agentID, UUID focusID) {
+    public AQLJsonObject changeFocus(UUID agentID, AQLTree.ID focusID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().setFocus(focusID);
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.setFocus(focusID);
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject deleteCurrentFocus(UUID agentID) {
+    public AQLJsonObject deleteCurrentFocus(UUID agentID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().delete();
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.delete();
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
-    public AQLQueryObject deleteQueryFocus(UUID agentID, UUID focusID) {
+    public AQLJsonObject deleteQueryFocus(UUID agentID, AQLTree.ID focusID) {
         AQLQueryContext context = getAQLQueryContextForAgentID(agentID);
-        context.getCurrentQuery().delete(focusID);
-        notifyAQLQueryChanged(agentID, context.getCurrentQuery());
-        return context.serializeCurrentQuery();
+        AQLQueryContext.QueryWrapper wrapper = context.getCurrentQuery().queryContainer.delete(focusID);
+        notifyAQLQueryChanged(agentID, wrapper);
+        return wrapper.query.getJson(wrapper.conversationID);
     }
 
     /*
@@ -249,7 +248,7 @@ public class UserAgentService {
         return agent.getContext(PrefixNSListenerContext.class);
     }
 
-    private void notifyAQLQueryChanged(UUID agentID, AQLQuery query) {
+    private void notifyAQLQueryChanged(UUID agentID, AQLQueryContext.QueryWrapper query) {
         platform.getLocalAgent(agentID).addExternalTrigger(
                 new AQLQueryChangedExternalTrigger(query)
         );

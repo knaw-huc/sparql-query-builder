@@ -13,11 +13,24 @@ public enum MappingPropertyType {
 	 */
 	OWL_SUBCLASS(ResourceFactory.createProperty(OWL.getURI(), "subClassOf")),
 	OWL_EQ_PROPERTY(OWL.equivalentProperty),
+	RDFS_SUBCLASS(RDFS.subClassOf),
 	OWL_INVERSE(OWL.inverseOf),
 	OWL_EQ_CLASS(OWL.equivalentClass),
 	RDFS_SUBPROPERTY(RDFS.subPropertyOf);
 	
 	private final Property property;
+
+	public boolean isClass() {
+		return OWL_SUBCLASS.equals(this) || OWL_EQ_CLASS.equals(this) || RDFS_SUBCLASS.equals(this);
+	}
+
+	public boolean isEquivalentProperty() {
+		return OWL_EQ_PROPERTY.equals(this) || RDFS_SUBPROPERTY.equals(this);
+	}
+
+	public boolean isInverseProperty() {
+		return OWL_INVERSE.equals(this);
+	}
 	
 	MappingPropertyType(Property property) {
 		this.property = property;

@@ -2,6 +2,7 @@ package org.uu.nl.goldenagents.decompose.expertise;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.uu.nl.goldenagents.netmodels.angular.ExpertiseModel;
@@ -15,18 +16,26 @@ public class DbAgentExpertise implements FIPASendableObject {
 
 	private static final long serialVersionUID = 1L;
 
-	private final ArrayList<OntologicalConceptInfo> conceptInfoList = new ArrayList<OntologicalConceptInfo>();
+	private final ArrayList<OntologicalConceptInfo> conceptInfoList = new ArrayList<>();
+	private final Map<String, String> usedPrefixes;
 
-	public DbAgentExpertise(ArrayList<String> concepts) {
+	public DbAgentExpertise(ArrayList<String> concepts, Map<String, String> usedPrefixes) {
 		super();
+		this.usedPrefixes = usedPrefixes;
 		for(String concept : concepts) {
 			conceptInfoList.add(new OntologicalConceptInfo(concept));
 		}
 	}
 
-	public DbAgentExpertise(List<OntologicalConceptInfo> infoList) {
+	public DbAgentExpertise(List<OntologicalConceptInfo> infoList, Map<String, String> usedPrefixes) {
 		super();
 		conceptInfoList.addAll(infoList);
+		this.usedPrefixes = usedPrefixes;
+	}
+
+	public DbAgentExpertise removeConceptsWithZeroEntities() {
+		this.conceptInfoList.removeIf(info -> info.getCount() == 0);
+		return this;
 	}
 
 	/**
@@ -39,7 +48,6 @@ public class DbAgentExpertise implements FIPASendableObject {
 	 * @return ratio of combination of two concepts to the count of base concept
 	 */
 	public float getStarCombinationRatio(String baseConcept, String combinedConcept) {
-		
 		int base = conceptInfoList.indexOf(new OntologicalConceptInfo(baseConcept));
 		if(base == -1) {
 			return 0f;
@@ -78,6 +86,10 @@ public class DbAgentExpertise implements FIPASendableObject {
 	
 	public List<Integer> getCounts() {
 		return conceptInfoList.stream().map(OntologicalConceptInfo::getCount).collect(Collectors.toList());
+	}
+
+	public Map<String, String> getUsedPrefixes() {
+		return usedPrefixes;
 	}
 
 	public String printAsMatrix(String dbName) {

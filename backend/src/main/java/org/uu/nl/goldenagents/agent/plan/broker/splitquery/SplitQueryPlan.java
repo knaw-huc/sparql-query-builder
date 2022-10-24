@@ -3,6 +3,7 @@ package org.uu.nl.goldenagents.agent.plan.broker.splitquery;
 import org.apache.jena.query.QueryException;
 import org.uu.nl.goldenagents.agent.context.BrokerContext;
 import org.uu.nl.goldenagents.agent.context.BrokerPrefixNamespaceContext;
+import org.uu.nl.goldenagents.agent.context.BrokerSearchSuggestionsContext;
 import org.uu.nl.goldenagents.agent.context.DirectSsePublisher;
 import org.uu.nl.goldenagents.agent.context.query.QueryProgressType;
 import org.uu.nl.goldenagents.agent.plan.MessagePlan;
@@ -56,7 +57,7 @@ public abstract class SplitQueryPlan extends MessagePlan {
 	 * The QueryID, which is unique for this query, and used to indicate the topic of messages, errors and progress
 	 * updates
 	 */
-	private String queryID;
+	protected String queryID;
 
 	/**
 	 * The identitier of this conversion, used to connect this query progress to a specific user request
@@ -67,7 +68,7 @@ public abstract class SplitQueryPlan extends MessagePlan {
 	 * The plan interface is static for every execution cycle. Making it a class member allows not having to pass it
 	 * as an argument to other class methods
 	 */
-	private PlanToAgentInterface planInterface;
+	protected PlanToAgentInterface planInterface;
 
 	/**
 	 * A reference to the BrokerContext object
@@ -80,7 +81,7 @@ public abstract class SplitQueryPlan extends MessagePlan {
 	private DirectSsePublisher publisher;
 
 	// Message fields, so we don't have to unpack constantly
-	private AgentID userAgent;
+	protected AgentID userAgent;
 
 	/**
 	 * A boolean that tells the broker to collect suggestions based on the results
@@ -109,8 +110,17 @@ public abstract class SplitQueryPlan extends MessagePlan {
 	)
 			throws PlanExecutionError
 	{
+
+		if(!preprocess(planInterface)) {
+			return;
+		}
+
+		processQuery();
+	}
+
+	protected boolean preprocess(PlanToAgentInterface planToAgentInterface) throws PlanExecutionError {
 		// Update plan interface and broker context on every execution cycle
-		this.planInterface = planInterface;
+		this.planInterface = planToAgentInterface;
 		this.context = planInterface.getContext(BrokerContext.class);
 		BrokerPrefixNamespaceContext prefixContext = planInterface.getContext(BrokerPrefixNamespaceContext.class);
 
@@ -123,17 +133,17 @@ public abstract class SplitQueryPlan extends MessagePlan {
 
 		// Perform advanced syntax checks and parse query
 		try {
-			this.queryInfo = new QueryInfo(this.queryString, prefixContext.getOntologyPrefixes());
+			this.queryInfo = new QueryInfo(this.queryRequest, prefixContext.getOntologyPrefixes());
 		} catch(QueryException | BadQueryException e) {
 			informQueryError(e);
-			return;
+			return false;
 		} catch (Exception e) {
 			// Added this to catch any type of error and thus, to stop crashing broker agent
 			e.printStackTrace();
-			return;
+			return false;
 		}
 
-		processQuery();
+		return true;
 	}
 
 	/**
@@ -179,6 +189,34 @@ public abstract class SplitQueryPlan extends MessagePlan {
 	}
 
 	/**
+	 * Create a cached model for new conversations, or reuse an existing cached model if present
+	 * @return The cached model to use for query results for the current query
+	 */
+	protected CachedModel ensureModelPresent() {
+		if (!this.suggestionsRequested || this.queryRequest.getAql() == null) {
+			return this.context.createCachedModel(this.conversationID, this.queryRequest, this.queryInfo);
+		}
+
+		BrokerSearchSuggestionsContext searchSuggestionsContext = planInterface.getContext(BrokerSearchSuggestionsContext.class);
+		BrokerSearchSuggestionsContext.SearchSuggestionSubscription subscription =
+				searchSuggestionsContext.getSubscription(this.conversationID);
+
+
+		if (subscription == null) {
+			CachedModel model = this.context.createCachedModel(this.conversationID, this.queryRequest, this.queryInfo);
+			searchSuggestionsContext.addSubscription(this.message, this.header, model, this.queryInfo);
+			subscription = searchSuggestionsContext.getSubscription(this.conversationID);
+		}
+
+		BrokerSearchSuggestionsContext.SearchSuggestion suggestion = subscription.getSearchSuggestions(this.queryRequest.getAql().hashCode());
+		if (suggestion == null) {
+			subscription.addQuery(this.message, this.header, this.queryInfo);
+		}
+
+		return subscription.getSearchSuggestions(this.queryRequest.getAql().hashCode()).getModel();
+	}
+
+	/**
 	 * Once parsing of the query has succeeded, try to match data source agents to parts of the query
 	 */
 	private void processQuery() {
@@ -186,9 +224,7 @@ public abstract class SplitQueryPlan extends MessagePlan {
 		QueryProgress<Integer> queryProgress =
 				new QueryProgress<>(this.queryID, QueryProgressType.SUBQUERY_SENT, 0, false);
 
-		CachedModel model = this.context.createCachedModel(this.conversationID, this.queryRequest, this.queryInfo);
-		model.setSuggestionsExpected(this.suggestionsRequested);
-        logger.log(getClass(), Level.FINE, "Created cached model");
+		CachedModel model = ensureModelPresent();
 
 		List<AgentQuery> agentQueries = null;
 		try {

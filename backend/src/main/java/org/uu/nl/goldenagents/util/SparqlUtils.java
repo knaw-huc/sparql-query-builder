@@ -68,4 +68,41 @@ public class SparqlUtils {
 			}
 		}
 	}
+
+	/**
+	 * Same as validateLocalName(localName, prefixMap, false);
+	 * @param localName
+	 * @param prefixMap
+	 * @return
+	 */
+	public static String validateLocalName(String localName, Map<String, String> prefixMap) {
+		return validateLocalName(localName, prefixMap, false);
+	}
+
+    public static String validateLocalName(String localName, Map<String, String> prefixMap, boolean wrapInAngleBrackets) {
+        if (
+                (localName.startsWith("<") && localName.endsWith(">")) ||
+                !localName.contains("/") ||
+                !localName.contains(":")
+        )
+            return localName;
+
+        String[] segments = localName.split(":");
+        if (prefixMap.containsKey(segments[0])) {
+            StringBuilder name = new StringBuilder();
+			if (wrapInAngleBrackets) {
+				name.append("<");
+			}
+			name.append(prefixMap.get(segments[0]));
+            for(int i = 1; i < segments.length; i++) {
+                name.append(segments[i]);
+            }
+			if (wrapInAngleBrackets) {
+				name.append(">");
+			}
+            return name.toString();
+        } else {
+            return localName; // hope for the best
+        }
+    }
 }

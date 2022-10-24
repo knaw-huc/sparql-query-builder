@@ -2,20 +2,26 @@ package org.uu.nl.goldenagents.agent.plan.dbagent;
 
 import org.apache.jena.arq.querybuilder.SelectBuilder;
 import org.apache.jena.arq.querybuilder.WhereBuilder;
+import org.apache.jena.datatypes.RDFDatatype;
+import org.apache.jena.datatypes.xsd.XSDDatatype;
 import org.apache.jena.graph.Node;
 import org.apache.jena.graph.NodeFactory;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.Query;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.query.Syntax;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.riot.thrift.wire.RDF_DataTuple;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.vocabulary.RDF;
 import org.uu.nl.goldenagents.agent.context.DBAgentContext;
 import org.uu.nl.goldenagents.agent.context.query.DbTranslationContext;
 import org.uu.nl.goldenagents.agent.plan.MessagePlan;
 import org.uu.nl.goldenagents.netmodels.AqlDbTypeSuggestionWrapper;
+import org.uu.nl.goldenagents.netmodels.fipa.EntityList;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
-import org.uu.nl.goldenagents.sparql.CachedModel;
 import org.uu.nl.goldenagents.util.Pair;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.defaults.messenger.MessageReceiverNotFoundException;
@@ -29,6 +35,7 @@ import org.uu.nl.net2apl.core.platform.PlatformNotFoundException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -56,9 +63,10 @@ public class SparklisTypeSuggestionsPlan extends MessagePlan {
     @Override
     public void executeOnce(PlanToAgentInterface planInterface, ACLMessage receivedMessage, GAMessageHeader header, FIPASendableObject content) throws PlanExecutionError {
         this.planInterface = planInterface;
+        EntityList entityList = EntityList.fromACLMessage(receivedMessage);
         DBAgentContext context = planInterface.getContext(DBAgentContext.class);
         DbTranslationContext translator = planInterface.getContext(DbTranslationContext.class);
-        List<String> entitiesValues = this.getEntities(300); // TODO what value can / should we use here?
+        List<EntityList.Entity> entitiesValues = this.getEntities(entityList.getTargetAQLQueryID(), 300); // TODO what value can / should we use here?
 
         // Create query builders for each suggestion type
         Var var = Var.alloc("x");
@@ -69,27 +77,30 @@ public class SparklisTypeSuggestionsPlan extends MessagePlan {
         logger.log(getClass(), String.format("Starting process to find suggestions for %d entities", entitiesValues.size()));
 
         int blankNodeIndex = 0;
-        for (String entityValue : entitiesValues) {
+        int urisCounter = 0;
+        for (EntityList.Entity entityValue : entitiesValues) {
             // NodeFactory.createBlankNode() is bugged and will not produce results. This hack does
             Var blankNode = Var.alloc(String.format("a%d", blankNodeIndex++));
-            Node entityUri = NodeFactory.createURI(entityValue);
-
-            // Add UNION WHERE clauses to each query builder
-            classFinder.addUnion(new WhereBuilder().addWhere(entityUri, RDF.type, var));
-
+            Node entityUri = entityValue.getAsNode();
             // p of q  --> ?y p ?x, with ?y fresh var
             forwardCrossingFinder.addUnion(new WhereBuilder().addWhere(blankNode, var, entityUri));
 
-            // p : q --> ?x p ?y, with ?y fresh
-            backwardCrossingFinder.addUnion(new WhereBuilder().addWhere(entityUri, var, blankNode));
+            if (entityValue.isUri()) {
+                urisCounter += 1;
+                // Add UNION WHERE clauses to each query builder
+                classFinder.addUnion(new WhereBuilder().addWhere(entityUri, RDF.type, var));
+
+                // p : q --> ?x p ?y, with ?y fresh
+                backwardCrossingFinder.addUnion(new WhereBuilder().addWhere(entityUri, var, blankNode));
+            }
         }
 
         Pair<ArrayList<Resource>> classSuggestions =
-                this.executeQuery(context, translator, classFinder, var);
+                urisCounter > 0 ? this.executeQuery(context, translator, classFinder, var) : new Pair<>(new ArrayList<>(), new ArrayList<>());
         Pair<ArrayList<Resource>> forwardCrossSuggestions =
                 this.executeQuery(context, translator, forwardCrossingFinder, var);
         Pair<ArrayList<Resource>> backwardCrossSuggestions =
-                this.executeQuery(context, translator, backwardCrossingFinder, var);
+                urisCounter > 0 ? this.executeQuery(context, translator, backwardCrossingFinder, var) : new Pair<>(new ArrayList<>(), new ArrayList<>());
 
         // TODO did I switch these around the wrong way?
         ArrayList<Resource> forwardCrossingProperties = forwardCrossSuggestions.getFirst();
@@ -104,7 +115,8 @@ public class SparklisTypeSuggestionsPlan extends MessagePlan {
                 classSuggestions.getFirst(),
                 forwardCrossingProperties,
                 backwardCrossingProperties,
-                UUID.fromString(this.message.getConversationId())
+                entityList.getTargetAQLQueryID(),
+                UUID.fromString(message.getConversationId())
         );
 
         ACLMessage response = message.createReply(planInterface.getAgentID(), Performative.INFORM_REF);
@@ -123,10 +135,10 @@ public class SparklisTypeSuggestionsPlan extends MessagePlan {
      * @param maxSize Maximum number of entities in this list (to avoid stack overflow in query construction)
      * @return List of entities, reduced to maxSize
      */
-    private List<String> getEntities(int maxSize) {
-        CachedModel.EntityList<String> entityList = new CachedModel.EntityList<>(new ArrayList<>());
+    private List<EntityList.Entity> getEntities(int targetAQLQueryID, int maxSize) {
+        EntityList entityList = new EntityList(targetAQLQueryID);
         try {
-            entityList = (CachedModel.EntityList<String>) ((GAMessageContentWrapper) message.getContentObject()).getContent();
+            entityList = (EntityList) ((GAMessageContentWrapper) message.getContentObject()).getContent();
         } catch (UnreadableException e) {
             logger.log(getClass(), e);
         }
@@ -150,17 +162,28 @@ public class SparklisTypeSuggestionsPlan extends MessagePlan {
             SelectBuilder query, Var getVar) {
         ArrayList<NodeType> result = new ArrayList<>();
         ArrayList<NodeType> inverse = new ArrayList<>();
-        try (DBAgentContext.DbQuery q = context.getDbQuery(query.build())) {
+        Query query1 = query.build();
+        query1.setSyntax(Syntax.syntaxSPARQL_10);
+        try (DBAgentContext.DbQuery q = context.getDbQuery(query1)) {
             ResultSet results = q.queryExecution.execSelect();
             while (results.hasNext()) {
                 Resource item = results.next().get(getVar.toString()).asResource();
-                DbTranslationContext.Translation translation = translator.getLocalToGlobalTranslation(item);
-                if(translation != null && !translation.isInverse()) {
-                    result.add((NodeType) translation.getGlobalConcept());
-                } else if (translation != null) {
-                    inverse.add((NodeType) translation.getGlobalConcept());
+                List<DbTranslationContext.Translation> translations = translator.getLocalToGlobalTranslation(item);
+                if(translations != null) {
+                    for(DbTranslationContext.Translation translation : translations) {
+                        if(!translation.isInverse())
+                            result.add((NodeType) translation.getGlobalConcept());
+                        else
+                            inverse.add((NodeType) translation.getGlobalConcept());
+                    }
                 } else {
-                    Platform.getLogger().log(getClass(), "Dropping resource " + item.toString() + " because it has no translation");
+                    List<String> capabilities = context.getExpertise().getCapabilities();
+                    String shortForm = translator.shortForm(item.getURI());
+                    if (capabilities.contains(item.getURI()) || capabilities.contains(shortForm)) {
+                        result.add((NodeType) item);
+                    } else {
+                        Platform.getLogger().log(getClass(), "Dropping resource " + item + " because it has no translation");
+                    }
                 }
             }
         } catch (Exception e) {

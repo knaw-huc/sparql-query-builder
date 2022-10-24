@@ -1,21 +1,17 @@
 package org.uu.nl.goldenagents.agent.plan.dbagent;
 
-import org.apache.jena.arq.querybuilder.SelectBuilder;
-import org.apache.jena.arq.querybuilder.WhereBuilder;
 import org.apache.jena.graph.Node;
+import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.*;
 import org.apache.jena.sparql.core.Var;
-import org.apache.jena.sparql.expr.Expr;
-import org.apache.jena.sparql.expr.ExprAggregator;
-import org.apache.jena.sparql.expr.ExprVar;
-import org.apache.jena.sparql.expr.aggregate.AggCountVarDistinct;
-import org.apache.jena.sparql.expr.aggregate.Aggregator;
+import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.apache.jena.sparql.resultset.ResultSetException;
-import org.apache.jena.vocabulary.RDF;
+import org.apache.jena.vocabulary.*;
 import org.uu.nl.goldenagents.agent.context.DBAgentContext;
 import org.uu.nl.goldenagents.agent.context.DirectSsePublisher;
 import org.uu.nl.goldenagents.agent.context.PrefixNSListenerContext;
+import org.uu.nl.goldenagents.agent.context.UIContext;
+import org.uu.nl.goldenagents.agent.context.query.DbTranslationContext;
 import org.uu.nl.goldenagents.agent.context.registration.MinimalFunctionalityContext;
 import org.uu.nl.goldenagents.agent.plan.broker.AddDbExpertisePlan;
 import org.uu.nl.goldenagents.decompose.expertise.DbAgentExpertise;
@@ -24,14 +20,16 @@ import org.uu.nl.goldenagents.sparql.OntologicalConceptInfo;
 import org.uu.nl.goldenagents.sparql.PreparedQueryExecution;
 import org.uu.nl.goldenagents.util.DatabaseConfig;
 import org.uu.nl.goldenagents.util.SparqlUtils;
-import org.uu.nl.goldenagents.util.agentconfiguration.RdfSourceConfig;
 import org.uu.nl.net2apl.core.agent.AgentID;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.plan.PlanExecutionError;
 import org.uu.nl.net2apl.core.plan.builtin.RunOncePlan;
 import org.uu.nl.net2apl.core.platform.Platform;
 
+import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 /**
@@ -45,6 +43,14 @@ public class DiscoverExpertisePlan extends RunOncePlan {
 	private static Var VAR_COUNT = Var.alloc(SparqlUtils.COUNT_VAR_NAME);
 
 	private AgentID agentID;
+    Map<String, String> usedPrefixes;
+    protected DBAgentContext context;
+    protected PrefixNSListenerContext prefixContext;
+    protected DbTranslationContext translationContext;
+
+    // Optimization
+    private Integer ignoreConceptsWithLessThanEntities = 1000;
+    private boolean ignoreNonGAConcepts = true;
 
     /**
      * Execute the business logic of the plan. Make sure that when you implement this
@@ -58,223 +64,325 @@ public class DiscoverExpertisePlan extends RunOncePlan {
     @Override
     public void executeOnce(PlanToAgentInterface planInterface) throws PlanExecutionError {
         this.agentID = planInterface.getAgentID();
-        DBAgentContext context = planInterface.getContext(DBAgentContext.class);
+        this.context = planInterface.getContext(DBAgentContext.class);
         DbAgentExpertise expertise = context.getExpertise();
+        this.translationContext = planInterface.getContext(DbTranslationContext.class);
+        this.prefixContext = planInterface.getContext(PrefixNSListenerContext.class);
+
+        if (expertise == null) { // TODO, force reload?
+            expertise = readExpertiseFromFile(planInterface);
+        }
+        // Still null?
         if(expertise == null) {
             // Only re-discover expertise if it isn't yet available
-            expertise = extractExpertise(context, planInterface.getContext(PrefixNSListenerContext.class));
+            usedPrefixes = new HashMap<>();
+            translationContext.addMappedConceptsToPrefixListenerMap(planInterface.getAgentID());
+            Map<String, OntologicalConceptInfo> concepts = getConcepts();
+            expertise = extractExpertise(concepts);
+            writeExpertiseToFile(planInterface, expertise);
         }
         context.setExpertise(expertise);
         notifyReady(planInterface);
         setFinished(true);
     }
 
+    private void writeExpertiseToFile(PlanToAgentInterface planToAgentInterface, DbAgentExpertise expertise) {
+        File targetFile = getExpertiseTargetFile(planToAgentInterface);
+        try {
+            if(targetFile.getParentFile().mkdirs()) {
+                Platform.getLogger().log(getClass(), "Created required parent directories " + targetFile.getParentFile());
+            }
+            FileOutputStream fos = new FileOutputStream(targetFile);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(expertise);
+            os.close();
+            Platform.getLogger().log(getClass(), "Successfully stored expertise in file " + targetFile.getAbsolutePath());
+        } catch (IOException e) {
+            Platform.getLogger().log(getClass(), e);
+        }
+    }
+
+    private DbAgentExpertise readExpertiseFromFile(PlanToAgentInterface planToAgentInterface) {
+        File targetFile = getExpertiseTargetFile(planToAgentInterface);
+        if (targetFile.exists()) {
+            Platform.getLogger().log(getClass(), "Found " + targetFile.getAbsolutePath());
+            try {
+                FileInputStream fis = new FileInputStream(targetFile);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                Object obj = ois.readObject();
+                DbAgentExpertise expertise = (DbAgentExpertise) obj;
+                Platform.getLogger().log(getClass(), "Succesfully read DB agent expertise");
+                return expertise;
+            } catch (IOException | ClassNotFoundException e) {
+                Platform.getLogger().log(getClass(), e);
+            }
+        } else {
+            Platform.getLogger().log(getClass(), "No stored expertise object yet found. Was looking for " + targetFile.getAbsolutePath());
+        }
+        return null;
+    }
+
+    private File getExpertiseTargetFile(PlanToAgentInterface planToAgentInterface) {
+        String nickname = planToAgentInterface.getContext(UIContext.class).getNickname();
+        nickname = nickname.replaceAll("[\\\\ /'\"@#$^*()!,?;:`~]", "");
+        return Path.of(
+                "data",
+                "db-expertise",
+                nickname,
+                "expertise.dat"
+        ).toFile();
+    }
+
+    private Map<String, OntologicalConceptInfo> getConcepts() {
+        Map<String, OntologicalConceptInfo> concepts = new HashMap<>();
+        Set<Node> classes = listNodesForQuery("?x a ?concept");
+        Set<Node> properties = listNodesForQuery("?x ?concept []");
+
+        for (Node className : classes) {
+            addNodeToMap(className, true, concepts);
+        }
+
+        for(Node propertyName : properties) {
+            addNodeToMap(propertyName, false, concepts);
+        }
+        return concepts;
+    }
+
+    private Set<Node> listNodesForQuery(String bgp) {
+        // Group by clause is bullshit, but stops jena from complaining so what do we care
+        String q;
+        if (ignoreConceptsWithLessThanEntities != null) {
+            q = String.format("SELECT DISTINCT ?concept (COUNT(?x) as ?count) WHERE {%s} GROUP BY ?concept", bgp);
+        } else {
+            // Not doing a count makes the query faster
+            q = String.format("SELECT DISTINCT ?concept WHERE {%s} GROUP BY ?concept", bgp);
+        }
+        System.out.println(q);
+        Set<Node> nodes = new HashSet<>();
+        try (DBAgentContext.DbQuery dbQuery = context.getDbQuery(q)) {
+            ResultSet resultSet = dbQuery.queryExecution.execSelect();
+            while(resultSet.hasNext()) {
+                QuerySolution s = resultSet.next();
+                Node item = s.get("concept").asNode();
+                if (ignoreConceptsWithLessThanEntities != null) {
+                    int amount = s.get("count").asLiteral().getInt();
+                    if (amount > 1000 || translationContext.translateLocalToGlobal(item.getURI()) != null) {
+                        nodes.add(item);
+                    }
+                } else {
+                    nodes.add(item);
+                }
+            }
+        }
+        return nodes;
+    }
+
+    private void addNodeToMap(
+            Node node, boolean isClass, Map<String, OntologicalConceptInfo> concepts) {
+        if(!(
+                node.getNameSpace().equals(RDFS.getURI()) ||
+                node.getNameSpace().equals(RDF.getURI()) ||
+                node.getNameSpace().equals(OWL.getURI()) ||
+                node.getNameSpace().equals(OWL2.getURI()) ||
+                node.getNameSpace().equals(SKOS.getURI()) ||
+                node.getNameSpace().equals(SKOSXL.getURI())
+        )) {
+            List<DbTranslationContext.Translation> translations = translationContext.getLocalToGlobalTranslation(node.getURI());
+            if (translations == null && (!ignoreNonGAConcepts || node.getNameSpace().contains("goldenagents"))) {
+                String shortForm = translationContext.shortForm(node.getURI());
+                String prefix = shortForm.substring(0, shortForm.indexOf(":"));
+                String ns = prefixContext.getNamespaceForPrefix(prefix);
+                if (ns != null && shortForm.startsWith(prefix)) {
+                    if (usedPrefixes.get(prefix) == null || ns.equals(usedPrefixes.get(prefix))) {
+                        usedPrefixes.put(prefix, ns);
+                    }
+                } else {
+                    shortForm = node.getURI();
+                }
+                OntologicalConceptInfo info = new OntologicalConceptInfo(shortForm, isClass);
+                info.addMapping(isClass ? MappingPropertyType.OWL_EQ_CLASS : MappingPropertyType.OWL_EQ_PROPERTY, node);
+                concepts.put(info.getLabel(), info); // TODO, make it harder for the server!!!
+            } else if (translations != null) {
+                for(DbTranslationContext.Translation translation : translations) {
+                    OntologicalConceptInfo info = concepts.get(translation.getGlobalConceptShortform());
+                    if (info == null) {
+                        info = new OntologicalConceptInfo(translation.getGlobalConceptShortform(), isClass);
+                    }
+                    info.addMapping(translation.getMappingPropertyType(), node);
+                    concepts.put(info.getLabel(), info);
+                }
+            }
+        }
+    }
+
     /**
      * Extracts expertise information of a data source 
-     * @param context Context of DB Agent to get mapping and add extracted info
      * @return expertise of the DB Agent
      */
-    private DbAgentExpertise extractExpertise(DBAgentContext context, PrefixNSListenerContext prefixContext) {
-
-        StmtIterator it = context.getOntologyModel().listStatements();
-        Map<String, OntologicalConceptInfo> concepts = new HashMap<>();
-        Set<String> namespaces = prefixContext.getNamespaces();
-        while(it.hasNext()) {
-            Statement s = it.nextStatement();
-            Node subject = s.getSubject().asNode();
-            Property predicate = s.getPredicate();
-            Node object = s.getObject().asNode();
-
-            if(subject.isURI() && namespaces.contains(subject.getNameSpace())) {
-                //object is the mapping in this case
-                String gaConcept = context.getOntologyModel().shortForm(subject.getURI());
-                updateConceptMap(concepts, gaConcept, predicate, object);
-            }
-            else if(object.isURI() && namespaces.contains(object.getNameSpace())) {
-                //subject is the mapping in this case
-                String gaConcept = context.getOntologyModel().shortForm(object.getURI());
-                updateConceptMap(concepts, gaConcept, predicate, subject);
-            }
-        }
-        return addStatsToConceptInfo(context, new ArrayList<>(concepts.values()));
+    private DbAgentExpertise extractExpertise(Map<String, OntologicalConceptInfo> concepts) {
+        return addStatsToConceptInfo(new ArrayList<>(concepts.values())).removeConceptsWithZeroEntities();
     }
 
-    /**
-     * This is an alternative to read mapping of a data source.
-     * 
-     *	TODO: Further investigation of ontology reading 
-     *	It requires further investigation to extract mapping statements 
-     *	in a more efficient and semantic way because they are created with
-     *	known predicates and actions for those are already known. Therefore,
-     *	this method should be expanded in a way that it uses the semantics of mappings
-     * 
-     * @param context
-     */
-    private void readAsOntology(DBAgentContext context) {
-    	
-    	Model m = context.getOntologyModel();
-    	//OntModel m = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM, context.getOntologyModel());
-    	for(MappingPropertyType mp : MappingPropertyType.values()) {
-    		RDFNode n = null;
-    		StmtIterator it = m.listStatements(new SimpleSelector(null, mp.getProperty(), n));
-        	while(it.hasNext()) {
-        	    Statement statement = it.nextStatement();
-        		// TODO
-        	}
-        	it.close();
-    	}
-    }
-
-    /**
-     * Updates the given mapping with the information of given mapping
-     * @param concepts map of concepts to their extracted info
-     * @param gaConcept	ontological concept
-     * @param predicate	predicate of the mapping
-     * @param mapping	mapped node
-     */
-    private void updateConceptMap(
-            Map<String, OntologicalConceptInfo> concepts,
-            String gaConcept,
-            Property predicate,
-            Node mapping
-    ) {
-        //If the concept has not created yet, create it
-
-        MappingPropertyType mappingPropertyType = MappingPropertyType.fromNode(predicate.asNode());
-
-        if (mappingPropertyType == null) {
-            // This mapping is not known, so do not add this concept to the concept map, as it cannot be used
-            Platform.getLogger().log(MappingPropertyType.class, Level.WARNING, String.format(
-                    "Failed to match mapping property from %s used between GA concept %s and subject or object %s. Skipping",
-                    predicate.getURI(),
-                    gaConcept,
-                    mapping.getURI()
-            ));
-            return;
-        }
-
-        if(!concepts.containsKey(gaConcept)) {
-            boolean isClass = false;
-            //If the concept is a class then the mapping predicate is either equivalent class or subclass
-            if(predicate.equals(MappingPropertyType.OWL_EQ_CLASS.getProperty()) ||
-                    predicate.equals(MappingPropertyType.OWL_SUBCLASS.getProperty())) {
-                isClass = true;
-            }
-            concepts.put(gaConcept, new OntologicalConceptInfo(gaConcept, isClass));
-        }
-        concepts.get(gaConcept).addMapping(mappingPropertyType, mapping);
-    }
-    
     /**
      * Updates concept info with statistical information, which are
      * the number of entities having a concept (class or predicate) and 
      * the number of entities having a combination of the concepts.
-     * @param 	context	DB Agent context
      * @param 	conceptList	List of ontological concepts
      * @return	expertise of the DB Agent
      */
-    protected DbAgentExpertise addStatsToConceptInfo(DBAgentContext context, List<OntologicalConceptInfo> conceptList) {
-    	ArrayList<SelectBuilder> builders = new ArrayList<>();
-    	int count = 0;
-    	//	Sends count queries to learn number of entities having concepts
-    	for(OntologicalConceptInfo conceptInfo : conceptList) {
-    		Map<MappingPropertyType, ArrayList<Node>> mappings = conceptInfo.getOntologicalMappings();
-    		SelectBuilder sb = buildCountQuery(mappings, count);
-    		builders.add(sb);
-    		if(context.getConfig().getMethod() == DatabaseConfig.QUERY_METHOD.SPARQL) {
-                try (PreparedQueryExecution ex = new PreparedQueryExecution(
-                        sb.buildString(), context.getConfig())) {
-                    final ResultSet result = ex.queryExecution.execSelect();
-                    conceptInfo.setCount(result.nextSolution().get(VAR_COUNT.toString()).asLiteral().getInt());
-                } catch (ResultSetException e) {
-                	logQueryException(e, sb.buildString());
+    protected DbAgentExpertise addStatsToConceptInfo(List<OntologicalConceptInfo> conceptList) {
+        for(int i = 0; i < conceptList.size(); i++) {
+            makeConceptListQuery(conceptList.get(i), conceptList.subList(i+1, conceptList.size()));
+        }
+        return new DbAgentExpertise(conceptList, usedPrefixes);
+    }
+
+    private String getTriplePattern(MappingPropertyType relation, Node node, int count) {
+        if (relation.isClass()) {
+            return String.format("{?p%d a <%s> filter (?x = ?p%d)}", count, node, count);
+        }
+        //owl:equivalent property and rdfs:subPropertyOf
+        else if (relation.isEquivalentProperty()) {
+            return String.format("{?x <%s> ?p%d}", node, count);
+        }
+        //owl:inverse
+        else if (relation.isInverseProperty()) {
+            return String.format("{?p%d <%s> ?x}", count, node);
+        }
+        return null;
+    }
+
+    private void makeConceptListQuery(OntologicalConceptInfo info, List<OntologicalConceptInfo> conceptList) {
+        List<String> unions = new ArrayList<>();
+        List<String> projection = new ArrayList<>();
+        Map<String, OntologicalConceptInfo> varToInfoMap = new HashMap<>();
+        int count = 0;
+        for(OntologicalConceptInfo otherInfo : conceptList) {
+            // Avoid large queries to prevent time outs
+            if (count > 30) {
+                boolean success;
+                do {
+                    success = executeConceptListQuery(info, unions, projection, varToInfoMap, count);
+                } while (!success);
+                unions = new ArrayList<>();
+                projection = new ArrayList<>();
+                varToInfoMap = new HashMap<>();
+                count = 0;
+            }
+            for(MappingPropertyType relation : otherInfo.getOntologicalMappings().keySet()) {
+                ArrayList<Node> nodeList = otherInfo.getOntologicalMappings().get(relation);
+                for (Node node : nodeList) {
+                    unions.add(getTriplePattern(relation, node, count));
+                    projection.add(String.format("(COUNT (?p%d) as ?c%d)", count, count));
+                    varToInfoMap.put(String.format("c%d", count), otherInfo);
                 }
-            } else {
-                try(DBAgentContext.DbQuery dbQuery = context.getDbQuery(sb.build())) {
-                    final ResultSet rSet = dbQuery.queryExecution.execSelect();
-                    conceptInfo.setCount(rSet.nextSolution().get(VAR_COUNT.toString()).asLiteral().getInt());
-                } catch (Exception e) {
-                	logQueryException(e, sb.buildString());
+                count++;
+            }
+        }
+        boolean success;
+        do {
+            success = executeConceptListQuery(info, unions, projection, varToInfoMap, count);
+        } while(!success);
+    }
+
+    private boolean executeConceptListQuery(
+            OntologicalConceptInfo info,
+            List<String> unions, List<String> projection,
+            Map<String, OntologicalConceptInfo> varToInfoMap,
+            int count
+    ) {
+        List<String> mainSelect = buildMainSelect(info, count);
+        String query = "SELECT\n\t" +
+                "(COUNT (DISTINCT ?x) as ?c)\n\t" +
+                String.join("\n\t", projection) +
+                "\n{\n\t" +
+                String.join(" UNION \n\t", mainSelect);
+        if (unions.size() > 0) {
+            query += " . \n\t{\n\t\t{} UNION\n\t\n\t\t" +
+                    String.join(" UNION \n\t\t", unions) +
+                    "\n\t}";
+        }
+        query += "\n}";
+        System.out.println(query);
+
+        long millis = System.currentTimeMillis();
+
+        boolean success = false;
+
+        if(context.getConfig().getMethod() == DatabaseConfig.QUERY_METHOD.SPARQL) {
+            try (PreparedQueryExecution ex = new PreparedQueryExecution(
+                    query, context.getConfig())) {
+                ex.queryExecution.setTimeout(3, TimeUnit.MINUTES);
+                final ResultSet results = ex.queryExecution.execSelect();
+                processConceptListQuery(results, info, varToInfoMap);
+                success = true;
+            } catch (QueryExceptionHTTP e) {
+                Platform.getLogger().log(getClass(), e);
+            } catch (ResultSetException e) {
+                logQueryException(e, query);
+            }
+        } else {
+            try(DBAgentContext.DbQuery dbQuery = context.getDbQuery(query)) {
+                dbQuery.queryExecution.setTimeout(3, TimeUnit.MINUTES);
+                ResultSet results = dbQuery.queryExecution.execSelect();
+                processConceptListQuery(results, info, varToInfoMap);
+                success = true;
+            } catch (Exception e) {
+                logQueryException(e, query);
+            }
+        }
+        if (System.currentTimeMillis() - millis > 120000 || !success) { // 2 minutes
+            try {
+                Thread.sleep(success ? 30000 : 6000); // Give server some rest
+            } catch (InterruptedException e) {
+                Platform.getLogger().log(getClass(), e);
+            }
+        }
+        return success;
+    }
+
+    private void processConceptListQuery(ResultSet results, OntologicalConceptInfo info, Map<String, OntologicalConceptInfo> varToInfoMap) {
+        while (results.hasNext()) {
+            QuerySolution s = results.next();
+            Iterator<String> it = s.varNames();
+            while (it.hasNext()) {
+                String var = it.next();
+                int count = s.get(var).asLiteral().getInt();
+                if (var.equals("c")) {
+                    info.setCount(count);
+                } else {
+                    info.addStarCombination(varToInfoMap.get(var).getLabel(), count);
+                    varToInfoMap.get(var).addStarCombination(info.getLabel(), count);
                 }
             }
-    		count++;
-    	}
-    	// Sends count queries to learn number of entities having combinations of concepts 
-    	for (int i = 0; i < builders.size(); i++) {
-    		for(int j = 0; j <= i; j++) {
-    			SelectBuilder sb = builders.get(i).clone();
-    			sb.getWhereHandler().addAll(builders.get(j).getWhereHandler());
-                if(context.getConfig().getMethod() == DatabaseConfig.QUERY_METHOD.SPARQL) {
-                    try (PreparedQueryExecution ex = new PreparedQueryExecution(
-                            sb.buildString(), context.getConfig())) {
-                        final ResultSet results = ex.queryExecution.execSelect();
-                        int result = (results.nextSolution().get(VAR_COUNT.toString()).asLiteral().getInt());
-                        conceptList.get(i).addStarCombination(conceptList.get(j).getLabel(), result);
-                        conceptList.get(j).addStarCombination(conceptList.get(i).getLabel(), result);
-                    } catch (ResultSetException e) {
-                    	logQueryException(e, sb.buildString());
-                    }
-                } else {
-                    try(DBAgentContext.DbQuery dbQuery = context.getDbQuery(sb.build())) {
-                        ResultSet results = dbQuery.queryExecution.execSelect();
-                        int result = (results.nextSolution().get(VAR_COUNT.toString()).asLiteral().getInt());
-                        conceptList.get(i).addStarCombination(conceptList.get(j).getLabel(), result);
-                        conceptList.get(j).addStarCombination(conceptList.get(i).getLabel(), result);
-                    } catch (Exception e) {
-                    	logQueryException(e, sb.buildString());
-                    }
+        }
+    }
+
+    private List<String> buildMainSelect(OntologicalConceptInfo info,  int count) {
+        List<String> mainSelect = new ArrayList<>();
+
+        for (MappingPropertyType relation : info.getOntologicalMappings().keySet()) {
+            ArrayList<Node> nodeList = info.getOntologicalMappings().get(relation);
+            for (Node node : nodeList) {
+                String tp = null;
+                if (relation.isClass()) {
+                    tp = String.format("{?x a <%s>}", node);
                 }
-    		}
-		}
-    	return new DbAgentExpertise(conceptList);
-    }
-    
-    /**
-     * Builds a count query in the form {@code SelectBuilder} with the given mappings
-     * @param	mappings mapping of the concept
-     * @param	count	count for variable name to keep them unique
-     * @return	SelectBuilder with the constraints based on mappings
-     */
-    protected SelectBuilder buildCountQuery(Map<MappingPropertyType, ArrayList<Node>> mappings, int count) {
-    	Expr subjExpr = new ExprVar(VAR_SUBJECT);
-    	SelectBuilder sb = new SelectBuilder();
-    	Aggregator agg = new AggCountVarDistinct(subjExpr);
-    	ExprAggregator expression = new ExprAggregator(VAR_SUBJECT, agg);
-    	sb.addVar(expression, VAR_COUNT);
-    	addWhereClause(mappings, sb, count);
-    	return sb;
-    }
-    
-    protected void addWhereClause(Map<MappingPropertyType, ArrayList<Node>> mappings, SelectBuilder sb, int count) {
-    	for (MappingPropertyType relation : mappings.keySet()) {
-			ArrayList<Node> nodeList = mappings.get(relation);
-			for (int i = 0; i < nodeList.size(); i++) {
-				/*
-				 * This is an anonymous variable that we need in the object position
-				 * If we do not make them unique then a problem arises because variables
-				 * in two different statements become the same. 
-				 * Var.ANON is useless because it produces the same variable everytime
-				 */
-				Var var_obj = Var.alloc(count + SparqlUtils.OBJECT_VAR_NAME + i);
-				Node node = nodeList.get(i);
-				WhereBuilder wb = new WhereBuilder();
-				//owl:equivalent class and owl:subclass
-				if ((relation == MappingPropertyType.OWL_SUBCLASS) 
-						|| (relation == MappingPropertyType.OWL_EQ_CLASS)) {
-					wb.addWhere(VAR_SUBJECT, RDF.type, node);
-				}
-				//owl:equivalent property and rdfs:subPropertyOf
-				else if ((relation == MappingPropertyType.OWL_EQ_PROPERTY) 
-						|| (relation == MappingPropertyType.RDFS_SUBPROPERTY)) {
-					wb.addWhere(VAR_SUBJECT, node, var_obj);
-				} 
-				//owl:inverse
-				else if (relation == MappingPropertyType.OWL_INVERSE) {
-					wb.addWhere(var_obj, node, VAR_SUBJECT);
-				}
-				sb.addUnion(wb);
-			}
-		}
+                //owl:equivalent property and rdfs:subPropertyOf
+                else if (relation.isEquivalentProperty()) {
+                    tp = String.format("{?x <%s> ?p%d}", node, count);
+                }
+                //owl:inverse
+                else if (relation.isInverseProperty()) {
+                    tp = String.format("{?p%d <%s> ?x}", count, node);
+                }
+
+                if (tp != null) mainSelect.add(tp);
+            }
+            count++;
+        }
+
+        return mainSelect;
     }
 
     /**

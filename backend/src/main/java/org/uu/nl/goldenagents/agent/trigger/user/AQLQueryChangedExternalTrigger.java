@@ -1,6 +1,8 @@
 package org.uu.nl.goldenagents.agent.trigger.user;
 
+import org.uu.nl.goldenagents.agent.context.query.AQLQueryContext;
 import org.uu.nl.goldenagents.aql.AQLQuery;
+import org.uu.nl.goldenagents.aql.AQLQueryContainer;
 import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.net2apl.core.agent.Trigger;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
@@ -8,14 +10,18 @@ import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
 import java.util.UUID;
 
 public class AQLQueryChangedExternalTrigger implements Trigger, FIPASendableObject {
+    private AQLQueryContainer queryContainer;
     private AQLQuery query;
     private AQLTree queryTree;
-    private UUID focus;
+    private AQLTree.ID focus;
+    private UUID conversationID;
 
-    public AQLQueryChangedExternalTrigger(AQLQuery query) {
-        this.query = query;
-        this.queryTree = query.getQueryTree();
-        this.focus = query.getFocusName();
+    public AQLQueryChangedExternalTrigger(AQLQueryContext.QueryWrapper query) {
+        this.queryContainer = query.queryContainer;
+        this.conversationID = query.conversationID;
+        this.query = query.query;
+        this.queryTree = this.query.getQueryTree();
+        this.focus = this.query.getFocusName();
     }
 
     public AQLTree getQueryTree() {
@@ -26,11 +32,11 @@ public class AQLQueryChangedExternalTrigger implements Trigger, FIPASendableObje
         this.queryTree = queryTree;
     }
 
-    public UUID getFocus() {
+    public AQLTree.ID getFocus() {
         return focus;
     }
 
-    public void setFocus(UUID focus) {
+    public void setFocus(AQLTree.ID focus) {
         this.focus = focus;
     }
 
@@ -40,5 +46,21 @@ public class AQLQueryChangedExternalTrigger implements Trigger, FIPASendableObje
 
     public void setQuery(AQLQuery query) {
         this.query = query;
+    }
+
+    public AQLQueryContainer getQueryContainer() {
+        return queryContainer;
+    }
+
+    public void setQueryContainer(AQLQueryContainer queryContainer) {
+        this.queryContainer = queryContainer;
+    }
+
+    public UUID getConversationID() {
+        return conversationID;
+    }
+
+    public void setConversationID(UUID conversationID) {
+        this.conversationID = conversationID;
     }
 }

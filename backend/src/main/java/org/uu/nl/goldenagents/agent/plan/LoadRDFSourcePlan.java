@@ -1,6 +1,5 @@
 package org.uu.nl.goldenagents.agent.plan;
 
-import org.apache.jena.atlas.web.HttpException;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;

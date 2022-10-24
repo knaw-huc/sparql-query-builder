@@ -32,18 +32,12 @@ public class BrokerContext extends MinimalFunctionalityContext {
 	private final Map<String, Set<String>> linkMap = new LinkedHashMap<>();
 	/** Reasoner that only infers owl:sameAs relations **/
 	private final Reasoner owlSameAsReasoner;
-////<<<<<<< HEAD
-//	private final Map<String, AgentID> conversationMap = new HashMap<>();
-//	private final Map<String, CachedModel> queryCachedModels = new HashMap<>();
-//	private final Map<AgentID, DbAgentExpertise> dbAgentExpertises = new HashMap<>();
-//	private final Map<String, String> queryIDMap = new HashMap<>();
-////=======
+
 	private final Map<String, AgentID> conversationMap = new HashMap<>();
 	private final Map<String, CachedModel> queryCachedModels = new HashMap<>();
 	private final Map<AgentID, DbAgentExpertise> dbAgentExpertises = new HashMap<>();
-	private final Map<String, Map<AgentID, AqlDbTypeSuggestionWrapper>> aqlSuggestionMap = new HashMap<>();
+
 	private final Map<String, String> queryIDMap = new HashMap<>();
-//>>>>>>> feature/UI
 	private Set<OntClass> ontologyClasses;
 	private Set<OntProperty> ontologyProperties;
 	private ExpertiseGraph<String> expertiseGraph;
@@ -104,6 +98,10 @@ public class BrokerContext extends MinimalFunctionalityContext {
 			}
 		}
 	}
+
+	public Set<String> getConversations() {
+		return this.conversationMap.keySet();
+	}
 	
 	public void addConversation(String conversation, AgentID user) {
 		conversationMap.put(conversation, user);
@@ -130,6 +128,12 @@ public class BrokerContext extends MinimalFunctionalityContext {
 			queryCachedModels.put(conversation, model);
 		}
 		return model;
+	}
+
+	public void addCachedModel(String conversation,CachedModel model) {
+		if(!queryCachedModels.containsKey(conversation)) {
+			this.queryCachedModels.put(conversation, model);
+		}
 	}
 	
 	public void addDbAgentExpertise(AgentID dbAgentID, DbAgentExpertise dbAgentExpertise) {
@@ -227,19 +231,6 @@ public class BrokerContext extends MinimalFunctionalityContext {
 		}
 	}
 
-	public void addDbSuggestionsForQuery(String conversationID, AgentID dbAID, AqlDbTypeSuggestionWrapper suggestions) {
-		if(!this.aqlSuggestionMap.containsKey(conversationID)) {
-			this.aqlSuggestionMap.put(conversationID, new HashMap<>());
-		}
-		this.aqlSuggestionMap.get(conversationID).put(dbAID, suggestions);
-	}
-
-	public HashMap<AgentID, AqlDbTypeSuggestionWrapper> getDbSuggestionsForQuery(String conversationID) {
-		if(this.aqlSuggestionMap.containsKey(conversationID)) {
-			return new HashMap<>(this.aqlSuggestionMap.get(conversationID));
-		}
-		return null;
-	}
 	public List<RdfSourceConfig> getLinksetConfigs() {
 		return linksetConfigs;
 	}

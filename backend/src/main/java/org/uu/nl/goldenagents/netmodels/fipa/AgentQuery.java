@@ -1,14 +1,11 @@
 package org.uu.nl.goldenagents.netmodels.fipa;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.apache.jena.rdf.model.Model;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.rdf.model.StmtIterator;
+import org.uu.nl.goldenagents.agent.context.query.DbTranslationContext;
 import org.uu.nl.goldenagents.sparql.TripleInfo;
+import org.uu.nl.goldenagents.util.SparqlUtils;
 import org.uu.nl.net2apl.core.agent.AgentID;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
 
@@ -29,86 +26,89 @@ public class AgentQuery implements FIPASendableObject {
 	private String[] filters;
 	private HashMap<String, HashSet<String>> values;
 	private boolean translated = false;
-	private HashMap<String, String> prefixMap = null;
+	private HashMap<String, String> prefixMap = new HashMap<>();
 	private AgentID queryOwner;
+	private final Integer targetAqlQueryID;
 	private StringBuilder prefixErrors = new StringBuilder();
 
-	public AgentQuery(AgentID queryOwner) {
+	public AgentQuery(AgentID queryOwner, Integer targetAqlQueryID) {
 		this.queryOwner = queryOwner;
+		this.targetAqlQueryID = targetAqlQueryID;
 	}
 
 	/**
 	 * Translate this query using the {@code model} argument.
-	 * @param model
+	 * @param translationContext
 	 */
-	public void translate(Model model) {
-		
+	public void translate(DbTranslationContext translationContext) {
+
 		//Load the prefixes coming from the model
-		model.getNsPrefixMap().forEach((k,v) -> {
+		Map<String, String> prefixMap = translationContext.getPrefixContext().getPrefixMap();
+		prefixMap.forEach((k, v) -> {
 			//Check if the prefix has not used before
-			if(!prefixMap.containsKey(k)) {
+			if(!this.prefixMap.containsKey(k)) {
 				this.prefixMap.put(k,v);
 			}
 			//If it is used, check if the ontologies of the prefix are different
-			else if (!prefixMap.get(k).equals(model.getNsPrefixMap().get(k))) {
-				prefixErrors.append("Prefix " + k + " is used for different ontologies in the query (" + 
-						this.prefixMap.get(k) + ") and in the mapping file (" + 
-						model.getNsPrefixMap().get(k) + ").").append(System.lineSeparator());
+			else if (!this.prefixMap.get(k).equals(prefixMap.get(k))) {
+				prefixErrors
+						.append("Prefix ")
+						.append(k)
+						.append(" is used for different ontologies in the query (")
+						.append(this.prefixMap.get(k))
+						.append(") and in the mapping file (")
+						.append(prefixMap.get(k)).append(").")
+						.append(System.lineSeparator());
 				/*
 				 * TODO We should find a way to prevent this to happen
 				 * One solution might be a kind of hashing for prefixes in the mapping to make them (sort of) unique
 				 */
 			}
 		});
-		
+
 		this.translatedTriples = new TripleInfo[triples.length];
 
 		for (int i = 0; i < this.triples.length; i++) {
+			this.triples[i].setSubject(SparqlUtils.validateLocalName(this.triples[i].getSubject(), prefixMap, true));
+			this.triples[i].setObject(SparqlUtils.validateLocalName(this.triples[i].getObject(), prefixMap, true));
+			String[] predicates = this.triples[i].getPredicatePath().getPredicates();
+			for(String predicate : predicates) {
+				this.triples[i].getPredicatePath().update(predicate, SparqlUtils.validateLocalName(predicate, prefixMap, true));
+			}
+
 			final TripleInfo translation = this.triples[i].createCopy();
 
-			StmtIterator it = model.listStatements();
-			// TODO maybe this could be refactored to use DbTranslationContext
-			while (it.hasNext()) {
-				Statement s = it.next();
+			// TODO, officially, multiple local concepts can together comprise a global concept. In this case, we need a union,
+			// but the current structure hardly allows for that
+			List<DbTranslationContext.Translation> tSubj = translationContext.getGlobalToLocalTranslation(translation.getSubject());
+			List<DbTranslationContext.Translation> tPred = translationContext.getGlobalToLocalTranslation(translation.getPredicate());
+			List<DbTranslationContext.Translation> tObj = translationContext.getGlobalToLocalTranslation(translation.getObject());
 
-				// Assume subject is the GoldenAgents concept
-				String gaURI = model.shortForm(s.getSubject().getURI());
-				String translationPredicate = model.shortForm(s.getPredicate().asResource().getURI());
-				String translatedURI = model.shortForm(s.getObject().asResource().getURI());
+			if (tSubj != null) {
+				translation.setSubject(getValidatedLocalName(tSubj, translationContext));
+			}
 
-				// If previous assumption was wrong (i.e. object, which is translated URI starts with GA prefix), switch
-				// object and subject around
-				if(translatedURI.startsWith("ga:")) {
-					String temp = gaURI;
-					gaURI = translatedURI;
-					translatedURI = temp;
+			if(tPred != null) {
+				String translatedConcept = getValidatedLocalName(tPred, translationContext);
+				translation.getPredicatePath().update(translation.getPredicate(), translatedConcept);
+				if (tPred.get(0).isInverse()) {
+					translation.getPredicatePath().invert(translatedConcept);
 				}
+			}
 
-				// If a Golden Agents concept is used in the triple at the subject position,
-				// replace it with the translated URI
-				if (translation.getSubject().equals(gaURI)) {
-					translation.setSubject(translatedURI);
-				}
-
-				// This update does nothing if gaURI is not present somewhere in path
-				translation.getPredicatePath().update(gaURI, translatedURI);
-
-				// If a GoldenAgents concept is used in the triple at the object position, replace it with the
-				// translated URI
-				if (translation.getObject().equals(gaURI)) {
-					translation.setObject(translatedURI);
-				}
-
-				// If the equivalence property used in the mapping is OWL:InverseOf, inverse the property path of the
-				// query translation as well
-				if (translationPredicate.equals("owl:inverseOf")) {
-					translation.getPredicatePath().invert(translatedURI);
-				}
+			if(tObj != null) {
+				translation.setObject(getValidatedLocalName(tObj, translationContext));
 			}
 
 			this.translatedTriples[i] = translation;
 		}
 		this.translated = true;
+	}
+
+	private String getValidatedLocalName(List<DbTranslationContext.Translation> translations, DbTranslationContext translationContext) {
+		String uri = translations.get(0).getLocalConcept().getURI();
+		String shortForm = translationContext.shortForm(uri);
+		return shortForm.contains("/") ? uri : shortForm;
 	}
 
 	public boolean isEmpty() {
@@ -165,11 +165,6 @@ public class AgentQuery implements FIPASendableObject {
 					return "\t" + ti.toString() + " .";
 				})
 				.collect(Collectors.joining(NEWLINE));
-
-		//if(hasConstraints())
-		//	tripleWherePattern += NEWLINE + Arrays.stream(getConstraints())
-		//		.map(constraint -> "\t" + constraint.toString())
-		//		.collect(Collectors.joining(NEWLINE));
 
 
 		if(hasBinds())
@@ -259,5 +254,9 @@ public class AgentQuery implements FIPASendableObject {
 
 	public TripleInfo[] getTranslatedTriples() {
 		return translatedTriples;
+	}
+
+	public Integer getTargetAqlQueryID() {
+		return targetAqlQueryID;
 	}
 }

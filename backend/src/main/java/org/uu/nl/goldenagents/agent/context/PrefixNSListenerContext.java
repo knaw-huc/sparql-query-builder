@@ -71,4 +71,19 @@ public class PrefixNSListenerContext implements Context {
         return namespaces;
     }
 
+    public String getNamespaceForPrefix(String prefix) {
+        return this.getPrefixMap().get(prefix);
+    }
+
+    public String getPrefixForNamespace(String uri) {
+        for(AgentID agentID : this.prefixMap.keySet()) {
+            for(String prefix : this.prefixMap.get(agentID).keySet()) {
+                if (this.prefixMap.get(agentID).get(prefix).equals(uri)) {
+                    return prefix;
+                }
+            }
+        }
+        return null;
+    }
+
 }

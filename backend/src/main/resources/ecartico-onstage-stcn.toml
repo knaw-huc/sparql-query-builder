@@ -40,7 +40,7 @@ database_icon = "dns"
 [databases]
     [databases.ecartico]
         localname = "Ecartico"
-        entity_expertise = true
+        entity_expertise = false
         description = "ECARTICO is a comprehensive collection of structured biographical data concerning painters, engravers, printers, book sellers, gold- and silversmiths and others involved in the ‘cultural industries’ of the Low Countries in the sixteenth and seventeenth centuries. As in other biographical databases, users can search and browse for data on individuals or make selections of certain types of data. However, ECARTICO also allows users to visualize and analyze data on cultural entrepreneurs and their ‘milieus’."
         homepage = "https://www.vondel.humanities.uva.nl/ecartico/"
         [databases.ecartico.endpoint]
@@ -56,7 +56,7 @@ database_icon = "dns"
 
     [databases.onstage]
         localname = "OnStage"
-        entity_expertise = true
+        entity_expertise = false
         description = "This is your address for questions about the repertoire, performances, popularity and revenues of the cultural program in Amsterdam’s public theatre during the period 1637 - 1772. All data provided in this system links to archival source materials in contemporary administration."
         homepage = "http://www.vondel.humanities.uva.nl/onstage/"
         [databases.onstage.endpoint]
@@ -72,7 +72,7 @@ database_icon = "dns"
 
     [databases.stcn]
         localname = "STCN"
-        entity_expertise = true
+        entity_expertise = false
         description = "The Short-Title Catalogue Netherlands (STCN) is the Dutch retrospective bibliography for the period 1540-1800; also included are concise descriptions of Dutch (post-)incunabula. The database is freely available as a scholarly bibliographic research instrument. The ultimate goal is the description of every single books that has been published before 1801 in the Netherlands and all Dutch-language books published abroad."
         homepage = "https://www.kb.nl/en/organisation/research-expertise/for-libraries/short-title-catalogue-netherlands-stcn"
         [databases.stcn.endpoint]

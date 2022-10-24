@@ -1,20 +1,28 @@
 package org.uu.nl.goldenagents.agent.context.query;
 
-import org.uu.nl.goldenagents.netmodels.AqlDbTypeSuggestionWrapper;
 import org.uu.nl.goldenagents.netmodels.angular.CachedQueryInfo;
 import org.uu.nl.goldenagents.netmodels.fipa.QueryResult;
 import org.uu.nl.goldenagents.netmodels.fipa.UserQueryTrigger;
-import org.uu.nl.net2apl.core.agent.AgentID;
 import org.uu.nl.net2apl.core.agent.Context;
 
 import java.io.ByteArrayOutputStream;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class QueryResultContext implements Context {
 
+	// Key: QueryID
 	private Map<String, CachedQueryInfo> queryHistory = new LinkedHashMap<>();
+
+	// Key: Conversation ID, Vale: (UUID or, in the case of AQL, unsigned integer)
 	private Map<String, String> conversationIDQueryHashMap = new HashMap<>();
+
+	// Key: QueryID (UUID or, in the case of AQL, unsigned integer)
 	private Map<String, QueryResult> resultMap = new HashMap<>();
+
+	// Key: QueryID (UUID or, in the case of AQL, unsigned integer)
 	private Map<String, UserQueryTrigger> queryMap = new HashMap<>();
 
 	// ID for last query that was initiated

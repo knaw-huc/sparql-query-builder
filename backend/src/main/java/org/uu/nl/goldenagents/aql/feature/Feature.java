@@ -4,9 +4,16 @@ import org.uu.nl.goldenagents.aql.AQLTree;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class Feature extends AQLTree {
+
+    public Feature() {
+        super();
+    }
+
+    public Feature(ID focusName, ID parent) {
+        super(focusName, parent);
+    }
 
     /**
      * Convert this query to an AQL string recursively
@@ -55,7 +62,7 @@ public abstract class Feature extends AQLTree {
      * @param newChild New sub tree
      */
     @Override
-    public void replaceChild(UUID child, AQLTree newChild) throws IllegalArgumentException {
+    public void replaceChild(ID child, AQLTree newChild) throws IllegalArgumentException {
         throw new IllegalArgumentException("Trying to replace a child of a leaf node");
     }
 }

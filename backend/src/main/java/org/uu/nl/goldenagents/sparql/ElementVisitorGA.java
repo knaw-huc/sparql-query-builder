@@ -1,12 +1,5 @@
 package org.uu.nl.goldenagents.sparql;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.logging.Level;
-
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.expr.Expr;
@@ -15,6 +8,9 @@ import org.apache.jena.sparql.util.VarUtils;
 import org.uu.nl.goldenagents.exceptions.BadQueryException;
 import org.uu.nl.net2apl.core.logging.Loggable;
 import org.uu.nl.net2apl.core.platform.Platform;
+
+import java.util.*;
+import java.util.logging.Level;
 
 /**	
  * 	An element visitor that is created to extract information

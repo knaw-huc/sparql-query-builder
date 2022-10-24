@@ -3,9 +3,20 @@ package org.uu.nl.goldenagents.agent.trigger.goal.broker;
 import org.uu.nl.net2apl.core.agent.AgentContextInterface;
 import org.uu.nl.net2apl.core.agent.Goal;
 
+import java.util.Map;
+
 public class LoadConceptsGoal extends Goal {
 
     private boolean isAchieved = false;
+    private final Map<String, String> usedPrefixes;
+
+    public LoadConceptsGoal(Map<String, String> usedPrefixes) {
+        this.usedPrefixes = usedPrefixes;
+    }
+
+    public LoadConceptsGoal() {
+        usedPrefixes = null;
+    }
 
     /**
      * Implement to check whether the goal is achieved according to the information
@@ -24,4 +35,7 @@ public class LoadConceptsGoal extends Goal {
         this.isAchieved = achieved;
     }
 
+    public Map<String, String> getUsedPrefixes() {
+        return usedPrefixes;
+    }
 }

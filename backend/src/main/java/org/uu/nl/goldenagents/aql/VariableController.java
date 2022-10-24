@@ -1,9 +1,10 @@
 package org.uu.nl.goldenagents.aql;
 
+import org.apache.jena.graph.Node;
 import org.apache.jena.sparql.core.Var;
+import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * The VariableController is used when translating an AQL Query to ARQ, to construct fresh variables
@@ -11,15 +12,18 @@ import java.util.UUID;
 public class VariableController {
 
     private HashMap<String, Integer> labelStore;
+    private Map<Var, List<Node>> variableFilterMap;
     private int labellessIndex;
     private Var focusVariable;
-    private UUID focusID;
+    private AQLTree focus; // for debugging
+    private boolean hasMostGenericQueryAtFocus = false;
 
     /**
      * Default constructor
      */
     public VariableController() {
         this.labelStore = new HashMap<>();
+        this.variableFilterMap = new HashMap<>();
         labellessIndex = 0;
     }
 
@@ -46,10 +50,15 @@ public class VariableController {
      * @return          ARQ Var
      */
     public Var getVariableForLabel(String label, int index) {
-        if(index == 0) {
-            return Var.alloc(label);
-        } else {
-            return Var.alloc(String.format("%s_%s", label, indexToVariable(index)));
+        try {
+            if (index == 0) {
+                return Var.alloc(label);
+            } else {
+                return Var.alloc(String.format("%s_%s", label, indexToVariable(index)));
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return Var.alloc("a");
         }
     }
 
@@ -98,15 +107,43 @@ public class VariableController {
     private static String indexToVariable(int index) {
         int letter = Math.floorMod(index, 26);
         int number = Math.floorDiv(index, 26);
-        return String.format("%s%s", String.valueOf((char)(letter + 97)), number > 0 ? String.valueOf(number) : "");
+        return String.format("%s%s", (char) (letter + 97), number > 0 ? String.valueOf(number) : "");
     }
 
-    public void setQueryFocusID(UUID focus) {
-        this.focusID = focus;
+    public void setQueryFocus(AQLTree focus) {
+        this.focus = focus;
     }
 
-    public UUID getQueryFocusID() {
-        return this.focusID;
+    public int getFocusName() {
+        return this.focus.hashCode();
     }
 
+    public void addFilterOnVariable(Var variable, Node filter) {
+        List<Node> filters = this.variableFilterMap.get(variable);
+        if (filters == null) {
+            filters = new ArrayList<>();
+        }
+        filters.add(filter);
+        this.variableFilterMap.put(variable, filters);
+    }
+
+    public Map<Var, List<Node>> getVariableFilterMap() {
+        return variableFilterMap;
+    }
+
+    /**
+     * We use this to understand whether to apply filters (e.g., named resource or named literal).
+     * The reason is that, contrary to every other AQLTree, which only affects the selection of its children,
+     * these filters are applied globally. However, if there is a MostGeneralQuery at the focus (i.e., the variable
+     * for that MostGeneralQuery is the same for the focus AQLTree), than the semantics is "select everything that
+     * matches the resource, *or* everything else", i.e., no filter should be applied in that case.
+     * @return
+     */
+    public boolean isHasMostGenericQueryAtFocus() {
+        return hasMostGenericQueryAtFocus;
+    }
+
+    public void setHasMostGenericQueryAtFocus(boolean hasMostGenericQueryAtFocus) {
+        this.hasMostGenericQueryAtFocus = hasMostGenericQueryAtFocus;
+    }
 }

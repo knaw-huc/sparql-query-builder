@@ -1,13 +1,18 @@
 package org.uu.nl.goldenagents.controllers;
 
+import org.apache.jena.graph.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.feature.Feature;
+import org.uu.nl.goldenagents.aql.feature.NamedLiteral;
 import org.uu.nl.goldenagents.aql.feature.NamedResource;
 import org.uu.nl.goldenagents.aql.feature.TypeSpecification;
 import org.uu.nl.goldenagents.exceptions.AgentNotFoundException;
 import org.uu.nl.goldenagents.netmodels.angular.*;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLJsonObject;
 import org.uu.nl.goldenagents.netmodels.datatables.DataTableResult;
+import org.uu.nl.goldenagents.netmodels.fipa.EntityList;
 import org.uu.nl.goldenagents.netmodels.fipa.UserQueryTrigger;
 import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 import org.uu.nl.goldenagents.services.UserAgentService;
@@ -66,7 +71,6 @@ public class UserAgentController {
     public DataTableResult listQueryResultsPaginated(
             HttpServletRequest request,
             HttpServletResponse response
-
     ) {
         return service.getPaginatedQueryResults(request);
     }
@@ -89,10 +93,16 @@ public class UserAgentController {
      * START OF AQL RELATED INTERFACES
      * ***************************************/
 
+    @Deprecated
     @GetMapping("/{agentid}/aqlquery")
     @ResponseBody
     public AQLQueryObject getAQLQuery(@PathVariable("agentid") String agentID) throws URISyntaxException {
         return service.getCurrentQuery(UUID.fromString(agentID));
+    }
+
+    @GetMapping("/{agentid}/aqlqueryjson")
+    public AQLJsonObject getAQLJSONQuery(@PathVariable("agentid") String agentID) throws URISyntaxException {
+        return service.getCurrentQueryAsJson(UUID.fromString(agentID));
     }
 
     @GetMapping("/{agentid}/aqlsuggestions")
@@ -109,7 +119,7 @@ public class UserAgentController {
 
     @PostMapping("/{agentid}/aqlquery/addClass")
     @ResponseBody
-    public AQLQueryObject addClass(@PathVariable("agentid") String agentID, @RequestBody AQLResource classUri) {
+    public AQLJsonObject addClass(@PathVariable("agentid") String agentID, @RequestBody AQLResource classUri) {
         SerializableResourceImpl resource = new SerializableResourceImpl(classUri.uri);
         TypeSpecification feature = new TypeSpecification(resource, classUri.label);
         return service.intersect(UUID.fromString(agentID), feature);
@@ -117,52 +127,60 @@ public class UserAgentController {
 
     @PostMapping("/{agentid}/aqlquery/addProperty/{forwards}")
     @ResponseBody
-    public AQLQueryObject addProperty(@PathVariable("agentid") String agentID, @PathVariable("forwards") boolean forwards, @RequestBody AQLResource propertyUri) {
+    public AQLJsonObject addProperty(@PathVariable("agentid") String agentID, @PathVariable("forwards") boolean forwards, @RequestBody AQLResource propertyUri) {
         return service.cross(UUID.fromString(agentID), propertyUri, forwards);
     }
 
     @PostMapping("/{agentid}/aqlquery/addEntity")
     @ResponseBody
-    public AQLQueryObject addEntity(@PathVariable("agentid") String agentID, String entityUri) {
-        SerializableResourceImpl resource = new SerializableResourceImpl(entityUri);
-        NamedResource feature = new NamedResource(resource);
+    public AQLJsonObject addEntity(@PathVariable("agentid") String agentID, @RequestBody AQLSuggestions.InstanceSuggestion entity) {
+        EntityList.Entity e = new EntityList.Entity(entity);
+        Feature feature;
+        if (e.isUri()) {
+            feature = new NamedResource(new SerializableResourceImpl(e.getValue()));
+        } else {
+            feature = new NamedLiteral(e);
+        }
+
         return service.intersect(UUID.fromString(agentID), feature);
     }
 
     @PostMapping("/{agentid}/aqlquery/intersect")
     @ResponseBody
-    public AQLQueryObject intersect(@PathVariable("agentid") String agentID, Feature feature) throws URISyntaxException {
+    public AQLJsonObject intersect(@PathVariable("agentid") String agentID, Feature feature) throws URISyntaxException {
         return service.intersect(UUID.fromString(agentID), feature);
     }
 
     @PostMapping("/{agentid}/aqlquery/exclude")
     @ResponseBody
-    public AQLQueryObject exclude(@PathVariable("agentid") String agentID) throws URISyntaxException {
+    public AQLJsonObject exclude(@PathVariable("agentid") String agentID) throws URISyntaxException {
         return service.exclude(UUID.fromString(agentID));
     }
 
     @PostMapping("/{agentid}/aqlquery/union")
     @ResponseBody
-    public AQLQueryObject union(@PathVariable("agentid") String agentID) throws URISyntaxException {
+    public AQLJsonObject union(@PathVariable("agentid") String agentID) throws URISyntaxException {
         return service.union(UUID.fromString(agentID));
     }
 
     @PostMapping("/{agentid}/aqlquery/focus/{focus}")
     @ResponseBody
-    public AQLQueryObject focus(@PathVariable("agentid") String agentID, @PathVariable("focus") String focus) throws URISyntaxException {
-        return service.changeFocus(UUID.fromString(agentID), UUID.fromString(focus));
+    public AQLJsonObject focus(@PathVariable("agentid") String agentID, @PathVariable("focus") String focus) throws URISyntaxException {
+        AQLTree.ID focusName = AQLTree.ID.fromString(focus);
+        return service.changeFocus(UUID.fromString(agentID), focusName);
     }
 
     @PostMapping("/{agentid}/aqlquery/delete")
     @ResponseBody
-    public AQLQueryObject deleteCurrentFocus(@PathVariable("agentid") String agentID) throws URISyntaxException {
+    public AQLJsonObject deleteCurrentFocus(@PathVariable("agentid") String agentID) throws URISyntaxException {
         return service.deleteCurrentFocus(UUID.fromString(agentID));
     }
 
     @PostMapping("/{agentid}/aqlquery/delete/{focus}")
     @ResponseBody
-    public AQLQueryObject delete(@PathVariable("agentid") String agentID, @PathVariable("delete") String focus) throws URISyntaxException {
-        return service.deleteQueryFocus(UUID.fromString(agentID), UUID.fromString(focus));
+    public AQLJsonObject delete(@PathVariable("agentid") String agentID, @PathVariable("focus") String focus) throws URISyntaxException {
+        AQLTree.ID focusName = AQLTree.ID.fromString(focus);
+        return service.deleteQueryFocus(UUID.fromString(agentID), focusName);
     }
 
 }

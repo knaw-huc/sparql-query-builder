@@ -2,9 +2,11 @@ package org.uu.nl.goldenagents.agent.plan.broker.suggestions;
 
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntProperty;
-import org.apache.jena.rdf.model.impl.ResourceImpl;
+import org.apache.jena.rdf.model.Resource;
+import org.uu.nl.goldenagents.agent.context.BrokerSearchSuggestionsContext;
 import org.uu.nl.goldenagents.netmodels.AqlDbTypeSuggestionWrapper;
 import org.uu.nl.goldenagents.netmodels.angular.AQLSuggestions;
+import org.uu.nl.goldenagents.netmodels.fipa.EntityList;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
 import org.uu.nl.goldenagents.sparql.CachedModel;
 import org.uu.nl.net2apl.core.agent.AgentID;
@@ -25,20 +27,19 @@ public class DbBasedSuggestSearchOptionsPlan extends ASuggestSearchOptionsPlan {
      */
     @Override
     protected List<AQLSuggestions.TypeSuggestion> generateClassList() {
-        // Preparation
-        HashMap<AgentID, AqlDbTypeSuggestionWrapper> dbSuggestions =
-                this.context.getDbSuggestionsForQuery(this.message.getConversationId());
+        Map<AgentID, AqlDbTypeSuggestionWrapper> dbSuggestions =
+            searchSuggestionsContext.getDbSuggestionsForQuery(message.getConversationId(), this.userQueryTrigger.getAql());
 
         // Join suggested classes from all DB agents
         Set<OntClass> allClasses = new HashSet<>();
         List<AgentID> agentKeys = new ArrayList<>(dbSuggestions.keySet());
         for(AgentID aid : agentKeys) {
-            allClasses.addAll(dbSuggestions.get(aid).getClassSuggestions(context.getOntology()));
+            allClasses.addAll(dbSuggestions.get(aid).getClassSuggestions(brokerContext.getOntology()));
         }
 
         // Create list of AQL type suggestions, filtering out all classes not in general ontology
         return findUpperClasses(allClasses.iterator()).stream()
-                .map(x -> new AQLSuggestions.TypeSuggestion(x, this.context.getOntologyClasses()))
+                .map(x -> new AQLSuggestions.TypeSuggestion(x, this.brokerContext.getOntologyClasses()))
                 .collect(Collectors.toList());
     }
 
@@ -48,16 +49,16 @@ public class DbBasedSuggestSearchOptionsPlan extends ASuggestSearchOptionsPlan {
     @Override
     protected List<AQLSuggestions.TypeSuggestion> generatePropertyList() {
         // Preparation
-        HashMap<AgentID, AqlDbTypeSuggestionWrapper> dbSuggestions =
-                this.context.getDbSuggestionsForQuery(this.message.getConversationId());
+        Map<AgentID, AqlDbTypeSuggestionWrapper> dbSuggestions =
+                searchSuggestionsContext.getDbSuggestionsForQuery(message.getConversationId(), this.userQueryTrigger.getAql());
 
         // Join suggested properties from all DB agents
         Set<OntProperty> forwardProperties = new HashSet<>();
         Set<OntProperty> backwardProperties = new HashSet<>();
         List<AgentID> agentKeys = new ArrayList<>(dbSuggestions.keySet());
         for(AgentID aid : agentKeys) {
-            forwardProperties.addAll(dbSuggestions.get(aid).getForwardCrossingOntologyProperties(this.context.getOntology()));
-            backwardProperties.addAll(dbSuggestions.get(aid).getBackwardCrossingOntologyProperties(this.context.getOntology()));
+            forwardProperties.addAll(dbSuggestions.get(aid).getForwardCrossingOntologyProperties(this.brokerContext.getOntology()));
+            backwardProperties.addAll(dbSuggestions.get(aid).getBackwardCrossingOntologyProperties(this.brokerContext.getOntology()));
         }
 
         // Reduce set to upper properties only
@@ -69,10 +70,10 @@ public class DbBasedSuggestSearchOptionsPlan extends ASuggestSearchOptionsPlan {
         // Create suggestion object for each remaining property (both forwards and backwards crossing), filtering
         // out all properties that are not in the general ontology
         for(OntProperty prop : forwardProperties) {
-            suggestions.add(new AQLSuggestions.TypeSuggestion(prop, true, this.context.getOntologyProperties()));
+            suggestions.add(new AQLSuggestions.TypeSuggestion(prop, true, this.brokerContext.getOntologyProperties()));
         }
         for(OntProperty prop : backwardProperties) {
-            suggestions.add(new AQLSuggestions.TypeSuggestion(prop, false, this.context.getOntologyProperties()));
+            suggestions.add(new AQLSuggestions.TypeSuggestion(prop, false, this.brokerContext.getOntologyProperties()));
         }
 
         return suggestions;
@@ -81,14 +82,16 @@ public class DbBasedSuggestSearchOptionsPlan extends ASuggestSearchOptionsPlan {
     /**
      * Generate a list of instances the current query can be intersected with at the current focus
      */
+    @Deprecated
     @Override
     protected List<AQLSuggestions.InstanceSuggestion> generateInstanceList() {
-        // TODO instances should come from BROKER itself. These are the same entities that are sent to DB agents
         List<AQLSuggestions.InstanceSuggestion> suggestions = new ArrayList<>();
-        CachedModel m = this.context.getCachedModel(this.message.getConversationId());
+        BrokerSearchSuggestionsContext.SearchSuggestionSubscription subscription =
+                this.searchSuggestionsContext.getSubscription(this.conversationID);
+        CachedModel m = subscription.getSearchSuggestions(this.userQueryTrigger.getAql().hashCode()).getModel();
         if (m != null) {
-            ArrayList<ResourceImpl> individuals = m.getEntitiesAtFocus();
-            suggestions = individuals.subList(0, Math.min(individuals.size(), 200)).stream().map(AQLSuggestions.InstanceSuggestion::new).collect(Collectors.toList());
+            EntityList individuals = subscription.getSearchSuggestions(this.userQueryTrigger.getAql()).getSerializableFocusEntities();
+            suggestions = individuals.getSublist(200).stream().map(AQLSuggestions.InstanceSuggestion::new).collect(Collectors.toList());
         }
         return suggestions;
     }

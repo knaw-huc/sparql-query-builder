@@ -8,22 +8,9 @@ import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
  * @author jbaas
  * @see org.uu.nl.goldenagents.agent.plan.MessagePlan#executeOnce(org.uu.nl.net2apl.core.agent.PlanToAgentInterface, org.uu.nl.net2apl.core.fipa.acl.ACLMessage, GAMessageHeader, FIPASendableObject)
  */
-public class GAMessageContentString implements FIPASendableObject {
+public class GAMessageContentString extends GaMessageContentObjectContainer<String> {
 
-	private static final long serialVersionUID = 1L;
-
-	private final String content;
-	
 	public GAMessageContentString(String content) {
-		this.content = content;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	@Override
-	public String toString() {
-		return content;
+		super(content);
 	}
 }

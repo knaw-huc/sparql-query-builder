@@ -23,7 +23,7 @@ public class AqlDbTypeSuggestionWrapper implements FIPASendableObject, Serializa
     private List<String> classSuggestions;
     private List<String> forwardCrossingOntologyProperties; // p of q1    (y p x, y is fresh)
     private List<String> backwardCrossingOntologyProperties; // p : q1    (x p y, y is fresh)
-
+    private int targetAqlQueryId;
     private UUID conversationID;
 
     /**
@@ -37,10 +37,12 @@ public class AqlDbTypeSuggestionWrapper implements FIPASendableObject, Serializa
             List<Resource> classSuggestions,
             List<Resource> forwardCrossingOntologyProperties,
             List<Resource> backwardCrossingOntologyProperties,
+            int targetAqlQueryID,
             UUID conversationID) {
         this.classSuggestions = classSuggestions.stream().map(Resource::getURI).collect(Collectors.toList());
         this.forwardCrossingOntologyProperties = forwardCrossingOntologyProperties.stream().map(Resource::getURI).collect(Collectors.toList());
         this.backwardCrossingOntologyProperties = backwardCrossingOntologyProperties.stream().map(Resource::getURI).collect(Collectors.toList());
+        this.targetAqlQueryId = targetAqlQueryID;
         this.conversationID = conversationID;
     }
 
@@ -109,5 +111,9 @@ public class AqlDbTypeSuggestionWrapper implements FIPASendableObject, Serializa
      */
     public void setConversationID(UUID conversationID) {
         this.conversationID = conversationID;
+    }
+
+    public int getTargetAqlQueryId() {
+        return targetAqlQueryId;
     }
 }

@@ -3,6 +3,7 @@ package org.uu.nl.goldenagents.sparql;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.apache.jena.graph.Node;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
@@ -135,5 +136,19 @@ public class OntologicalConceptInfo implements FIPASendableObject {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		List<String> nodeValues = new ArrayList<>();
+		for(List<Node> nodes : this.getOntologicalMappings().values()) {
+			for(Node n : nodes) {
+				nodeValues.add(n.getURI());
+			}
+		}
+		return String.format(
+				"%s -> %s",
+				this.label,
+				nodeValues.size() == 1 ? nodeValues.get(0) : "(" + String.join(", ", nodeValues)
+		);
+	}
 }

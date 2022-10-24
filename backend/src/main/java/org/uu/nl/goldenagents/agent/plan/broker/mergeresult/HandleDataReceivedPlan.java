@@ -1,9 +1,7 @@
 package org.uu.nl.goldenagents.agent.plan.broker.mergeresult;
 
 import org.apache.jena.rdf.model.Model;
-import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
-import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
-import org.uu.nl.goldenagents.netmodels.fipa.SubGraph;
+import org.uu.nl.goldenagents.netmodels.fipa.*;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.defaults.messenger.MessageReceiverNotFoundException;
 import org.uu.nl.net2apl.core.fipa.acl.ACLMessage;
@@ -30,7 +28,21 @@ public class HandleDataReceivedPlan extends MergeResultPlan{
                 this.conversationID));
 
         try {
-            final Model model = ((SubGraph) content).getModel();
+            SubGraph subGraph = (SubGraph) content;
+
+            // Acknowledge results to data source, so a new batch of results may be initiated
+            // We send the message before starting processing, so DB agent does not have to wait for this
+            ACLMessage response = this.message.createReply(planInterface.getAgentID(), Performative.QUERY_REF);
+            response.setContentObject(
+                    new GAMessageContentWrapper(
+                            GAMessageHeader.BROKER_ACK,
+                            new GaMessageContentObjectContainer<>(subGraph.getTargetAqlQueryID())
+                    )
+            );
+
+            planInterface.getAgent().sendMessage(response);
+
+            final Model model = subGraph.getModel();
             long nAddedItems = this.model.addPartialModel(this.datasourceAgent, model);
             long dataSize = this.model.getTotalSize();
 
@@ -41,12 +53,6 @@ public class HandleDataReceivedPlan extends MergeResultPlan{
                     dataSize));
 
             this.publisher.publishQueryProgress(createQueryProgress(dataSize, nAddedItems));
-
-            // Acknowledge results to data source, so a new batch of results may be initiated
-            ACLMessage response = this.message.createReply(planInterface.getAgentID(), Performative.QUERY_REF);
-            response.setContentObject(new GAMessageContentWrapper(GAMessageHeader.BROKER_ACK));
-
-            planInterface.getAgent().sendMessage(response);
         } catch (IOException | MessageReceiverNotFoundException | PlatformNotFoundException e) {
             logger.log(MergeResultPlan.class, e);
         }

@@ -112,9 +112,7 @@ public class ProvenanceTracer {
 	 */
 	private void findSourcesOfAsExpressions() {
 		Map<String, Set<String>> varsToAdd = findVarsInAsExpressions();
-		varsToAdd.forEach((varToAdd, mappingFromVars) -> {
-			mapSources(varToAdd, mappingFromVars);
-		});
+		varsToAdd.forEach(this::mapSources);
 	}
 	
 	/**

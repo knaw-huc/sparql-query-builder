@@ -55,9 +55,10 @@ COPY src/main/resources/configs ./configs
 COPY src/main/resources/golden-agents-datasets ./golden-agents-datasets
 COPY Dockerfile ./
 COPY pom.xml ./
+COPY data ./data
 
 EXPOSE 8080
 
 # Run backend on start of container
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+#ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD java -jar golden-agents-backend.jar --configuration ${CONFIG}

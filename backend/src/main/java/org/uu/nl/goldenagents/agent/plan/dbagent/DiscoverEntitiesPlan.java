@@ -1,13 +1,16 @@
 package org.uu.nl.goldenagents.agent.plan.dbagent;
 
 import org.apache.jena.arq.querybuilder.SelectBuilder;
+import org.apache.jena.arq.querybuilder.WhereBuilder;
 import org.apache.jena.graph.Node;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.sparql.core.Var;
 import org.apache.jena.sparql.engine.http.QueryExceptionHTTP;
 import org.apache.jena.sparql.expr.Expr;
 import org.apache.jena.sparql.expr.ExprVar;
 import org.apache.jena.sparql.resultset.ResultSetException;
+import org.apache.jena.vocabulary.RDF;
 import org.uu.nl.goldenagents.agent.context.DBAgentContext;
 import org.uu.nl.goldenagents.decompose.expertise.DbAgentExpertise;
 import org.uu.nl.goldenagents.sparql.MappingPropertyType;
@@ -15,6 +18,7 @@ import org.uu.nl.goldenagents.sparql.OntologicalConceptInfo;
 import org.uu.nl.goldenagents.sparql.PreparedQueryExecution;
 import org.uu.nl.goldenagents.util.CollectionUtils;
 import org.uu.nl.goldenagents.util.DatabaseConfig;
+import org.uu.nl.goldenagents.util.SparqlUtils;
 import org.uu.nl.net2apl.core.platform.Platform;
 
 import java.util.ArrayList;
@@ -34,8 +38,7 @@ import java.util.logging.Level;
 public class DiscoverEntitiesPlan extends DiscoverExpertisePlan {
 
 	@Override
-	protected DbAgentExpertise addStatsToConceptInfo(DBAgentContext context, List<OntologicalConceptInfo> conceptList) {
-
+	protected DbAgentExpertise addStatsToConceptInfo(List<OntologicalConceptInfo> conceptList) {
 		int count = 0;
 		//	Sends queries to collect entities
 		for(OntologicalConceptInfo conceptInfo : conceptList) {
@@ -119,7 +122,7 @@ public class DiscoverEntitiesPlan extends DiscoverExpertisePlan {
 				conceptList.get(j).addStarCombination(conceptList.get(i).getLabel(), intersection.size());
 			}
 		}
-		return new DbAgentExpertise(conceptList);
+		return new DbAgentExpertise(conceptList, null);
 	}
 
 	/**
@@ -135,6 +138,38 @@ public class DiscoverEntitiesPlan extends DiscoverExpertisePlan {
 		addWhereClause(mappings, sb, count);
 		sb.setDistinct(true);
 		return sb;
+	}
+
+	protected void addWhereClause(Map<MappingPropertyType, ArrayList<Node>> mappings, SelectBuilder sb, int count) {
+		for (MappingPropertyType relation : mappings.keySet()) {
+			ArrayList<Node> nodeList = mappings.get(relation);
+			for (int i = 0; i < nodeList.size(); i++) {
+				/*
+				 * This is an anonymous variable that we need in the object position
+				 * If we do not make them unique then a problem arises because variables
+				 * in two different statements become the same.
+				 * Var.ANON is useless because it produces the same variable everytime
+				 */
+				Var var_obj = Var.alloc(count + SparqlUtils.OBJECT_VAR_NAME + i);
+				Node node = nodeList.get(i);
+				WhereBuilder wb = new WhereBuilder();
+				//owl:equivalent class and owl:subclass
+				if ((relation == MappingPropertyType.OWL_SUBCLASS)
+						|| (relation == MappingPropertyType.OWL_EQ_CLASS)) {
+					wb.addWhere(VAR_SUBJECT, RDF.type, node);
+				}
+				//owl:equivalent property and rdfs:subPropertyOf
+				else if ((relation == MappingPropertyType.OWL_EQ_PROPERTY)
+						|| (relation == MappingPropertyType.RDFS_SUBPROPERTY)) {
+					wb.addWhere(VAR_SUBJECT, node, var_obj);
+				}
+				//owl:inverse
+				else if (relation == MappingPropertyType.OWL_INVERSE) {
+					wb.addWhere(var_obj, node, VAR_SUBJECT);
+				}
+				sb.addUnion(wb);
+			}
+		}
 	}
 
 }

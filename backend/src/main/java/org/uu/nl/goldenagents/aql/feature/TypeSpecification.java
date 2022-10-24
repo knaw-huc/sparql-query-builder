@@ -11,8 +11,8 @@ import org.uu.nl.goldenagents.aql.VariableController;
 import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class TypeSpecification extends hasResource {
 
@@ -27,6 +27,11 @@ public class TypeSpecification extends hasResource {
         this.type = TYPE.CLASS;
     }
 
+    private TypeSpecification(SerializableResourceImpl resource, String label, ID focusName, ID parent) {
+        super(resource, label, focusName, parent);
+        this.type = TYPE.CLASS;
+    }
+
     /**
      * AQL label representing this node in the AQL query
      *
@@ -34,7 +39,7 @@ public class TypeSpecification extends hasResource {
      */
     @Override
     public String getAQLLabel() {
-        return "that is a " + super.getAQLLabel();
+        return super.getAQLLabel();
     }
 
     public Op toARQ(Var var, VariableController controller) {
@@ -76,17 +81,6 @@ public class TypeSpecification extends hasResource {
     }
 
     /**
-     * Replace a child of this node with a new sub tree
-     *
-     * @param child    Child to be replaced
-     * @param newChild New sub tree
-     */
-    @Override
-    public void replaceChild(UUID child, AQLTree newChild) throws IllegalArgumentException {
-        throw new IllegalArgumentException("No children that can be replaced on this node");
-    }
-
-    /**
      * Get the subqueries for this tree. Subqueries are the edges of this node.
      *
      * @return List of subqueries (i.e. sub trees) for this node
@@ -95,4 +89,12 @@ public class TypeSpecification extends hasResource {
     public List<AQLTree> getSubqueries() {
         return new ArrayList<>();
     }
+
+    @Override
+    public AQLTree copy(ID parent, HashMap<ID, AQLTree> foci) {
+        TypeSpecification copy = new TypeSpecification(this.resource, this.label, this.getFocusName(), parent);
+        foci.put(copy.getFocusName(), copy);
+        return copy;
+    }
+
 }

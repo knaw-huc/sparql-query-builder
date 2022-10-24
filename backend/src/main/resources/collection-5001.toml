@@ -1,0 +1,84 @@
+# Specify the data bases that should be connected. Agents will be created for each database automatically
+database_icon = "dns"
+
+# Specify at least one ontology
+[[ontology]]
+    local = false
+    uri = "https://sparql.goldenagents.org/"
+    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/ga_ontology_20210730"
+    default_page_size = 10000
+#   Specify the preferred namespace if it is not explicitly declared as preferred in the ontology (prefix present is not sufficient)
+#    [[ontology.prefixes]]
+#        prefix = "ga"
+#        iri = "https://data.goldenagents.org/ontology/"
+
+# Specify the linksets used to link the databases above
+[[linkset]]
+    local = false
+    uri = "https://sparql.goldenagents.org/"
+    default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/linkset_onstage_ecartico_sameas_20190218"
+    default_page_size = 10000
+
+[[linkset]]
+    local = false
+    uri = "https://sparql.goldenagents.org/"
+    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb_linkset_1_20210723"
+    default_page_size = 10000
+
+#[[linkset]]
+#    local = false
+#    uri = "https://sparql.goldenagents.org/"
+#    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb_linkset_2_20210723"
+#    default_page_size = 10000
+
+[[linkset]]
+    local = true
+    method="FILE"
+    uri="golden-agents-datasets/2021_Q2/linkset/jiw_otr_linkset_person.ttl"
+#    uri = "https://sparql.goldenagents.org/"
+#    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/jiw_otr_linkset_20210727"
+#    default_page_size = 2500
+#    timeout = 30000
+
+# Specify the non-DB related agents that should be added to the system
+[agents]
+    [agents.df]
+        type = "df"
+        icon = "import_contacts"
+        localname = "Directory Facilitator"
+
+    [agents.broker]
+        type = "broker"
+        icon = "call_split"
+        localname = "Broker"
+
+#    [agents.user]
+#        type = "user"
+#        icon = "person"
+#        localname = "User"
+
+
+[databases]
+    # This one hardly contributes to results
+    [databases.collection5001]
+        localname = "Collection 5001"
+        description = "Collection 5001"
+        entity_expertise = false
+        homepage = ""
+        [databases.collection5001.endpoint]
+            local = false
+            uri = "https://sparql.goldenagents.org/"
+            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ead_5001_xml_20210712"
+            method = "SPARQL"
+            default_page_size = 10000
+        [[databases.collection5001.mapping]]
+            local = false
+            uri = "https://sparql.goldenagents.org/"
+            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+
+
+
+
+
+
+

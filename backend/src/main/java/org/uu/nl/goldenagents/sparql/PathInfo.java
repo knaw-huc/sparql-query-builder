@@ -4,6 +4,8 @@ import org.uu.nl.net2apl.core.logging.Loggable;
 import org.uu.nl.net2apl.core.platform.Platform;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,10 +29,35 @@ public class PathInfo implements Serializable {
 
 	private String[] separators;
 	private String alias;
+
+	private List<String> customSplitPath(String raw) {
+		List<String> parts = new ArrayList<>();
+		List<String> separators = new ArrayList<>();
+		StringBuilder builder = new StringBuilder();
+		boolean inUri = false;
+		for(int i = 0; i < raw.length(); i++) {
+			if (raw.charAt(i) == '<') {
+				inUri = true;
+				builder.append('<');
+			} else if (inUri && raw.charAt(i) == '>') {
+				builder.append('>');
+				inUri = false;
+			} else if (!inUri && pattern.matcher("" + raw.charAt(i)).matches()) {
+				parts.add(builder.toString());
+				builder = new StringBuilder();
+				separators.add("" + raw.charAt(i));
+			} else {
+				builder.append(raw.charAt(i));
+			}
+		}
+		parts.add(builder.toString());
+		this.separators = separators.toArray(new String[0]);
+		return parts;
+	}
 	
 	public PathInfo(String raw) {
 		try {
-			String[] parts = raw.split(DELIMITERS);
+			String[] parts = customSplitPath(raw).toArray(new String[0]);
 			this.predicates = new String[parts.length];
 			this.prefixes = new String[parts.length];
 			this.suffixes = new String[parts.length];
@@ -47,15 +74,6 @@ public class PathInfo implements Serializable {
 
 				predicates[i] = parts[i];
 			}
-
-			this.separators = new String[parts.length - 1];
-			final Matcher matcher = pattern.matcher(raw);
-			int i = 0;
-			while(matcher.find()) {
-				separators[i] = matcher.group();
-				i++;
-			}
-
 		} catch (StringIndexOutOfBoundsException e) {
 			/*
 			 * TODO When the prefixes are not mapped properly,

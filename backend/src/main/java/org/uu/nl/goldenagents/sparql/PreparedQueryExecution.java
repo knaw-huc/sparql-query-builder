@@ -18,6 +18,7 @@ public class PreparedQueryExecution implements AutoCloseable {
 	public PreparedQueryExecution(String query, RdfSourceConfig source) {
 		this.source = source;
 		this.queryExecution = QueryExecutionFactory.createServiceRequest(source.getLocation(), QueryFactory.create(query));
+
 		if (source.getDefaultGraph() != null)
 			this.queryExecution.setDefaultGraphURIs(Collections.singletonList(source.getDefaultGraph()));
 		setTimeout(source.getTimeout());

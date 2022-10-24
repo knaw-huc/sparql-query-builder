@@ -27,7 +27,7 @@ import org.uu.nl.net2apl.core.platform.Platform;
  */
 public class DiscoverBrokerExpertisePlan extends Plan {
 	
-	private static Loggable LOGGER = Platform.getLogger();
+	private static final Loggable LOGGER = Platform.getLogger();
 	private ExpertiseGraph<String> brokerExpertise;
 	
 	@Override
@@ -40,8 +40,7 @@ public class DiscoverBrokerExpertisePlan extends Plan {
 			}
 		}
 		if(context.getDbAgentExpertises().size() == 1) {
-			context.getDbAgentExpertises().forEach(
-					(aid, expertise) -> addAgent(aid, expertise));
+			context.getDbAgentExpertises().forEach(this::addAgent);
 		}
 		else {
 			addNewcomer(context.getDbAgentExpertises(), context.getLinkMap());
@@ -50,6 +49,7 @@ public class DiscoverBrokerExpertisePlan extends Plan {
 		egHandler.fullAnalysis();
 		LOGGER.log(this.getClass(), Level.INFO, "Broker Agent updated the graph:\n" + 
 				context.getExpertiseGraph().summarizeSize());
+
 	}
 	
 	/**

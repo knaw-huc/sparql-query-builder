@@ -6,23 +6,27 @@ import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.VariableController;
 import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.UUID;
 
 public class NamedResource extends hasResource {
 
     public NamedResource(SerializableResourceImpl resource) {
-        super(resource);
+        super(resource, resource.getLabel());
     }
 
     public NamedResource(SerializableResourceImpl resource, String label) {
         super(resource, label);
     }
 
+    private NamedResource(SerializableResourceImpl resource, String label, ID focusName, ID parent) {
+        super(resource, label, focusName, parent);
+    }
+
     public Op toARQ(Var var, VariableController controller) {
-        // See @code{Exclusion} for the issue here
         checkIfFocus(var, controller);
+        controller.addFilterOnVariable(var, this.resource.asNode());
         return null;
     }
 
@@ -57,17 +61,6 @@ public class NamedResource extends hasResource {
     }
 
     /**
-     * Replace a child of this node with a new sub tree
-     *
-     * @param child    Child to be replaced
-     * @param newChild New sub tree
-     */
-    @Override
-    public void replaceChild(UUID child, AQLTree newChild) throws IllegalArgumentException {
-        throw new IllegalArgumentException("Named resource does not have any children that can be renamed");
-    }
-
-    /**
      * Get the subqueries for this tree. Subqueries are the edges of this node.
      *
      * @return List of subqueries (i.e. sub trees) for this node
@@ -77,5 +70,10 @@ public class NamedResource extends hasResource {
         return new LinkedList<>();
     }
 
-
+    @Override
+    public AQLTree copy(ID parent, HashMap<ID, AQLTree> foci) {
+        NamedResource copy = new NamedResource(this.resource, this.label, this.getFocusName(), parent);
+        foci.put(copy.getFocusName(), copy);
+        return copy;
+    }
 }

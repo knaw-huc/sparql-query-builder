@@ -4,6 +4,7 @@ import org.uu.nl.goldenagents.agent.context.query.QueryProgressType;
 import org.uu.nl.goldenagents.netmodels.angular.QueryProgress;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentString;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
+import org.uu.nl.goldenagents.netmodels.fipa.SubGraph;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.fipa.acl.ACLMessage;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
@@ -20,8 +21,8 @@ public class HandleDataErrorPlan extends MergeResultPlan {
     @Override
     protected void handleMessage(PlanToAgentInterface planInterface) {
         this.model.setErrorForAgent(this.datasourceAgent);
-
-        String error = ((GAMessageContentString)content).getContent();
+        SubGraph subGraph = SubGraph.fromACLMessage(message);
+        String error = subGraph.getErrorReason();
 
         // Send error information to subscribed listeners
         QueryProgress<String> errorProgress = new QueryProgress<>(

@@ -3,8 +3,11 @@ package org.uu.nl.goldenagents.aql;
 import org.apache.jena.sparql.algebra.Op;
 import org.apache.jena.sparql.algebra.op.OpBGP;
 import org.apache.jena.sparql.core.Var;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLJsonBuilder;
+import org.uu.nl.goldenagents.netmodels.angular.aql.AQLQueryJsonObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +19,12 @@ public class MostGeneralQuery extends AQLTree {
     private static final int N_SUB_TREES = 0;
     private static final String AQL_LABEL = "?";
     private static final String NL_LABEL = "anything";
+
+    public MostGeneralQuery() { }
+
+    private MostGeneralQuery(ID focusName, ID parent) {
+        super(focusName, parent);
+    }
 
     /**
      * AQL label representing this node in the AQL query
@@ -30,7 +39,10 @@ public class MostGeneralQuery extends AQLTree {
 
     public Op toARQ(Var var, VariableController controller) {
         checkIfFocus(var, controller);
-        return new OpBGP();
+        if (var.equals(controller.getFocusVariable())) {
+            controller.setHasMostGenericQueryAtFocus(true);
+        }
+        return controller.getFocusName() == this.hashCode() ? new OpBGP() : null;
     }
 
     /**
@@ -70,7 +82,7 @@ public class MostGeneralQuery extends AQLTree {
      * @param newChild New sub tree
      */
     @Override
-    public void replaceChild(UUID child, AQLTree newChild) throws IllegalArgumentException {
+    public void replaceChild(ID child, AQLTree newChild) throws IllegalArgumentException {
         throw new IllegalArgumentException("The most general query does not have any children which can be replaced");
     }
 
@@ -82,5 +94,17 @@ public class MostGeneralQuery extends AQLTree {
     @Override
     public List<AQLTree> getSubqueries() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MostGeneralQuery;
+    }
+
+    @Override
+    public AQLTree copy(ID parent, HashMap<ID, AQLTree> foci) {
+        MostGeneralQuery copy = new MostGeneralQuery(getFocusName(), parent);
+        foci.put(copy.getFocusName(), copy);
+        return copy;
     }
 }

@@ -10,7 +10,7 @@ import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.VariableController;
 import org.uu.nl.goldenagents.netmodels.jena.SerializableResourceImpl;
 
-import java.util.UUID;
+import java.util.HashMap;
 
 /**
  * Forward crossing properties are those properties p ( S , . )
@@ -31,14 +31,8 @@ public class CrossingForwards extends CrossingOperator {
         super(resource, subquery, label);
     }
 
-    /**
-     * AQL label representing this node in the AQL query
-     *
-     * @return String
-     */
-    @Override
-    public String getAQLLabel() {
-        return "that is the " + this.label + " of something";
+    private CrossingForwards(SerializableResourceImpl resource, AQLTree subquery, String label, ID focusName, ID parent) {
+        super(resource, subquery, label, focusName, parent);
     }
 
     public Op toARQ(Var var, VariableController controller) {
@@ -72,5 +66,11 @@ public class CrossingForwards extends CrossingOperator {
         return "";
     }
 
-
+    @Override
+    public AQLTree copy(ID parent, HashMap<ID, AQLTree> foci) {
+        AQLTree child = getSubquery().copy(getFocusName(), foci);
+        CrossingForwards copy = new CrossingForwards(this.resource, child, label, this.getFocusName(), parent);
+        foci.put(copy.getFocusName(), copy);
+        return copy;
+    }
 }

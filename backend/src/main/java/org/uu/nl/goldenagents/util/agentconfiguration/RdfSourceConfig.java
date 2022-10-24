@@ -31,7 +31,7 @@ public class RdfSourceConfig {
     private final String defaultGraph;
     private final boolean isLocal;
     private int defaultPageSize = DEFAULT_PAGE_SIZE;
-    private long timeout = 10000L;
+    private long timeout = 60000L;
     private final Map<String, String> prefixes = new HashMap<>();
 
     private boolean isLoaded = false;

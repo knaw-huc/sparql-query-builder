@@ -1,12 +1,11 @@
 package org.uu.nl.goldenagents.agent.plan.dbagent;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 import org.uu.nl.goldenagents.agent.context.DBAgentContext;
+import org.uu.nl.goldenagents.agent.context.query.DbTranslationContext;
 import org.uu.nl.goldenagents.agent.plan.MessagePlan;
-import org.uu.nl.goldenagents.netmodels.fipa.AgentQuery;
-import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
-import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
-import org.uu.nl.goldenagents.netmodels.fipa.SubGraph;
+import org.uu.nl.goldenagents.netmodels.fipa.*;
 import org.uu.nl.goldenagents.sparql.CachedQuery;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.defaults.messenger.MessageReceiverNotFoundException;
@@ -27,6 +26,7 @@ public class QueryDbPlan extends MessagePlan  {
 
 	private String query;
 	private AgentQuery agentQuery;
+	private Integer targetAqlQueryID = null;
 
 	public QueryDbPlan(ACLMessage message, GAMessageHeader header, FIPASendableObject content) {
 		super(message, header, content);
@@ -42,7 +42,14 @@ public class QueryDbPlan extends MessagePlan  {
 
 		if(agentQuery != null && agentQuery.getPrefixError() != null) {
 			// Inform broker agent of ambiguous use of prefixes in query
-			sendErrorMessage(planInterface, agentQuery.getPrefixError());
+			try {
+				sendErrorMessage(
+						planInterface,
+						new SubGraph(targetAqlQueryID, agentQuery.getPrefixError())
+				);
+			} catch (IOException e) {
+				logError(e);
+			}
 		} else {
 			// Execute query on encapsulated data base
 			executeQuery();
@@ -64,19 +71,22 @@ public class QueryDbPlan extends MessagePlan  {
 			case BROKER_QUERY:
 				// This header indicates a new query process should be started. Create new AgentQuery object
 				this.agentQuery = (AgentQuery) content;
-				this.agentQuery.translate(context.getOntologyModel());
+				this.agentQuery.translate(planInterface.getContext(DbTranslationContext.class));
+				this.targetAqlQueryID = this.agentQuery.getTargetAqlQueryID();
 
 				// Create the CONSTRUCT query and cache it in context
 				String constructQuery = this.agentQuery.createConstruct(planInterface.getAgentID());
-				this.context.addCachedQuery(this.message.getConversationId(), new CachedQuery(constructQuery,
+				this.context.addCachedQuery(this.message.getConversationId(), this.targetAqlQueryID, new CachedQuery(constructQuery,
 						this.agentQuery.getTriples().length, this.context.getDbLimit()));
-				this.query = this.context.getCachedQuery(this.message.getConversationId()).getNextQuery();
+				this.query = this.context.getCachedQuery(this.message.getConversationId(), this.targetAqlQueryID).getNextQuery();
 
 				logger.log(QueryDbPlan.class, "\n" + constructQuery);
 				break;
 			case BROKER_ACK:
 				// Broker process has previously started. Get CONSTRUCT query from context object
-				this.query = context.getCachedQuery(this.message.getConversationId()).getNextQuery();
+				GaMessageContentObjectContainer<Integer> contentObject = ((GaMessageContentObjectContainer<Integer>) content);
+				this.targetAqlQueryID = contentObject == null ? null : contentObject.getContent();
+				this.query = context.getCachedQuery(this.message.getConversationId(), this.targetAqlQueryID).getNextQuery();
 				break;
 		}
 	}
@@ -103,7 +113,11 @@ public class QueryDbPlan extends MessagePlan  {
 			}
 		} catch (Exception e) {
 			String reason = logError(e);
-			sendErrorMessage(planInterface, reason);
+			try {
+				sendErrorMessage(planInterface, new SubGraph(this.targetAqlQueryID, reason));
+			} catch (IOException ex) {
+				logError(e);
+			}
 		}
 	}
 
@@ -121,7 +135,7 @@ public class QueryDbPlan extends MessagePlan  {
 
 		logger.log(QueryDbPlan.class, Level.SEVERE,
 				String.format("Unable to execute query on %s! Because: %s", endpoint, reason));
-		logger.log(QueryDbPlan.class, Level.FINEST, e);
+		logger.log(QueryDbPlan.class, Level.SEVERE, e);
 		logger.log(QueryDbPlan.class, Level.SEVERE, query);
 
 		return reason;
@@ -133,9 +147,9 @@ public class QueryDbPlan extends MessagePlan  {
 	 */
 	private void sendResults(Model model) {
 		try {
-			SubGraph subGraph = new SubGraph(model);
+			SubGraph subGraph = new SubGraph(model, SubGraph.Status.INTERMEDIATE, this.targetAqlQueryID);
 
-			CachedQuery cachedQuery = context.getCachedQuery(this.message.getConversationId());
+			CachedQuery cachedQuery = context.getCachedQuery(this.message.getConversationId(), this.targetAqlQueryID);
 			ACLMessage response = this.message.createReply(planInterface.getAgentID(), Performative.INFORM_REF);
 
 			if(header == GAMessageHeader.BROKER_QUERY) {
@@ -166,8 +180,9 @@ public class QueryDbPlan extends MessagePlan  {
 						this.message.getConversationId());
 
 		try {
+			SubGraph subGraph = new SubGraph(targetAqlQueryID);
 			ACLMessage response = this.message.createReply(planInterface.getAgentID(), Performative.INFORM_REF);
-			response.setContentObject(new GAMessageContentWrapper(GAMessageHeader.DB_DATA_END));
+			response.setContentObject(new GAMessageContentWrapper(GAMessageHeader.DB_DATA_END, subGraph));
 
 			logger.log(QueryDbPlan.class, "Notifying broker of end of data " + response.getConversationId());
 			planInterface.getAgent().sendMessage(response);

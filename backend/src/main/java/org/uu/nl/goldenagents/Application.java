@@ -1,6 +1,7 @@
 package org.uu.nl.goldenagents;
 
 import ch.rasc.sse.eventbus.config.EnableSseEventBus;
+import org.apache.jena.JenaRuntime;
 import org.apache.jena.sys.JenaSystem;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,6 +26,9 @@ public class Application extends SpringBootServletInitializer {
 
 		//Workaround to prevent Jena from getting stuck at initialization of the system
 		JenaSystem.init();
+
+		// Force Jena to use explicit String types when present (compatibility with RDF 1.0)
+		JenaRuntime.isRDF11 = false;
 
         SpringApplication.run(Application.class, args);
 

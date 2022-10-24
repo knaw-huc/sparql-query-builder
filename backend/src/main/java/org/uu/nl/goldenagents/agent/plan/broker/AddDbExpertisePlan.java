@@ -23,7 +23,7 @@ public class AddDbExpertisePlan extends MessagePlan {
 
 	@Override
 	public void executeOnce(PlanToAgentInterface planInterface, ACLMessage receivedMessage, 
-			GAMessageHeader header, FIPASendableObject content) throws PlanExecutionError {
+		GAMessageHeader header, FIPASendableObject content) throws PlanExecutionError {
 		
 		DbAgentExpertise expertise = (DbAgentExpertise) content;
 
@@ -31,7 +31,7 @@ public class AddDbExpertisePlan extends MessagePlan {
 		context.addDbAgentExpertise(receivedMessage.getSender(), expertise);
 
 		// Broker expertise changed. Concepts that can be suggested have to be updated
-		planInterface.getAgent().adoptGoal(new LoadConceptsGoal());
+		planInterface.getAgent().adoptGoal(new LoadConceptsGoal(expertise.getUsedPrefixes()));
 
 		//The plan to add the new source agent to the expertise of broker agent
 		planInterface.getAgent().adoptGoal(new DiscoverBrokerExpertiseGoal());

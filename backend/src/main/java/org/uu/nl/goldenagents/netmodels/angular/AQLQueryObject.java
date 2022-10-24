@@ -6,21 +6,19 @@ import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.complex.BinaryAQLInfixOperator;
 import org.uu.nl.goldenagents.aql.complex.CrossingOperator;
 
-import java.util.UUID;
-
 public class AQLQueryObject {
     private String verbalization;
     private String AQL;
     private boolean focus;
     private AQLQueryObject[] subqueries;
-    private UUID name;
+    private AQLTree.ID name;
     private String type;
     private boolean newline = false;
 
     private AQLQueryObject(AQLQuery query, AQLTree t) {
         this.verbalization = t.toNLQuery();
         this.AQL = t.getAQLLabel();
-        this.name = t.getFocusID();
+        this.name = t.getFocusName();
         this.focus = this.name.equals(query.getFocusName());
         // TODO maybe move FRONTEND filters to here? idk
         subqueries = t.getSubqueries().stream().map(s -> new AQLQueryObject(query, s)).toArray(AQLQueryObject[]::new);
@@ -115,16 +113,8 @@ public class AQLQueryObject {
         this.subqueries = subqueries;
     }
 
-    public String getName() {
-        return this.name.toString();
-    }
-
-    public void setName(String name) {
-        this.name = UUID.fromString(name);
-    }
-
-    public void setName(UUID name) {
-        this.name = name;
+    public AQLTree.ID getName() {
+        return this.name;
     }
 
     public String getType() {

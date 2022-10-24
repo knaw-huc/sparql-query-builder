@@ -1,19 +1,16 @@
 package org.uu.nl.goldenagents.agent.plan.broker.suggestions;
 
-import org.uu.nl.goldenagents.agent.context.BrokerContext;
+import org.uu.nl.goldenagents.agent.context.BrokerSearchSuggestionsContext;
 import org.uu.nl.goldenagents.agent.plan.MessagePlan;
-import org.uu.nl.goldenagents.aql.AQLTree;
+import org.uu.nl.goldenagents.aql.AQLQuery;
 import org.uu.nl.goldenagents.netmodels.AqlDbTypeSuggestionWrapper;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageContentWrapper;
 import org.uu.nl.goldenagents.netmodels.fipa.GAMessageHeader;
-import org.uu.nl.goldenagents.sparql.CachedModel;
 import org.uu.nl.net2apl.core.agent.PlanToAgentInterface;
 import org.uu.nl.net2apl.core.fipa.acl.ACLMessage;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
 import org.uu.nl.net2apl.core.fipa.acl.UnreadableException;
 import org.uu.nl.net2apl.core.plan.PlanExecutionError;
-
-import java.util.logging.Level;
 
 public class ReceiveDBSuggestionsPlan extends MessagePlan {
 
@@ -32,7 +29,6 @@ public class ReceiveDBSuggestionsPlan extends MessagePlan {
      */
     @Override
     public void executeOnce(PlanToAgentInterface planInterface, ACLMessage receivedMessage, GAMessageHeader header, FIPASendableObject content) throws PlanExecutionError {
-        BrokerContext context = planInterface.getContext(BrokerContext.class);
         AqlDbTypeSuggestionWrapper suggestions;
         try {
             suggestions = (AqlDbTypeSuggestionWrapper) ((GAMessageContentWrapper) message.getContentObject()).getContent();
@@ -42,24 +38,41 @@ public class ReceiveDBSuggestionsPlan extends MessagePlan {
             throw new PlanExecutionError();
         }
 
-        // TODO is this even correct for storing the data? Is AQL ID same as QueryID? Should maybe use query trigger for this
-        context.addDbSuggestionsForQuery(this.message.getConversationId(), message.getSender(), suggestions);
-        CachedModel model = context.getCachedModel(receivedMessage.getConversationId());
-        model.setAgentSuggestionsReceived(message.getSender(), true);
+        BrokerSearchSuggestionsContext suggestionsContext = planInterface.getContext(BrokerSearchSuggestionsContext.class);
 
-        if(model.querySuggestionsDone()) {
-            logger.log(getClass(), String.format(
-                    "Finished receiving %d suggestions, starting plan to aggregate and inform user",
-                    model.getExpectedSuggestionAgents()));
+        BrokerSearchSuggestionsContext.SearchSuggestionSubscription sub = suggestionsContext.getSubscription(message.getConversationId());
+        BrokerSearchSuggestionsContext.SearchSuggestion cachedSearchSuggestions =
+                sub.getSearchSuggestions(suggestions.getTargetAqlQueryId());
 
-            // TODO need AQLTree message somehow
-            AQLTree t = context.getCachedModel(receivedMessage.getConversationId()).getUserQueryTrigger().getAql().getQueryTree();
-            this.message.addReplyTo(context.getConversationUser(receivedMessage.getConversationId()));
-            planInterface.adoptPlan(new DbBasedSuggestSearchOptionsPlan(receivedMessage, header, t));
-        } else {
-            logger.log(getClass(), Level.SEVERE, String.format("Received suggestions from %d data source agents, expecting %d in total",
-                    context.getDbSuggestionsForQuery(this.message.getConversationId()).size(),
-                    model.getExpectedSuggestionAgents()));
+        cachedSearchSuggestions.getModel().setAgentSuggestionsReceived(message.getSender(), true);
+
+        AQLQuery query = cachedSearchSuggestions.getQuery();
+        suggestionsContext.addDbSuggestionsForQuery(message.getConversationId(), query, receivedMessage.getSender(), suggestions);
+        BrokerSearchSuggestionsContext.SearchSuggestion suggestion = sub.getSearchSuggestions(query);
+        try {
+            planInterface.adoptPlan(
+                    new DbBasedSuggestSearchOptionsPlan(
+                            suggestion.getReceivedMessage(),
+                            suggestion.getUserQueryTriggerMessageHeader(),
+                            suggestion.getReceivedMessage().getContentObject()
+                    )
+            );
+        } catch (UnreadableException e) {
+            e.printStackTrace();
         }
+    }
+
+    private void contactOtherAgents() {
+        /*
+        Get entity list.
+        Merge all entities over all agents from list
+        for each dbAgent in dbAgentExpertises:
+            Clone merged list
+            Remove all entities from entityList for dbAgent
+            For remaining, find sameAs entities
+            Send those entities to DB agent using:
+                - m.setPerformative(Performative.REQUEST);
+                - m.setContentObject(new GAMessageContentWrapper(GAMessageHeader.REQUEST_SUGGESTIONS, entities));
+         */
     }
 }

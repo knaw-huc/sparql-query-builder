@@ -1,5 +1,8 @@
 package org.uu.nl.goldenagents.sparql;
 
+import org.apache.jena.graph.Node;
+import org.apache.jena.graph.NodeFactory;
+import org.apache.jena.graph.Node_URI;
 import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryException;
 import org.apache.jena.query.QueryFactory;
@@ -8,9 +11,11 @@ import org.apache.jena.shared.impl.PrefixMappingImpl;
 import org.apache.jena.sparql.core.Prologue;
 import org.apache.jena.sparql.core.TriplePath;
 import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.path.Path;
 import org.apache.jena.sparql.sse.SSE;
 import org.apache.jena.sparql.syntax.ElementWalker;
 import org.uu.nl.goldenagents.exceptions.BadQueryException;
+import org.uu.nl.goldenagents.netmodels.fipa.UserQueryTrigger;
 import org.uu.nl.goldenagents.util.SparqlUtils;
 import org.uu.nl.net2apl.core.logging.Loggable;
 import org.uu.nl.net2apl.core.platform.Platform;
@@ -25,6 +30,11 @@ import java.util.*;
 public class QueryInfo {
 	
 	private static final Loggable logger = Platform.getLogger();
+
+	/**
+	 * The trigger sent by the user to initiate the query process
+	 */
+	protected UserQueryTrigger queryRequest;
 	
 	private final String originalQuery;
 	private final Set<TripleInfo> triples;
@@ -35,9 +45,9 @@ public class QueryInfo {
 	private final PrefixMapping prefixMap;
 	private int aliasCount = 0;
 	
-	public QueryInfo(String originalQuery, Map<String, String> prefixMap) throws QueryException, BadQueryException {
-
-		this.originalQuery = originalQuery;
+	public QueryInfo(UserQueryTrigger queryRequest, Map<String, String> prefixMap) throws QueryException, BadQueryException {
+		this.queryRequest = queryRequest;
+		this.originalQuery = queryRequest.getQuery();
 		this.prefixMap = new PrefixMappingImpl();
 		this.prefixMap.setNsPrefixes(prefixMap);
 		this.triples = new LinkedHashSet <>();
@@ -68,8 +78,23 @@ public class QueryInfo {
 	public void addTripleInfo(TriplePath tp, List<Var> vars) {
 		//Create prologue for prefix mapping
 		Prologue pg = new Prologue(this.prefixMap);
+
 		//string of path in short form that uses prefixes and remove parentheses
-		String predicate = tp.getPath().toString(pg).replaceAll("[()]", "");
+		Path path = tp.getPath();
+		String pathString = path.toString(pg);
+		String pathStringReplaced = pathString.replaceAll("[()]", "");
+
+		PathInfo predicate = new PathInfo(pathStringReplaced);
+		String[] predicates = predicate.getPredicates();
+		for(String p : predicates) {
+			if (TripleInfo.NodeType.fromString(p).equals(TripleInfo.NodeType.URI)) {
+				String u = p.replace("<", "").replace(">", "");
+				Node uri = NodeFactory.createURI(u);
+				String updated = uri.toString(this.prefixMap);
+				predicate.update(p, updated);
+			}
+		}
+
 		//string of object in the short form that uses prefixes
 		String object = tp.getObject().toString(this.prefixMap);
 		//creates triple info
@@ -146,5 +171,9 @@ public class QueryInfo {
 
 	public Map<String, Set<TripleInfo>> getVarTripleInfoMapping() {
 		return this.varTripleInfoMapping;
+	}
+
+	public UserQueryTrigger getQueryRequest() {
+		return queryRequest;
 	}
 }

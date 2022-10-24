@@ -3,50 +3,30 @@ package org.uu.nl.goldenagents.netmodels.angular;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.OntResource;
-import org.apache.jena.rdf.model.impl.ResourceImpl;
-import org.apache.jena.vocabulary.RDFS;
+import org.uu.nl.goldenagents.netmodels.fipa.EntityList;
 import org.uu.nl.net2apl.core.fipa.acl.FIPASendableObject;
-import org.uu.nl.net2apl.core.platform.Platform;
 
 import java.io.Serializable;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class AQLSuggestions implements Serializable, FIPASendableObject {
 
     private List<TypeSuggestion> classList;
     private List<TypeSuggestion> propertyList;
     private List<InstanceSuggestion> instanceList;
-    private UUID focusID;
-
-    /**
-     * Naively construct suggestion objects from lists of classes, properties and instances.
-     *
-     * This creates the hierarchy from <i>all</i> passed concepts, without filtering out classes that have no place here.
-     * Use with care.
-     *
-     * @param queryID       Query focus ID for which these suggestions apply
-     * @param classList     List of classes that can be suggested
-     * @param propertyList  List of properties that can be suggested
-     * @param instanceList  List of instances that can be suggested
-     */
-    public AQLSuggestions(UUID queryID, List<OntClass> classList, List<OntProperty> propertyList, List<ResourceImpl> instanceList) {
-        this.focusID = queryID;
-        this.classList = classList.stream().filter(x -> !x.isAnon() && !x.hasSuperClass()).map(x -> new TypeSuggestion(x, Collections.emptySet())).collect(Collectors.toList());
-        this.propertyList = propertyList.stream().map(x -> new TypeSuggestion(x, false, Collections.emptySet())).collect(Collectors.toList());
-        this.propertyList.addAll(propertyList.stream().map(x -> new TypeSuggestion(x, true, Collections.emptySet())).collect(Collectors.toList()));
-        this.instanceList = instanceList.stream().map(InstanceSuggestion::new).collect(Collectors.toList());
-    }
+    private int targetAqlQueryId;
 
     /**
      * Default constructor for AQL Query Suggestions
      * @param classList     List of classes to suggest
      * @param propertyList  List of properties to suggest
      * @param instanceList  List of instances to suggest
-     * @param queryID       Query focus ID for which these suggestions apply
+     * @param queryHashCode Hashcode of query to which suggestions apply
      */
-    public AQLSuggestions(List<TypeSuggestion> classList, List<TypeSuggestion> propertyList, List<InstanceSuggestion> instanceList, UUID queryID) {
-        this.focusID = queryID;
+    public AQLSuggestions(List<TypeSuggestion> classList, List<TypeSuggestion> propertyList, List<InstanceSuggestion> instanceList, int queryHashCode) {
+        this.targetAqlQueryId = queryHashCode;
         this.classList = classList;
         this.propertyList = propertyList;
         this.instanceList = instanceList;
@@ -76,12 +56,12 @@ public class AQLSuggestions implements Serializable, FIPASendableObject {
         this.instanceList = instanceList;
     }
 
-    public UUID getFocusID() {
-        return focusID;
+    public int getTargetAqlQueryId() {
+        return targetAqlQueryId;
     }
 
-    public void setFocusID(UUID focusID) {
-        this.focusID = focusID;
+    public void setTargetAqlQueryId(int targetAqlQueryId) {
+        this.targetAqlQueryId = targetAqlQueryId;
     }
 
     public static class TypeSuggestion implements Serializable {
@@ -135,7 +115,6 @@ public class AQLSuggestions implements Serializable, FIPASendableObject {
 
         private void populateFromResource(OntResource resource) {
             this.url = resource.getURI();
-            this.id = "random. DO we need this?";
             this.label = resource.getLabel("en");
             this.label = this.label == null ? resource.getLocalName() : this.label;
         }
@@ -166,36 +145,20 @@ public class AQLSuggestions implements Serializable, FIPASendableObject {
     }
 
     public static class InstanceSuggestion implements Serializable {
+        private String type = "instance";
+        private String dataTypeURI;
         private String label;
         private String target;
-        private String id;
         private String title;
 
-        public InstanceSuggestion(ResourceImpl individual) {
-            this.target = individual.getURI();
-            this.label = this.setLabel(individual);
-            this.id = "random. DO we need this?";
-            this.title = this.target;
-        }
+        // Empty constructor required for deserialization
+        public InstanceSuggestion() { }
 
-        private String setLabel(ResourceImpl individual) {
-            // TODO ideally we use rdfs:label, but this property needs to be included in each DB query if we want to extract it
-            String label;
-            if(individual.hasProperty(RDFS.label)) {
-                label = individual.getProperty(RDFS.label).getString();
-            } else if(!individual.getLocalName().isEmpty()) {
-                label = individual.getLocalName();
-            } else {
-                String uri = individual.getURI();
-                String nameSpace = individual.getNameSpace();
-                if(nameSpace.equalsIgnoreCase(uri)) {
-                    label = uri.substring(uri.lastIndexOf("/") + 1);
-                } else {
-                    label = uri.substring(nameSpace.length());
-                }
-            }
-            Platform.getLogger().log(getClass(), "URI " + individual.getURI() + " now has label " + label);
-            return label;
+        public InstanceSuggestion(EntityList.Entity individual) {
+            this.dataTypeURI = individual.getType();
+            this.target = individual.getValue();
+            this.label = individual.getLabel();
+            this.title = this.target;
         }
 
         public String getLabel() {
@@ -206,12 +169,36 @@ public class AQLSuggestions implements Serializable, FIPASendableObject {
             return target;
         }
 
-        public String getId() {
-            return id;
-        }
-
         public String getTitle() {
             return title;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getDataTypeURI() {
+            return dataTypeURI;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public void setDataTypeURI(String dataTypeURI) {
+            this.dataTypeURI = dataTypeURI;
+        }
+
+        public void setLabel(String label) {
+            this.label = label;
+        }
+
+        public void setTarget(String target) {
+            this.target = target;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
     }
 }

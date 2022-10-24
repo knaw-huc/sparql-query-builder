@@ -2,6 +2,7 @@ package org.uu.nl.goldenagents.agent.plan.dbagent;
 
 import org.uu.nl.goldenagents.agent.context.DBAgentContext;
 import org.uu.nl.goldenagents.agent.context.PrefixNSListenerContext;
+import org.uu.nl.goldenagents.agent.context.query.DbTranslationContext;
 import org.uu.nl.goldenagents.agent.plan.MessagePlan;
 import org.uu.nl.goldenagents.agent.planscheme.dbagent.DBAgentGoalPlanScheme;
 import org.uu.nl.goldenagents.agent.trigger.goal.dbagent.DiscoverExpertiseGoal;
@@ -48,6 +49,7 @@ public class PublishExpertisePlan extends MessagePlan {
 			// With the next call, this ensures that expertise will be updated before being sent to broker
 			context.setExpertise(null);
 			SparqlUtils.updatePrefixesInModel(context.getOntologyModel(), prefixContext.getPrefixMap());
+			planInterface.getAgent().addContext(new DbTranslationContext(context.getOntologyModel(), prefixContext));
 		}
 
 		if(context.getExpertise() == null) {

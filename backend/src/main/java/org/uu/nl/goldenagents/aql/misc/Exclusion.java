@@ -1,22 +1,40 @@
 package org.uu.nl.goldenagents.aql.misc;
 
 import org.apache.jena.sparql.algebra.Op;
+import org.apache.jena.sparql.algebra.op.OpFilter;
 import org.apache.jena.sparql.core.Var;
+import org.apache.jena.sparql.expr.Expr;
+import org.jetbrains.annotations.NotNull;
 import org.uu.nl.goldenagents.aql.AQLTree;
 import org.uu.nl.goldenagents.aql.VariableController;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class Exclusion extends AQLTree {
 
     private static final String AQL_LABEL = "not";
     private AQLTree negatedQuery;
 
-    public Exclusion(AQLTree negatedQuery) {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (!obj.getClass().isInstance(this)) return false;
+        if (!obj.getClass().equals(this.getClass())) return false;
+        return negatedQuery.equals(((Exclusion)obj).negatedQuery);
+    }
+
+    public Exclusion(@NotNull AQLTree negatedQuery) {
+        super();
         this.negatedQuery = negatedQuery;
-        this.negatedQuery.setParent(getFocusID());
+        this.negatedQuery.setParent(getFocusName());
+    }
+
+    private Exclusion(@NotNull AQLTree negatedQuery, ID focusName, ID parent) {
+        super(focusName, parent);
+        this.negatedQuery = negatedQuery;
+        this.negatedQuery.setParent(getFocusName());
     }
 
     /**
@@ -44,6 +62,11 @@ public class Exclusion extends AQLTree {
         // if the object of that property is ex:specificitem. This would be flattened if added at the
         // end
         checkIfFocus(var, controller);
+
+        Op child = negatedQuery.toARQ(var, controller);
+        Expr expression = null;
+        Op filter = OpFilter.filter(expression, child);
+
         return null;
     }
 
@@ -84,10 +107,10 @@ public class Exclusion extends AQLTree {
      * @param newChild New sub tree
      */
     @Override
-    public void replaceChild(UUID child, AQLTree newChild) throws IllegalArgumentException {
-        if(this.negatedQuery.getFocusID().equals(child)) {
+    public void replaceChild(ID child, AQLTree newChild) throws IllegalArgumentException {
+        if(this.negatedQuery.getFocusName().equals(child)) {
             this.negatedQuery = newChild;
-            this.negatedQuery.setParent(getFocusID());
+            this.negatedQuery.setParent(getFocusName());
         } else {
             throw new IllegalArgumentException("The passed argument is not a direct child of this node");
         }
@@ -105,5 +128,13 @@ public class Exclusion extends AQLTree {
 
     public AQLTree getNegatedQuery() {
         return negatedQuery;
+    }
+
+    @Override
+    public AQLTree copy(ID parent, HashMap<ID, AQLTree> foci) {
+        AQLTree negatedQueryCopy = this.negatedQuery.copy(getFocusName(), foci);
+        Exclusion copy = new Exclusion(negatedQueryCopy, getFocusName(), parent);
+        foci.put(getFocusName(), copy);
+        return copy;
     }
 }
