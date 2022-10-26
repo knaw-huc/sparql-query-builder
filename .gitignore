@@ -139,4 +139,5 @@ venv.bak/
 /site
 
 /net2apl
+/frontend/.env*
 
