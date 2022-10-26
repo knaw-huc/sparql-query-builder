@@ -17,7 +17,7 @@ public class DbAgentExpertise implements FIPASendableObject {
 	private static final long serialVersionUID = 1L;
 
 	private final ArrayList<OntologicalConceptInfo> conceptInfoList = new ArrayList<>();
-	private final Map<String, String> usedPrefixes;
+	private Map<String, String> usedPrefixes;
 
 	public DbAgentExpertise(ArrayList<String> concepts, Map<String, String> usedPrefixes) {
 		super();
@@ -90,6 +90,10 @@ public class DbAgentExpertise implements FIPASendableObject {
 
 	public Map<String, String> getUsedPrefixes() {
 		return usedPrefixes;
+	}
+
+	public void setUsedPrefixes(Map<String, String> usedPrefixes) {
+		this.usedPrefixes = usedPrefixes;
 	}
 
 	public String printAsMatrix(String dbName) {
