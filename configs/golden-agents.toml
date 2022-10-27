@@ -34,7 +34,7 @@ database_icon = "dns"
 [[linkset]]
     local = true
     method="FILE"
-    uri="golden-agents-datasets/2021_Q2/linkset/jiw_otr_linkset_person.ttl"
+    uri="../backend/src/main/resources/configs/jiw_otr_linkset_person.ttl"
 #    uri = "https://sparql.goldenagents.org/"
 #    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/jiw_otr_linkset_20210727"
 #    default_page_size = 2500
@@ -62,7 +62,11 @@ database_icon = "dns"
     [databases.ecartico]
         localname = "Ecartico"
         entity_expertise = false
+<<<<<<< HEAD
         description = "ECARTICO is a comprehensive collection of structured biographical data concerning painters, engravers, printers, book sellers, gold- and silversmiths and others involved in the â€˜cultural industriesâ€™ of the Low Countries in the sixteenth and seventeenth centuries. As in other biographical databases, users can search and browse for data on individuals or make selections of certain types of data. However, ECARTICO also allows users to visualize and analyze data on cultural entrepreneurs and their â€˜milieusâ€™."
+=======
+        description = "ECARTICO is a comprehensive collection of structured biographical data concerning painters, engravers, printers, book sellers, gold- and silversmiths and others involved in the ‘cultural industries’ of the Low Countries in the sixteenth and seventeenth centuries. As in other biographical databases, users can search and browse for data on individuals or make selections of certain types of data. However, ECARTICO also allows users to visualize and analyze data on cultural entrepreneurs and their ‘milieus’."
+>>>>>>> d89025eaaf307b1f40782930d857b6b80b085efd
         homepage = "https://www.vondel.humanities.uva.nl/ecartico/"
         [databases.ecartico.endpoint]
             local = false
@@ -78,7 +82,11 @@ database_icon = "dns"
     [databases.onstage]
         localname = "OnStage"
         entity_expertise = false
+<<<<<<< HEAD
         description = "This is your address for questions about the repertoire, performances, popularity and revenues of the cultural program in Amsterdamâ€™s public theatre during the period 1637 - 1772. All data provided in this system links to archival source materials in contemporary administration."
+=======
+        description = "This is your address for questions about the repertoire, performances, popularity and revenues of the cultural program in Amsterdam’s public theatre during the period 1637 - 1772. All data provided in this system links to archival source materials in contemporary administration."
+>>>>>>> d89025eaaf307b1f40782930d857b6b80b085efd
         homepage = "http://www.vondel.humanities.uva.nl/onstage/"
         [databases.onstage.endpoint]
             local = false
@@ -203,6 +211,25 @@ database_icon = "dns"
 #            local = false
 #            uri = "https://sparql.goldenagents.org/"
 #            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+<<<<<<< HEAD
+=======
+
+#    [databases.jaikwil]
+#        localname = "Ja, ik wil!"
+#        entity_expertise = false
+#        description = "Yes, I do! A collection of occasional mariage poetry"
+#        homepage = ""
+#        [databases.jaikwil.endpoint]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ja_ik_wil_20210712"
+#            method = "SPARQL"
+#            default_page_size = 10000
+#        [[databases.jaikwil.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+>>>>>>> d89025eaaf307b1f40782930d857b6b80b085efd
 
 #    [databases.jaikwil]
 #        localname = "Ja, ik wil!"
