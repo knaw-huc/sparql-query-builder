@@ -35,18 +35,32 @@ API_URL = 'http://127.0.0.1:8080'
 user_agents = {}
 
 
+# helper function to create a User agent
+def create_user_agent():
+    try:
+        response = requests.get(f'{API_URL}/api/agent/user')
+        agent_data = json.loads(response.text)
+        user_agents[agent_data['uuid']] = agent_data['nickname']
+        return True
+    except:
+        return False
+
+    
+
+
 @app.route('/ga/getresources', methods=['GET'])
 def get_resources():
     """This route gets all resources from the backend and
     returns the DB agents and stores the user agents"""
     try:
+        # request all agents
         response = requests.get(f'{API_URL}/api/agent/list')
         all_agents = json.loads(response.text)
-        print(all_agents)
-        # store all DB agents in this list
+
+        # store all DB agents in the result list and store
+        # user agents in the user_agents dictionary if necessary
         resources = []
         for agent in all_agents:
-            print('AGENT', agent)
             if agent['agentType'] == 'DB':
                 resources.append({
                     'id': agent['uuid'],
@@ -56,6 +70,12 @@ def get_resources():
                 agent_uuid = agent['uuid']
                 if agent_uuid not in user_agents.keys():
                     user_agents[agent_uuid] = agent['nickname']
+
+        # maybe there are no user agents, create one
+        if len(user_agents) < 5:
+            create_user_agent()
+            print(user_agents)
+
         return jsonify(resources)
     except:
         return []
