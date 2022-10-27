@@ -69,11 +69,11 @@ public class AgentQuery implements FIPASendableObject {
 		this.translatedTriples = new TripleInfo[triples.length];
 
 		for (int i = 0; i < this.triples.length; i++) {
-			this.triples[i].setSubject(SparqlUtils.validateLocalName(this.triples[i].getSubject(), prefixMap, true));
-			this.triples[i].setObject(SparqlUtils.validateLocalName(this.triples[i].getObject(), prefixMap, true));
+			this.triples[i].setSubject(SparqlUtils.validateLocalName(this.triples[i].getSubject(), prefixMap, true, false));
+			this.triples[i].setObject(SparqlUtils.validateLocalName(this.triples[i].getObject(), prefixMap, true, false));
 			String[] predicates = this.triples[i].getPredicatePath().getPredicates();
 			for(String predicate : predicates) {
-				this.triples[i].getPredicatePath().update(predicate, SparqlUtils.validateLocalName(predicate, prefixMap, true));
+				this.triples[i].getPredicatePath().update(predicate, SparqlUtils.validateLocalName(predicate, prefixMap, true, false));
 			}
 
 			final TripleInfo translation = this.triples[i].createCopy();

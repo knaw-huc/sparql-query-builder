@@ -49,7 +49,7 @@ public class DiscoverExpertisePlan extends RunOncePlan {
     protected DbTranslationContext translationContext;
 
     // Optimization
-    private Integer ignoreConceptsWithLessThanEntities = 1000;
+    private Integer ignoreConceptsWithLessThanEntities = null;
     private boolean ignoreNonGAConcepts = true;
 
     /**
@@ -80,6 +80,8 @@ public class DiscoverExpertisePlan extends RunOncePlan {
             Map<String, OntologicalConceptInfo> concepts = getConcepts();
             expertise = extractExpertise(concepts);
             writeExpertiseToFile(planInterface, expertise);
+        } else {
+            translationContext.addMappedConceptsToPrefixListenerMap(planInterface.getAgentID());
         }
         context.setExpertise(expertise);
         notifyReady(planInterface);
@@ -157,7 +159,6 @@ public class DiscoverExpertisePlan extends RunOncePlan {
             // Not doing a count makes the query faster
             q = String.format("SELECT DISTINCT ?concept WHERE {%s} GROUP BY ?concept", bgp);
         }
-        System.out.println(q);
         Set<Node> nodes = new HashSet<>();
         try (DBAgentContext.DbQuery dbQuery = context.getDbQuery(q)) {
             ResultSet resultSet = dbQuery.queryExecution.execSelect();
@@ -166,7 +167,7 @@ public class DiscoverExpertisePlan extends RunOncePlan {
                 Node item = s.get("concept").asNode();
                 if (ignoreConceptsWithLessThanEntities != null) {
                     int amount = s.get("count").asLiteral().getInt();
-                    if (amount > 1000 || translationContext.translateLocalToGlobal(item.getURI()) != null) {
+                    if (amount >= ignoreConceptsWithLessThanEntities || translationContext.translateLocalToGlobal(item.getURI()) != null) {
                         nodes.add(item);
                     }
                 } else {
@@ -190,13 +191,7 @@ public class DiscoverExpertisePlan extends RunOncePlan {
             List<DbTranslationContext.Translation> translations = translationContext.getLocalToGlobalTranslation(node.getURI());
             if (translations == null && (!ignoreNonGAConcepts || node.getNameSpace().contains("goldenagents"))) {
                 String shortForm = translationContext.shortForm(node.getURI());
-                String prefix = shortForm.substring(0, shortForm.indexOf(":"));
-                String ns = prefixContext.getNamespaceForPrefix(prefix);
-                if (ns != null && shortForm.startsWith(prefix)) {
-                    if (usedPrefixes.get(prefix) == null || ns.equals(usedPrefixes.get(prefix))) {
-                        usedPrefixes.put(prefix, ns);
-                    }
-                } else {
+                if(!addPrefixIfUsed(shortForm)) {
                     shortForm = node.getURI();
                 }
                 OntologicalConceptInfo info = new OntologicalConceptInfo(shortForm, isClass);
@@ -204,7 +199,9 @@ public class DiscoverExpertisePlan extends RunOncePlan {
                 concepts.put(info.getLabel(), info); // TODO, make it harder for the server!!!
             } else if (translations != null) {
                 for(DbTranslationContext.Translation translation : translations) {
-                    OntologicalConceptInfo info = concepts.get(translation.getGlobalConceptShortform());
+                    String shortForm = translation.getGlobalConceptShortform();
+                    OntologicalConceptInfo info = concepts.get(shortForm);
+                    addPrefixIfUsed(shortForm);
                     if (info == null) {
                         info = new OntologicalConceptInfo(translation.getGlobalConceptShortform(), isClass);
                     }
@@ -212,6 +209,19 @@ public class DiscoverExpertisePlan extends RunOncePlan {
                     concepts.put(info.getLabel(), info);
                 }
             }
+        }
+    }
+
+    private boolean addPrefixIfUsed(String shortForm) {
+        String prefix = shortForm.substring(0, shortForm.indexOf(":"));
+        String ns = prefixContext.getNamespaceForPrefix(prefix);
+        if (ns != null && shortForm.startsWith(prefix)) {
+            if (usedPrefixes.get(prefix) == null || ns.equals(usedPrefixes.get(prefix))) {
+                usedPrefixes.put(prefix, ns);
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 

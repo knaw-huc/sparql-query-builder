@@ -13,7 +13,7 @@
 
     <groupId>org.uu.nl.goldenagents</groupId>
     <artifactId>backend</artifactId>
-    <version>0.0.4-alpha</version>
+    <version>0.0.5-alpha</version>
     <packaging>jar</packaging>
     <name>goldenagents backend</name>
 

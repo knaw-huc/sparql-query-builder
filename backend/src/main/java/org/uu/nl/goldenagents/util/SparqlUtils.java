@@ -76,14 +76,13 @@ public class SparqlUtils {
 	 * @return
 	 */
 	public static String validateLocalName(String localName, Map<String, String> prefixMap) {
-		return validateLocalName(localName, prefixMap, false);
+		return validateLocalName(localName, prefixMap, false, false);
 	}
 
-    public static String validateLocalName(String localName, Map<String, String> prefixMap, boolean wrapInAngleBrackets) {
+    public static String validateLocalName(String localName, Map<String, String> prefixMap, boolean wrapInAngleBrackets, boolean forceFullUri) {
         if (
                 (localName.startsWith("<") && localName.endsWith(">")) ||
-                !localName.contains("/") ||
-                !localName.contains(":")
+				(!localName.contains("/") && !forceFullUri) || !localName.contains(":")
         )
             return localName;
 

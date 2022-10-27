@@ -8,7 +8,6 @@ import org.apache.jena.query.Query;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
-import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.util.iterator.ExtendedIterator;
 import org.uu.nl.goldenagents.agent.context.BrokerContext;
@@ -190,7 +189,7 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 				if(expertiseModel.isClass()) {
 					OntClass clazz = model.getOntClass(expertiseModel.getLabel());
 					if (clazz == null) {
-						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes);
+						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes, false, true);
 						clazz = model.getOntClass(uri);
 						if (clazz == null) {
 							clazz = model.createClass(uri);
@@ -200,7 +199,7 @@ public class FindOntologyConceptsPlan extends LoadRDFSourcePlan {
 				} else {
 					OntProperty property = model.getOntProperty(expertiseModel.getLabel());
 					if (property == null) {
-						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes);
+						String uri = SparqlUtils.validateLocalName(expertiseModel.getLabel(), prefixes, false, true);
 						property = model.getOntProperty(uri);
 						if (property == null) {
 							property = model.createOntProperty(uri);
