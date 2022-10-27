@@ -34,7 +34,7 @@ database_icon = "dns"
 [[linkset]]
     local = true
     method="FILE"
-    uri="golden-agents-datasets/2021_Q2/linkset/jiw_otr_linkset_person.ttl"
+    uri="../backend/src/main/resources/configs/jiw_otr_linkset_person.ttl"
 #    uri = "https://sparql.goldenagents.org/"
 #    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/jiw_otr_linkset_20210727"
 #    default_page_size = 2500
@@ -52,16 +52,16 @@ database_icon = "dns"
         icon = "call_split"
         localname = "Broker"
 
-    [agents.user]
-        type = "user"
-        icon = "person"
-        localname = "User"
+#    [agents.user]
+#        type = "user"
+#        icon = "person"
+#        localname = "User"
 
 
 [databases]
     [databases.ecartico]
         localname = "Ecartico"
-        entity_expertise = true
+        entity_expertise = false
         description = "ECARTICO is a comprehensive collection of structured biographical data concerning painters, engravers, printers, book sellers, gold- and silversmiths and others involved in the ‘cultural industries’ of the Low Countries in the sixteenth and seventeenth centuries. As in other biographical databases, users can search and browse for data on individuals or make selections of certain types of data. However, ECARTICO also allows users to visualize and analyze data on cultural entrepreneurs and their ‘milieus’."
         homepage = "https://www.vondel.humanities.uva.nl/ecartico/"
         [databases.ecartico.endpoint]
@@ -77,7 +77,7 @@ database_icon = "dns"
 
     [databases.onstage]
         localname = "OnStage"
-        entity_expertise = true
+        entity_expertise = false
         description = "This is your address for questions about the repertoire, performances, popularity and revenues of the cultural program in Amsterdam’s public theatre during the period 1637 - 1772. All data provided in this system links to archival source materials in contemporary administration."
         homepage = "http://www.vondel.humanities.uva.nl/onstage/"
         [databases.onstage.endpoint]
@@ -93,7 +93,7 @@ database_icon = "dns"
 
     [databases.stcn]
         localname = "STCN"
-        entity_expertise = true
+        entity_expertise = false
         description = "The Short-Title Catalogue Netherlands (STCN) is the Dutch retrospective bibliography for the period 1540-1800; also included are concise descriptions of Dutch (post-)incunabula. The database is freely available as a scholarly bibliographic research instrument. The ultimate goal is the description of every single books that has been published before 1801 in the Netherlands and all Dutch-language books published abroad."
         homepage = "https://www.kb.nl/en/organisation/research-expertise/for-libraries/short-title-catalogue-netherlands-stcn"
         [databases.stcn.endpoint]
@@ -118,22 +118,26 @@ database_icon = "dns"
 #            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/nta_20210311"
 #            method = "SPARQL"
 #            default_page_size = 10000
+#        [[databases.nta.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
 
-    [databases.ggd]
-        localname = "Gelegenheidsgedichten (GGD)"
-        entity_expertise = false
-        description = "A special event calls for a special poem! Apparently, that was the motive behind the composition of many of these verses. The occasion in question might have been a marriage, a death, an accession to office, or a silver wedding anniversary, but births, recoveries, promotions, awards, birthdays, etc. also prompted people to compose poetry. Nearly 4000 of these commemorative poems are to be found in the collection of the Koninklijke Bibliotheek. The foundation of the collection was laid in 1866, when the Koninklijke Bibliotheek purchased a collection of 2000 pieces at an auction. In 1972 another 750 were added and from that point onwards the genre became a focal point in the expansion of the collection. In 1982 a printed catalogue of the commemorative poems up to 1700 appeared; twenty years later an enlarged version of the catalogue - covering the seventeenth century as well - was published on cd-rom, along with microfiches of the texts. Most of the poems are in Dutch, although Latin is also well represented. The size varies from one page in broadsheet to fairly thick volumes of originally separate poems written to mark one occasion."
-        homepage = "https://www.kb.nl/en/themes/book-history/popular-printing/occasional-poetry"
-        [databases.ggd.endpoint]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ggd_20210408"
-            method = "SPARQL"
-            default_page_size = 10000
-        [[databases.ggd.mapping]]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ggd2ga_20210421"
+#    [databases.ggd]
+#        localname = "Gelegenheidsgedichten (GGD)"
+#        entity_expertise = false
+#        description = "A special event calls for a special poem! Apparently, that was the motive behind the composition of many of these verses. The occasion in question might have been a marriage, a death, an accession to office, or a silver wedding anniversary, but births, recoveries, promotions, awards, birthdays, etc. also prompted people to compose poetry. Nearly 4000 of these commemorative poems are to be found in the collection of the Koninklijke Bibliotheek. The foundation of the collection was laid in 1866, when the Koninklijke Bibliotheek purchased a collection of 2000 pieces at an auction. In 1972 another 750 were added and from that point onwards the genre became a focal point in the expansion of the collection. In 1982 a printed catalogue of the commemorative poems up to 1700 appeared; twenty years later an enlarged version of the catalogue - covering the seventeenth century as well - was published on cd-rom, along with microfiches of the texts. Most of the poems are in Dutch, although Latin is also well represented. The size varies from one page in broadsheet to fairly thick volumes of originally separate poems written to mark one occasion."
+#        homepage = "https://www.kb.nl/en/themes/book-history/popular-printing/occasional-poetry"
+#        [databases.ggd.endpoint]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ggd_20210408"
+#            method = "SPARQL"
+#            default_page_size = 10000
+#        [[databases.ggd.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ggd2ga_20210421"
 
 # This one hardly contributes to results
     [databases.collection5001]
@@ -168,53 +172,53 @@ database_icon = "dns"
 #            uri = "https://sparql.goldenagents.org/"
 #            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
 
-    [databases.ondertrouw]
-        localname = "Ondertrouw"
-        description = "Ondertrouwregister"
-        entity_expertise = false
-        homepage = ""
-        [databases.ondertrouw.endpoint]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/saa_id_003_index_op_ondertrouwregisters"
-            method = "SPARQL"
-            default_page_size = 10000
-        [[databases.ondertrouw.mapping]]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+#    [databases.ondertrouw]
+#        localname = "Ondertrouw"
+#        description = "Ondertrouwregister"
+#        entity_expertise = false
+#        homepage = ""
+#        [databases.ondertrouw.endpoint]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/saa_id_003_index_op_ondertrouwregisters"
+#            method = "SPARQL"
+#            default_page_size = 10000
+#        [[databases.ondertrouw.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
 
-    [databases.burial]
-        localname = "Burial"
-        entity_expertise = false
-        description = "Burial registry"
-        homepage = ""
-        [databases.burial.endpoint]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/saa_id_008_index_op_begraafregisters_voor_1811"
-            method = "SPARQL"
-            default_page_size = 10000
-        [[databases.burial.mapping]]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+#    [databases.burial]
+#        localname = "Burial"
+#        entity_expertise = false
+#        description = "Burial registry"
+#        homepage = ""
+#        [databases.burial.endpoint]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/saa_id_008_index_op_begraafregisters_voor_1811"
+#            method = "SPARQL"
+#            default_page_size = 10000
+#        [[databases.burial.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
 
-    [databases.jaikwil]
-        localname = "Ja, ik wil!"
-        entity_expertise = false
-        description = "Yes, I do! A collection of occasional mariage poetry"
-        homepage = ""
-        [databases.jaikwil.endpoint]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ja_ik_wil_20210712"
-            method = "SPARQL"
-            default_page_size = 10000
-        [[databases.jaikwil.mapping]]
-            local = false
-            uri = "https://sparql.goldenagents.org/"
-            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
+#    [databases.jaikwil]
+#        localname = "Ja, ik wil!"
+#        entity_expertise = false
+#        description = "Yes, I do! A collection of occasional mariage poetry"
+#        homepage = ""
+#        [databases.jaikwil.endpoint]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ja_ik_wil_20210712"
+#            method = "SPARQL"
+#            default_page_size = 10000
+#        [[databases.jaikwil.mapping]]
+#            local = false
+#            uri = "https://sparql.goldenagents.org/"
+#            default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/dtb2ga_20210730"
 
 
 

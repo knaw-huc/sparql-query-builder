@@ -34,7 +34,7 @@ database_icon = "dns"
 [[linkset]]
     local = true
     method="FILE"
-    uri="golden-agents-datasets/2021_Q2/linkset/jiw_otr_linkset_person.ttl"
+    uri="configs/jiw_otr_linkset_person.ttl"
 #    uri = "https://sparql.goldenagents.org/"
 #    default_graph = "https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/jiw_otr_linkset_20210727"
 #    default_page_size = 2500
