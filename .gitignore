@@ -141,3 +141,4 @@ venv.bak/
 /net2apl
 /frontend/.env*
 
+.DS_Store
