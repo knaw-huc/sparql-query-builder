@@ -2,11 +2,13 @@ import json
 import logging
 import requests
 import sys
+import time
+import uuid
 
 from logging.config import dictConfig
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from sseclient import SSEClient
+
 
 dictConfig({
     'version': 1,
@@ -24,17 +26,6 @@ dictConfig({
     }
 })
 
-
-QUERY = '''
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX ga: <https://data.goldenagents.org/ontology/>
-
-SELECT DISTINCT * WHERE {
-  ?creativeAgent a ga:CreativeAgent .
-  ?creativeAgent ga:hasName ?nameOfTheAgent
-}
-LIMIT 30
-'''
 
 
 app = Flask(__name__)
@@ -117,22 +108,59 @@ def sparql():
     return response.text
 
 
+
+
+
+
+
 @app.route('/ga/test', methods=['GET'])
 def test():
-    agent = user_agents[0]
-    # register user
-    messages = SSEClient(f'http://127.0.0.1:8080/api/sse/register/{agent}')
+
+    QUERY = '''
+    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    PREFIX ga: <https://data.goldenagents.org/ontology/>
+
+    SELECT DISTINCT * WHERE {
+      ?creativeAgent a ga:CreativeAgent .
+      ?creativeAgent ga:hasName ?nameOfTheAgent
+    }
+    LIMIT 30
+    '''
+
+    agent_id = user_agents[0]
+
     # do a query and wait for messages
     payload = {
         'query': QUERY,
         'queryType': 'USER_QUERY',
         'selectedSources': list(db_agents)
     }
-    print('\n\n', payload, '\n\n')
     response = requests.post(
-        f'{API_URL}/api/agent/user/{agent}/query',
-        json={'data': QUERY},
-        headers={ 'Content-Type': 'application/json'},
+        f'{API_URL}/api/agent/user/{agent_id}/query',
+        json=payload,
+        headers={
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
         params={ 'format': 'json' }
     )
-    return []
+    query_id = (json.loads(response.text))['queryID']
+
+    # start polling for results
+    count = 0 
+    url = f'{API_URL}/api/agent/user/{agent_id}/xml/{query_id}'
+    result = None
+    while count < 10:
+        time.sleep(5)
+        response = requests.get(url)
+        result = response.text
+        if '<?xml' in result:
+            break
+        count += 1
+
+    # convert xml into json ?
+    return result or []
+
+
+
+
