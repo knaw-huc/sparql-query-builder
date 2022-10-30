@@ -108,11 +108,7 @@ def sparql():
     return response.text
 
 
-
-
-
-
-
+# curl -X GET 'http://127.0.0.1:5000/ga/test'
 @app.route('/ga/test', methods=['GET'])
 def test():
 
