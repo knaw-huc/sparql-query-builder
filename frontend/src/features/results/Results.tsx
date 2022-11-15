@@ -1,5 +1,5 @@
 import React, {useState, useMemo, useRef, useEffect} from 'react';
-import {motion, AnimatePresence} from "framer-motion"
+import {AnimatePresence} from 'framer-motion';
 import DataTable from 'react-data-table-component';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -14,6 +14,7 @@ import {useAppSelector} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {selectedDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
+import {FadeDiv, SlideDiv} from '../animations/Animations';
 import './DataTableTheme';
 
 type ResultsObject = {
@@ -88,55 +89,41 @@ export function Results() {
   return (
     <AnimatePresence>
       {( data || isFetching || isError ) &&
-      <motion.div
-        initial={{y: "100%"}}
-        animate={{y: 0}}
-        exit={{y: "100%"}}
-        key="results-container">
+      <SlideDiv key="results-container">
         <Container fluid className={styles.container}>
           <Row>
             <Col lg={12}>
               {isFetching ?
-              <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                exit={{opacity: 0}}
-                key="results-spinner"
-                className={styles.spinner}>
+              <FadeDiv key="results-spinner" className={styles.spinner}>
                 <Spinner animation="border" variant="primary" /> 
-              </motion.div>
+              </FadeDiv>
               :
-              <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                exit={{opacity: 0}}
-                key="results-table"
-                ref={resultsRef}>
-                  {isError ?
-                    <p className={styles.error}>Oh no, something has gone wrong.</p>
-                    :
-                    <DataTable
-                      columns={columns}
-                      data={filteredItems}
-                      pagination 
-                      paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                      title={<h5>Results</h5>}
-                      subHeader
-                      subHeaderComponent={headerComponentMemo}
-                      subHeaderWrap
-                      theme="huc"
-                      striped
-                      highlightOnHover
-                      paginationPerPage={20}
-                      paginationRowsPerPageOptions={[20, 50, 100]} 
-                    />
-                  }
-              </motion.div>
+              <FadeDiv key="results-table" refProps={resultsRef}>
+                {isError ?
+                  <p className={styles.error}>Oh no, something has gone wrong.</p>
+                  :
+                  <DataTable
+                    columns={columns}
+                    data={filteredItems}
+                    pagination 
+                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    title={<h5>Results</h5>}
+                    subHeader
+                    subHeaderComponent={headerComponentMemo}
+                    subHeaderWrap
+                    theme="huc"
+                    striped
+                    highlightOnHover
+                    paginationPerPage={20}
+                    paginationRowsPerPageOptions={[20, 50, 100]} 
+                  />
+                }
+              </FadeDiv>
               }
             </Col>
           </Row>
         </Container>
-      </motion.div>
+      </SlideDiv>
       }
     </AnimatePresence>
   );

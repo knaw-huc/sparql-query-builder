@@ -8,11 +8,11 @@ import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {selectDataType, setDataType} from './downloadSlice';
 
 interface DownloadFn {
-    (subString: string): Promise<void>;
+  (subString: string): Promise<void>;
 }
 
 interface DownloadProps {
-  download: string;
+  download: 'json' | 'csv' | 'xml';
   onClick: DownloadFn;
   isLoading: boolean;
   activeType: string;
@@ -29,7 +29,7 @@ export function Download() {
     dispatch(setDataType(type));
     try {
       await downloadFile(currentQuery);
-      // reset datatype
+      // after requesting download, reset datatype to JSON
       dispatch(setDataType('json'));
     } catch {
       console.log('error downloading');

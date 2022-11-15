@@ -4,10 +4,11 @@ import Card from 'react-bootstrap/Card';
 import styles from './Datasets.module.scss';
 import {useGetDatasetsQuery} from './datasetsApi';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
-import {motion, AnimatePresence} from "framer-motion";
+import {AnimatePresence} from 'framer-motion';
 import Spinner from 'react-bootstrap/Spinner';
 import {setSelectedDatasets, selectedDatasets} from './datasetsSlice';
 import type {Dataset} from './datasetsSlice';
+import {FadeDiv} from '../animations/Animations';
 
 export function Datasets() {
   const {data, isFetching, isError} = useGetDatasetsQuery(undefined);
@@ -30,19 +31,11 @@ export function Datasets() {
       <Card.Body>
         <AnimatePresence mode="wait">
           {isFetching ?
-            <motion.div
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              key="datasets-loader">
+            <FadeDiv key="datasets-loader">
               <Spinner animation="border" variant="primary" />
-            </motion.div>
+            </FadeDiv>
             :
-            <motion.div
-              initial={{opacity: 0}}
-              animate={{opacity: 1}}
-              exit={{opacity: 0}}
-              key="datasets">
+            <FadeDiv key="datasets">
               {isError ?
                 <Card.Title as="h6">Error fetching the data sets</Card.Title>
                 :
@@ -64,7 +57,7 @@ export function Datasets() {
                   </Form>
                 </>
               }
-            </motion.div>
+            </FadeDiv>
           }
         </AnimatePresence>
       </Card.Body>

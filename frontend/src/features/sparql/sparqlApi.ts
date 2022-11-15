@@ -12,7 +12,7 @@ const headerTypes: Record<string, string> = {
   csv: 'text/csv',
 }
 
-// Sparql URL
+// Create Sparql URL and headers for requested data type.
 const dynamicBaseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_API,
   prepareHeaders: (headers, {getState}) => {

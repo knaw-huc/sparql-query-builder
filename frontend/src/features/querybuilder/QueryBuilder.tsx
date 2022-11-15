@@ -23,6 +23,7 @@ export function QueryBuilder() {
   const sentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
+  const dataSetEnabled = typeof process.env.REACT_APP_DATASETS_API !== 'undefined';
 
   function sendQuery() {
     if (currentQuery === sentQuery || !currentQuery) {
@@ -32,7 +33,7 @@ export function QueryBuilder() {
       }));
     }
     // TODO: Remove this optional check?
-    else if (currentDatasets.length === 0) {
+    else if (currentDatasets.length === 0 && dataSetEnabled) {
       dispatch(addNotification({
         message: 'Select one or more data sets',
         type: 'warning',
@@ -87,9 +88,11 @@ export function QueryBuilder() {
             <QueryCookies />
           </ButtonToolbar>
         </Col>
-        <Col md={4}>
-          <Datasets />
-        </Col>
+        {dataSetEnabled &&
+          <Col md={4}>
+            <Datasets />
+          </Col>
+        }
       </Row>
     </Container>
   );
