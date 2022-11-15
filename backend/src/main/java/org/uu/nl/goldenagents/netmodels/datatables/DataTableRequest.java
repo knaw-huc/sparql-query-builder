@@ -7,8 +7,12 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.uu.nl.net2apl.core.logging.Loggable;
+import org.uu.nl.net2apl.core.platform.Platform;
 
 public class DataTableRequest {
+    private static final Loggable logger = Platform.getLogger();
+
     /** The Constant PAGE_NO. */
     public static final String PAGE_NO = "start";
 
@@ -108,6 +112,9 @@ public class DataTableRequest {
         if(parameterNames.hasMoreElements()) {
 
             this.agentUUID = UUID.fromString(request.getParameter("agentUUID"));
+
+            logger.log(DataTableRequest.class, "===========> " + request.getParameter("agentUUID"));
+
             this.queryID = request.getParameter("queryID");
 
             this.start = Integer.parseInt(request.getParameter(PAGE_NO));
