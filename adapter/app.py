@@ -96,14 +96,19 @@ def get_resources():
 @app.route('/ga/sparql', methods=['POST'])
 def sparql():
     """This route is for direct sparql queries"""
+    # get headers
+    content_type = request.headers.get('Accept', type=str)
+    print('content_type', content_type)
     # breakdown request
     req = json.loads(request.data.decode('UTF-8'))
     # send the post request to the GA backend
     response = requests.post(
         f'{API_URL}/sparql',
         data=req['query'],
-        params={ 'format': 'json' }
+        params={ 'format': 'xml' }
     )
+    print(req['query'])
+    print(response.text)
     # and send the result back to the frontend
     return response.text
 
