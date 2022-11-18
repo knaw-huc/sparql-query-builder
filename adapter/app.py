@@ -6,9 +6,8 @@ import time
 import uuid
 
 from logging.config import dictConfig
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
-
 
 dictConfig({
     'version': 1,
@@ -26,15 +25,18 @@ dictConfig({
     }
 })
 
-
-
 app = Flask(__name__)
 cors = CORS(app, resources={r'/ga/*': {
     'origins': '*'
 }})
 
-
 API_URL = 'http://127.0.0.1:8080'
+
+FORMATS = {
+    'application/sparql-results+xml': 'xml',
+    'application/sparql-results+json': 'json',
+    'text/csv': 'csv'
+}
 
 # this list stores all user agents
 user_agents = []
@@ -53,7 +55,6 @@ def create_user_agent():
         return False
 
     
-
 @app.route('/ga/getresources', methods=['GET'])
 def get_resources():
     """This route gets all resources from the backend and
@@ -82,8 +83,6 @@ def get_resources():
                 if agent_id not in user_agents:
                     user_agents.append(agent_id)
 
-        print(db_agents)
-
         # maybe there are no user agents, create one
         if len(user_agents) < 1:
             create_user_agent()
@@ -96,67 +95,25 @@ def get_resources():
 @app.route('/ga/sparql', methods=['POST'])
 def sparql():
     """This route is for direct sparql queries"""
+    # get headers
+    accept_header = request.headers.get('Accept', type=str)
+    # no default value here, I expect the contents
+    # coming from Daan's React app.
+    format = FORMATS.get(accept_header)
+
     # breakdown request
     req = json.loads(request.data.decode('UTF-8'))
     # send the post request to the GA backend
-    response = requests.post(
+    backend_response = requests.post(
         f'{API_URL}/sparql',
         data=req['query'],
-        params={ 'format': 'json' }
+        params={ 'format': format }
     )
+
+    # create a new response from scratch
+    response = Response()
+    response.set_data(backend_response._content)
+    response.content_encoding = 'UTF-8'
+    response.content_type = accept_header
     # and send the result back to the frontend
-    return response.text
-
-
-# curl -X GET 'http://127.0.0.1:5000/ga/test'
-@app.route('/ga/test', methods=['GET'])
-def test():
-
-    QUERY = '''
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX ga: <https://data.goldenagents.org/ontology/>
-
-    SELECT DISTINCT * WHERE {
-      ?creativeAgent a ga:CreativeAgent .
-      ?creativeAgent ga:hasName ?nameOfTheAgent
-    }
-    LIMIT 30
-    '''
-
-    agent_id = user_agents[0]
-
-    # do a query and wait for messages
-    payload = {
-        'query': QUERY,
-        'queryType': 'USER_QUERY',
-        'selectedSources': list(db_agents)
-    }
-    response = requests.post(
-        f'{API_URL}/api/agent/user/{agent_id}/query',
-        json=payload,
-        headers={
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        params={ 'format': 'json' }
-    )
-    query_id = (json.loads(response.text))['queryID']
-
-    # start polling for results
-    count = 0 
-    url = f'{API_URL}/api/agent/user/{agent_id}/xml/{query_id}'
-    result = None
-    while count < 10:
-        time.sleep(5)
-        response = requests.get(url)
-        result = response.text
-        if '<?xml' in result:
-            break
-        count += 1
-
-    # convert xml into json ?
-    return result or []
-
-
-
-
+    return response

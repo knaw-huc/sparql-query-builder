@@ -24,10 +24,14 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.UUID;
 
+import org.uu.nl.net2apl.core.logging.Loggable;
+import org.uu.nl.net2apl.core.platform.Platform;
+
 @RestController
 @RequestMapping("api/agent/user")
 public class UserAgentController {
 
+    private static final Loggable logger = Platform.getLogger();
     private final UserAgentService service;
 
     @Autowired
@@ -108,6 +112,7 @@ public class UserAgentController {
     @GetMapping("/{agentid}/aqlsuggestions")
     @ResponseBody
     public AQLSuggestions getSuggestions(@PathVariable("agentid") String agentID) throws URISyntaxException {
+        logger.log(UserAgentController.class, "\n\n\n " + agentID + " asking for suggestions\n\n\n");
         return service.getSuggestions(UUID.fromString(agentID));
     }
 
