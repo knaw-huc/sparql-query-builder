@@ -18,6 +18,9 @@ const dynamicBaseQuery = fetchBaseQuery({
   prepareHeaders: (headers, {getState}) => {
     const dataType = (getState() as RootState).download.dataType;
     headers.set('Accept', headerTypes[dataType]);
+    // TODO: This is apparently needed by Virtuoso sparql services,
+    // which don't seem to accept JSON. Weird stuff.
+    headers.set('Content-Type','application/x-www-form-urlencoded')
     return headers;
   },
 });
@@ -30,13 +33,16 @@ export const sparqlApi = createApi({
     // Send Sparql query to server and save results to state
     sendSparql: build.query({
       query: ({query, datasets}) => {
+        // set params here to comply with x-www-form-urlencoded.
+        // otherwise, just throw this value into the body key
+        const params = new URLSearchParams({ 
+          query: query,
+          datasets: datasets, 
+        });
         return ({
           url: 'sparql', // to change, see datasets api and .env files
           method: 'POST',
-          body: {
-            query: query,
-            datasets: datasets,
-          },
+          body: params,
         })
       },
     }),

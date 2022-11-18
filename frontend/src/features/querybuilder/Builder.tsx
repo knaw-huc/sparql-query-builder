@@ -1,5 +1,11 @@
+import React, {useEffect} from 'react';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
 import Select from 'react-select';
 import styles from './QueryBuilder.module.scss';
+import * as queries from './helpers/queries';
+import {useSendSparqlQuery} from '../sparql/sparqlApi';
+import {setSelectedDatasets, selectedDatasets} from '../datasets/datasetsSlice';
 
 const theme = (theme: any) => ({
   ...theme,
@@ -19,33 +25,30 @@ const options = [
   {value: 'co', label: 'Colonist'},
 ];
 
-const options2 = [
-  {label: 'Sold to', value: 'sold'},
-  {label: 'Bought from', value: 'bought'},
-];
+export const Builder = () => {
+  const dispatch = useAppDispatch();
+  const currentDatasets = useAppSelector(selectedDatasets);
 
-const options3 = [
-  {label: 'Jan Six', value: 'six'},
-  {label: 'Joost Vondel', value: 'vondel'},
-];
+  const {data, isFetching, isError, error} = useSendSparqlQuery({
+    query: queries.initialQuery, 
+    datasets: currentDatasets
+  });
 
-export const Builder = () =>
-  <div>
-    <h5 className={styles.header}>Build your query</h5>
-    <p>Just placeholder selectboxes for now</p>
-    <Select 
-      className={styles.select}
-      options={options} 
-      placeholder="Give me every..."
-      theme={theme} />
-    <Select 
-      className={styles.select}
-      options={options2} 
-      placeholder="Who has..."
-      theme={theme} />
-    <Select 
-      className={styles.select}
-      options={options3} 
-      placeholder="To..."
-      theme={theme} />
-  </div>
+  const dataItems = data?.results.bindings;
+
+  const options = dataItems && 
+    dataItems.map( (item: any) => { 
+      return {value: item.c.value, label: item.c.value} 
+    });
+
+  return (
+    <div>
+      <h5 className={styles.header}>Build your query</h5>
+      <Select 
+        className={styles.select}
+        options={options} 
+        placeholder="Give me every..."
+        theme={theme} />
+    </div>
+  )
+}

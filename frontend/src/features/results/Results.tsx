@@ -28,7 +28,9 @@ export function Results() {
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
 
-  const {data, isFetching, isError, error} = useSendSparqlQuery({query: currentQuery, datasets: currentDatasets}, {
+  const {data, isFetching, isError, error} = useSendSparqlQuery({
+    query: currentQuery, datasets: currentDatasets
+  }, {
     skip: !currentQuery,
   });
 
