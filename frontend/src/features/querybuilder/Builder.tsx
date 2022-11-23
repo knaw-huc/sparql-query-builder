@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
-import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
+import {setActiveQuery} from './queryBuilderSlice';
 import Select from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
@@ -11,6 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import {FadeDiv} from '../animations/Animations';
 
 // TODO: Better typescript types
+// Multiple entity selection. Now only work for first entity
 
 interface SelectOptions {
   label: string;
@@ -49,10 +50,20 @@ export const Builder = () => {
     })
     // and no duplicates
     .filter((v: SelectOptions, i: number, a: any[]) => a.findIndex((v2: SelectOptions) => (v2.label === v.label)) === i);
+  
+  // Keep track of selected entities and set query accordingly
+  const setSelectedEntitiesObject = (newData: any) => {
+    setSelectedEntities(newData);
+    const theQuery = queries.resultQuery(newData[0], []);
+    dispatch(setActiveQuery(theQuery));
+  }
 
   // Keep track of selected properties for each entity, passed down to PropertySelect
-  const setSelectedPropertiesObject = ( entity: string, newData: SelectOptions) => {
+  // Set query
+  const setSelectedPropertiesObject = (entity: string, newData: SelectOptions) => {
     setSelectedProperties({...selectedProperties, [entity]: newData});
+    const theQuery = queries.resultQuery(selectedEntities[0], newData);
+    dispatch(setActiveQuery(theQuery));
   }
 
   return (
@@ -78,7 +89,7 @@ export const Builder = () => {
           'No properties found'
         }
         options={entityOptions}
-        onChange={(e: any) => setSelectedEntities(e)} />
+        onChange={(e: any) => setSelectedEntitiesObject(e)} />
 
       <AnimatePresence>
         {selectedEntities.map( (entity: SelectOptions, i: number) => 

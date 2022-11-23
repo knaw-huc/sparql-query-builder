@@ -24,3 +24,19 @@ export const propertyQuery = (schema: string) => `
     OPTIONAL { ?pred rdfs:label ?l }
   }
 `;
+
+// Shows up in the Query code editor and gets sent to the endpoint.
+// Ugly formatting here for nice formatting in the code editor
+export const resultQuery = (entity: any, properties: any) => {
+  const propertyLabels = properties.map((item: any) => '?' + item.label).join(' ');
+  const propertySelectors = properties.map((item: any) => '?' + entity.label + ' <' + item.value + '> ?' + item.label + '.').join('\n  ');
+  return (
+    !entity ? '' :
+    
+`SELECT ?${entity.label} ${propertyLabels} 
+WHERE {
+  ?${entity.label} a <${entity.value}>.
+  ${propertySelectors}
+} LIMIT 200`
+
+)};
