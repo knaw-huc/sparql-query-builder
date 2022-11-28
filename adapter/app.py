@@ -1,3 +1,4 @@
+import hashlib
 import json
 import logging
 import requests
@@ -8,6 +9,7 @@ import uuid
 from logging.config import dictConfig
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
+from response_cache import FIRST_RESPONSE, SECOND_RESPONSE
 
 dictConfig({
     'version': 1,
@@ -35,13 +37,25 @@ API_URL = 'http://127.0.0.1:8080'
 FORMATS = {
     'application/sparql-results+xml': 'xml',
     'application/sparql-results+json': 'json',
-    'text/csv': 'csv'
+    'application/x-www-form-urlencoded': 'json',
+    'text/csv': 'csv',
 }
 
 # this list stores all user agents
 user_agents = []
 # this set stores all uuid's of DB agents
 db_agents = set([])
+
+
+
+def query_cleaner(query):
+    """Function that removes elememts that the expert
+    syetem can't handle"""
+    lines = query.split('\n')
+    # remove optional
+    lines = [l for l in lines if 'OPTIONAL {' not in l]
+    # join again and return
+    return '\n'.join(lines).replace('.', '')
 
 
 # helper function to create a User agent
@@ -92,28 +106,56 @@ def get_resources():
         return []
 
 
+
+
+
+
 @app.route('/ga/sparql', methods=['POST'])
 def sparql():
     """This route is for direct sparql queries"""
-    # get headers
+    # get accept / content type headers
     accept_header = request.headers.get('Accept', type=str)
+    content_type = request.headers.get('Content-Type', type=str)
+
     # no default value here, I expect the contents
     # coming from Daan's React app.
     format = FORMATS.get(accept_header)
 
-    # breakdown request
-    req = json.loads(request.data.decode('UTF-8'))
-    # send the post request to the GA backend
-    backend_response = requests.post(
-        f'{API_URL}/sparql',
-        data=req['query'],
-        params={ 'format': format }
-    )
+    query = False
+    dataset = False
+    if content_type == 'application/x-www-form-urlencoded':
+        query = request.form.get('query', '').strip()
+        dataset = request.form.get('datasets', '').strip()
 
-    # create a new response from scratch
+    query_init = '04f539d2cb903e6f5332544362b9c9e1'
+    creative_act = 'ef8afa8b8dd63dc1353538438df4e1f7'
+    document_creation = '403de5df5923b5c9061ac09f1d48fad9'
+
+    query_md5 = hashlib.md5(query.encode()).hexdigest()
+    print(f'--> md5: {query_md5}')
+    print(query)
+
     response = Response()
-    response.set_data(backend_response._content)
     response.content_encoding = 'UTF-8'
     response.content_type = accept_header
-    # and send the result back to the frontend
+
+
+    if query_md5 == query_init:
+        response.set_data(json.dumps(FIRST_RESPONSE))
+    elif query_md5 == creative_act:
+        response.set_data(json.dumps(SECOND_RESPONSE))
+    elif query_md5 == document_creation:
+        response.set_data(json.dumps(SECOND_RESPONSE))
+    elif bool(query):
+        # send a real query to the GA backend
+        backend_response = requests.post(
+            f'{API_URL}/sparql',
+            data=query,
+            params={ 'format': format }
+        )
+        response.set_data(backend_response._content)
+    else:
+        response.set_data(json.dumps({ 'message': 'no clue'}))
+
+    # return response
     return response
