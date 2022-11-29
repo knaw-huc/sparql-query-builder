@@ -85,7 +85,7 @@ export function QueryBuilder() {
                 Run Query
               </Button>
             </ButtonGroup>
-            <QueryCookies />
+            <QueryCookies setKey={() => setKey('editor')} />
           </ButtonToolbar>
         </Col>
         {dataSetEnabled &&

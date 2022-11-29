@@ -10,14 +10,16 @@ import moment from 'moment';
 import {setSelectedDatasets, selectedDatasets} from '../datasets/datasetsSlice';
 import type {Dataset} from '../datasets/datasetsSlice';
 
-// TODO: 
-// later: querybuilder in cookie
-
 export interface QueryCookieObject {
   query: string;
   datetime: string;
   datasets: Dataset[];
 }
+
+interface QueryCookiesTypes {
+  setKey: () => void;
+}
+
 
 /* 
  * Getter and setter for query cookies.
@@ -27,7 +29,7 @@ export interface QueryCookieObject {
  * Load: gets the value of the selected query, selected data sets, and saves this to the redux store
 */
 
-export function QueryCookies() {
+export function QueryCookies({setKey}: QueryCookiesTypes) {
   const [cookies, setCookie] = useCookies(['querylist']);
   const currentQuery = useAppSelector(selectActiveQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
@@ -51,7 +53,7 @@ export function QueryCookies() {
       return;
     }
 
-    if (newList.filter( (q: QueryCookieObject) => q.query === currentQuery).length > 0) {
+    if (newList.filter((q: QueryCookieObject) => q.query === currentQuery).length > 0) {
       dispatch(
         addNotification({
           message: `Query already in list`,
@@ -91,6 +93,8 @@ export function QueryCookies() {
         type: 'info',
       })
     );
+    // Change tab view to code editor, as we're not setting query builder blocks
+    setKey();
   }
 
   return (

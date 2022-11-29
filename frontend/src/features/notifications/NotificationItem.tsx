@@ -7,26 +7,26 @@ import styles from './Notifications.module.scss';
 export type NotificationTypes = 'success' | 'error' | 'warning' | 'info';
 
 export interface Notification {
-  id: string
-  message: string
-  type?: NotificationTypes
-  onClose?: () => void
+  id: string;
+  message: string;
+  type?: NotificationTypes;
+  onClose?: () => void;
 }
 
 interface NotificationProps {
-  notification: Notification
+  notification: Notification;
 }
 
 export function NotificationItem({
   notification: {id, message, onClose, type = 'info'},
 }: NotificationProps) {
-  const dispatch = useAppDispatch()
-  const isPresent = useIsPresent()
+  const dispatch = useAppDispatch();
+  const isPresent = useIsPresent();
 
   // Handle dismiss of a single notification
   const handleDismiss = () => {
     if (isPresent) {
-      dispatch(dismissNotification(id))
+      dispatch(dismissNotification(id));
     }
   }
 
@@ -34,18 +34,18 @@ export function NotificationItem({
   const [, cancel, reset] = useTimeoutFn(
     handleDismiss,
     6000
-  )
+  );
 
   // Reset or cancel dismiss timeout based on mouse interactions
-  const onMouseEnter = () => cancel()
-  const onMouseLeave = () => reset()
+  const onMouseEnter = () => cancel();
+  const onMouseLeave = () => reset();
 
   // Call `onDismissComplete` when notification unmounts if present
   useUpdateEffect(() => {
     if (!isPresent) {
-      onClose?.()
+      onClose?.();
     }
-  }, [isPresent])
+  }, [isPresent]);
 
   return (
     <motion.li
