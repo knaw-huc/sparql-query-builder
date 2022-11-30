@@ -1,4 +1,4 @@
-export function getLabel(schema: string) {
+export function getLabel(schema: string | undefined) {
   // check for hash or slash, grab value after it
   var hash = schema.lastIndexOf('#');
   var slash = schema.lastIndexOf('/');

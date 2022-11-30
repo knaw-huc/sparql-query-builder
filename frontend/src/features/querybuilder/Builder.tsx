@@ -14,37 +14,48 @@ import {FadeDiv} from '../animations/Animations';
 // Implement Typescript types!
 // Do some filtering for duplicate results??
 
-type SparqlObject = {
+interface SparqlObject {
   type: string;
   value: string;
 }
 
-type EntityResults = {
+interface EntityResults {
   c: SparqlObject;
   l?: SparqlObject;
   p?: SparqlObject;
+  pred?: never;
+  tpe?: never;
+  dt?: never;
+  ot?: never;
 }
 
-type PropertyResults = {
+interface PropertyResults {
+  c?: never;
+  p?: never;
   pred: SparqlObject;
   tpe: SparqlObject;
-  dt: SparqlObject;
+  dt?: SparqlObject;
   ot?: SparqlObject;
   l?: SparqlObject;
 }
 
-type SparqlResults = EntityResults | PropertyResults | string;
+type SparqlResults = EntityResults | PropertyResults;
 
-interface SelectOptions {
-  value: any;
+interface PropertySelectData {
+  label: string;
+  value: PropertyResults;
+}
+
+interface SelectedOptions {
+  value: string;
   label: string;
 }
 
-interface SelectPropertyOptions extends SelectOptions {
-  ot: boolean;
+interface SelectedPropertyOptions extends SelectedOptions {
+  ot?: string;
 }
 
-interface SelectSubPropertyOptions extends SelectOptions {
+interface SelectedSubPropertyOptions extends SelectedOptions {
   subLabel: string;
   parent: string;
 }
@@ -62,9 +73,9 @@ const theme = (theme: any) => ({
 export const Builder = () => {
   const dispatch = useAppDispatch();
 
-  const [selectedEntity, setSelectedEntity] = useState<SelectOptions>({label:'', value:''});
-  const [selectedProperties, setSelectedProperties] = useState<SelectPropertyOptions[]>([]);
-  const [selectedSubProperties, setSelectedSubProperties] = useState<SelectSubPropertyOptions[]>([]);
+  const [selectedEntity, setSelectedEntity] = useState<SelectedOptions>({value:'', label:''});
+  const [selectedProperties, setSelectedProperties] = useState<SelectedPropertyOptions[]>([]);
+  const [selectedSubProperties, setSelectedSubProperties] = useState<SelectedSubPropertyOptions[]>([]);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
@@ -73,15 +84,15 @@ export const Builder = () => {
   }, [selectedEntity, selectedProperties, selectedSubProperties]);
   
   // Keep track of selected entities and set query accordingly
-  const setSelectedEntityObject = (selector: any, newData: any) => {
+  const setSelectedEntityObject = (selector: SelectedOptions, newData: SelectedOptions) => {
     setSelectedEntity(newData);
     setSelectedProperties([]);
     setSelectedSubProperties([]);
   }
 
   // Keep track of selected properties for each entity, passed down to PropertySelect
-  const setSelectedPropertiesObject = (selector: any, newData: any) => {
-    const dataForQuery = newData.map((d: any) => { 
+  const setSelectedPropertiesObject = (selector: SelectedOptions, newData: PropertySelectData[]) => {
+    const dataForQuery = newData.map((d: PropertySelectData) => { 
       return {
         label: d.value.l?.value || queries.getLabel(d.value.pred.value),
         value: d.value.pred.value,
@@ -92,15 +103,15 @@ export const Builder = () => {
 
     // Check if subproperties are still applicable
     const newArray = selectedSubProperties.filter(
-      (sp: any) => newData.some((nd: any) => nd.value.ot?.value === sp.parent)
+      (sp: SelectedSubPropertyOptions) => newData.some((nd: PropertySelectData) => nd.value.ot?.value === sp.parent)
     );
     newArray && setSelectedSubProperties(newArray);
   }
 
   // Keep track of selected subproperties for each property that has an ot
-  const setSelectedSubPropertiesObject = (selector: any, newData: any) => {
+  const setSelectedSubPropertiesObject = (selector: SelectedOptions, newData: PropertySelectData) => {
     // Check if data already exists in properties array.
-    const newArray = selectedSubProperties.filter((o: any) => o.parent !== selector.value);
+    const newArray = selectedSubProperties.filter((o: SelectedSubPropertyOptions) => o.parent !== selector.value);
     const dataForQuery = {
         label: selector.label,
         value: newData.value.pred.value,
@@ -137,7 +148,7 @@ export const Builder = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {selectedProperties.map( (property: any) => {
+        {selectedProperties.map( (property: SelectedPropertyOptions) => {
           return (
             property.ot &&
             <FadeDiv key={property.ot}>
@@ -160,7 +171,7 @@ export const Builder = () => {
 }
 
 interface SparqlSelectTypes {
-  selector: SelectOptions;
+  selector: SelectedOptions;
   onChange: any;
   multiSelect: boolean;
   label: string;
@@ -181,15 +192,14 @@ const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, leve
 
   // Reformat and rearrange results
   const resultsOptions = results && 
-    results.map((item: any) => {
-      !item.hasOwnProperty('c') && console.log(item)
+    results.map((item: SparqlResults) => {
       return {
         value: item.c?.value || item,
-        label: (item.l?.value || queries.getLabel(item.c?.value || item.pred.value)) +
-          (item.hasOwnProperty('ot') ? `: ${queries.getLabel(item.ot.value)}` : ''),
+        label: (item.l?.value || queries.getLabel(item.c?.value || item.pred?.value)) +
+          (item.hasOwnProperty('ot') ? `: ${queries.getLabel(item.ot?.value)}` : ''),
       }
     })
-    .sort((a: SelectOptions, b: SelectOptions) => {
+    .sort((a: SelectedOptions, b: SelectedOptions) => {
       const la = a.label.toLowerCase(),
             lb = b.label.toLowerCase();
       return la < lb ? -1 : (la > lb ? 1 : 0)
