@@ -3,6 +3,7 @@ import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
 import {setActiveQuery} from './queryBuilderSlice';
 import Select from 'react-select';
+import {ValueType, ActionMeta} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
@@ -179,6 +180,8 @@ interface SparqlSelectTypes {
   level: number;
 }
 
+type OnChange = (value: ValueType<SelectedOptions>, actionMeta: ActionMeta<SelectedOptions>) => void;
+
 const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, level}: SparqlSelectTypes) => {
   const currentDatasets = useAppSelector(selectedDatasets);
   const theQuery = level === 0 ? queries.entityQuery : queries.propertyQuery(selector.value);
@@ -233,7 +236,7 @@ const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, leve
           /> : 
           'Nothing found'
         }
-        onChange={(e: any) => onChange(selector, e)}
+        onChange={(e: OnChange) => onChange(selector, e)}
         theme={theme} />
     </div>
   );
