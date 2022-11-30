@@ -3,7 +3,7 @@ import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
 import {setActiveQuery} from './queryBuilderSlice';
 import Select from 'react-select';
-import {ValueType, ActionMeta} from 'react-select';
+import type {SingleValue, MultiValue, Theme} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
@@ -12,7 +12,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import {FadeDiv} from '../animations/Animations';
 
 // TODO: 
-// Implement Typescript types!
+// Better Typescript types
 // Do some filtering for duplicate results??
 
 interface SparqlObject {
@@ -61,7 +61,7 @@ interface SelectedSubPropertyOptions extends SelectedOptions {
   parent: string;
 }
 
-const theme = (theme: any) => ({
+const theme = (theme: Theme) => ({
   ...theme,
   borderRadius: 0,
   colors: {
@@ -173,14 +173,15 @@ export const Builder = () => {
 
 interface SparqlSelectTypes {
   selector: SelectedOptions;
-  onChange: any;
+  // Hier even naar kijken
+  onChange: (selector: SelectedOptions, newData: any) => void;
   multiSelect: boolean;
   label: string;
   placeholder: string;
   level: number;
 }
 
-type OnChange = (value: ValueType<SelectedOptions>, actionMeta: ActionMeta<SelectedOptions>) => void;
+type OnChange = SingleValue<React.ChangeEvent<HTMLSelectElement>> | MultiValue<React.ChangeEvent<HTMLSelectElement>>;
 
 const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, level}: SparqlSelectTypes) => {
   const currentDatasets = useAppSelector(selectedDatasets);
