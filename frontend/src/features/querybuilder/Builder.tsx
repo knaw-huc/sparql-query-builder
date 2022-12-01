@@ -3,17 +3,17 @@ import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
 import {setActiveQuery} from './queryBuilderSlice';
 import Select from 'react-select';
-import type {SingleValue, MultiValue, Theme} from 'react-select';
+import type {PropsValue, Theme} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
-import {setSelectedDatasets, selectedDatasets} from '../datasets/datasetsSlice';
+import {selectedDatasets} from '../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import {FadeDiv} from '../animations/Animations';
 
 // TODO: 
-// Better Typescript types
-// Do some filtering for duplicate results??
+// Check Typescript types?
+// Do some additional filtering/labeling for duplicate results?
 
 interface SparqlObject {
   type: string;
@@ -42,24 +42,26 @@ interface PropertyResults {
 
 type SparqlResults = EntityResults | PropertyResults;
 
-interface PropertySelectData {
+interface SelectedData {
+  value: SparqlResults;
   label: string;
-  value: PropertyResults;
 }
 
-interface SelectedOptions {
+export interface EntityState {
   value: string;
   label: string;
 }
 
-interface SelectedPropertyOptions extends SelectedOptions {
+export interface PropertyState extends EntityState {
   ot?: string;
 }
 
-interface SelectedSubPropertyOptions extends SelectedOptions {
+export interface SubPropertyState extends EntityState {
   subLabel: string;
   parent: string;
 }
+
+interface SelectorData extends EntityState {}
 
 const theme = (theme: Theme) => ({
   ...theme,
@@ -74,29 +76,32 @@ const theme = (theme: Theme) => ({
 export const Builder = () => {
   const dispatch = useAppDispatch();
 
-  const [selectedEntity, setSelectedEntity] = useState<SelectedOptions>({value:'', label:''});
-  const [selectedProperties, setSelectedProperties] = useState<SelectedPropertyOptions[]>([]);
-  const [selectedSubProperties, setSelectedSubProperties] = useState<SelectedSubPropertyOptions[]>([]);
+  const [selectedEntity, setSelectedEntity] = useState<EntityState>({value: '', label: ''});
+  const [selectedProperties, setSelectedProperties] = useState<PropertyState[]>([]);
+  const [selectedSubProperties, setSelectedSubProperties] = useState<SubPropertyState[]>([]);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
     const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedSubProperties);
     selectedEntity.value && dispatch(setActiveQuery(theQuery));
-  }, [selectedEntity, selectedProperties, selectedSubProperties]);
+  }, [selectedEntity, selectedProperties, selectedSubProperties, dispatch]);
   
   // Keep track of selected entities and set query accordingly
-  const setSelectedEntityObject = (selector: SelectedOptions, newData: SelectedOptions) => {
-    setSelectedEntity(newData);
+  const setSelectedEntityObject = (selector: SelectorData, data: SelectedData) => {
+    setSelectedEntity({
+      value: data.value.c!.value, 
+      label: data.value.l?.value || queries.getLabel(data.value.c!.value)
+    });
     setSelectedProperties([]);
     setSelectedSubProperties([]);
   }
 
   // Keep track of selected properties for each entity, passed down to PropertySelect
-  const setSelectedPropertiesObject = (selector: SelectedOptions, newData: PropertySelectData[]) => {
-    const dataForQuery = newData.map((d: PropertySelectData) => { 
+  const setSelectedPropertiesObject = (selector: SelectorData, data: SelectedData[]) => {
+    const dataForQuery = data.map((d: SelectedData) => { 
       return {
-        label: d.value.l?.value || queries.getLabel(d.value.pred.value),
-        value: d.value.pred.value,
+        value: d.value.pred!.value,
+        label: d.value.l?.value || queries.getLabel(d.value.pred!.value),
         ot: d.value.ot?.value,
       }
     });
@@ -104,26 +109,26 @@ export const Builder = () => {
 
     // Check if subproperties are still applicable
     const newArray = selectedSubProperties.filter(
-      (sp: SelectedSubPropertyOptions) => newData.some((nd: PropertySelectData) => nd.value.ot?.value === sp.parent)
+      (sp: SubPropertyState) => data.some((nd: SelectedData) => nd.value.ot?.value === sp.parent)
     );
     newArray && setSelectedSubProperties(newArray);
   }
 
   // Keep track of selected subproperties for each property that has an ot
-  const setSelectedSubPropertiesObject = (selector: SelectedOptions, newData: PropertySelectData) => {
+  const setSelectedSubPropertiesObject = (selector: SelectorData, data: SelectedData) => {
     // Check if data already exists in properties array.
-    const newArray = selectedSubProperties.filter((o: SelectedSubPropertyOptions) => o.parent !== selector.value);
+    const newArray = selectedSubProperties.filter((o: SubPropertyState) => o.parent !== selector.value);
     const dataForQuery = {
+        value: data.value.pred!.value,
         label: selector.label,
-        value: newData.value.pred.value,
-        subLabel: `${selector.label}_${newData.value.l?.value || queries.getLabel(newData.value.pred.value)}`,
+        subLabel: `${selector.label}_${data.value.l?.value || queries.getLabel(data.value.pred!.value)}`,
         parent: selector.value,
     };
     setSelectedSubProperties([...newArray, dataForQuery]);
   }
 
   return (
-    <div>
+    <>
       <h5 className={styles.header}>Build your query</h5>
 
       <SparqlSelect 
@@ -149,7 +154,7 @@ export const Builder = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {selectedProperties.map( (property: SelectedPropertyOptions) => {
+        {selectedProperties.map( (property: PropertyState) => {
           return (
             property.ot &&
             <FadeDiv key={property.ot}>
@@ -167,27 +172,24 @@ export const Builder = () => {
           )
         })}
       </AnimatePresence>
-    </div>
+    </>
   )
 }
 
 interface SparqlSelectTypes {
-  selector: SelectedOptions;
-  // Hier even naar kijken
-  onChange: (selector: SelectedOptions, newData: any) => void;
+  selector: SelectorData;
+  onChange: (selector: SelectorData, data: any) => void;
   multiSelect: boolean;
   label: string;
   placeholder: string;
   level: number;
 }
 
-type OnChange = SingleValue<React.ChangeEvent<HTMLSelectElement>> | MultiValue<React.ChangeEvent<HTMLSelectElement>>;
-
 const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, level}: SparqlSelectTypes) => {
   const currentDatasets = useAppSelector(selectedDatasets);
   const theQuery = level === 0 ? queries.entityQuery : queries.propertyQuery(selector.value);
 
-  const {data, isFetching, isError, error} = useSendSparqlQuery({
+  const {data, isFetching, isError} = useSendSparqlQuery({
     query: theQuery, 
     datasets: currentDatasets
   });
@@ -198,16 +200,22 @@ const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, leve
   const resultsOptions = results && 
     results.map((item: SparqlResults) => {
       return {
-        value: item.c?.value || item,
+        value: item,
         label: (item.l?.value || queries.getLabel(item.c?.value || item.pred?.value)) +
-          (item.hasOwnProperty('ot') ? `: ${queries.getLabel(item.ot?.value)}` : ''),
+          (item.hasOwnProperty('ot') && level < 2 ? `: ${queries.getLabel(item.ot?.value)}` : ''),
       }
     })
-    .sort((a: SelectedOptions, b: SelectedOptions) => {
+    .sort((a: SelectedData, b: SelectedData) => {
       const la = a.label.toLowerCase(),
             lb = b.label.toLowerCase();
       return la < lb ? -1 : (la > lb ? 1 : 0)
-    });
+    })
+    // and no duplicate preds if final level, since we're not looking at the ot there
+    .filter((v: SelectedData, i: number, a: any[]) => 
+      level === 2 ? 
+        (a.findIndex((v2: SelectedData) => (v2.value.pred!.value === v.value.pred!.value)) === i) :
+        true
+    );
 
   return (
     <div>
@@ -235,9 +243,9 @@ const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, leve
             role="status"
             aria-hidden="true"
           /> : 
-          'Nothing found'
+          ( isError ? 'Nothing found' : 'Something\'s gone wrong with fetching the data')
         }
-        onChange={(e: OnChange) => onChange(selector, e)}
+        onChange={(e: PropsValue<SelectedData>) => onChange(selector, e)}
         theme={theme} />
     </div>
   );

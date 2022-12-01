@@ -29,7 +29,7 @@ const notificationsSlice = createSlice({
     },
     dismissNotification: (
       state,
-      {payload }: PayloadAction<Notification['id']>
+      {payload}: PayloadAction<Notification['id']>
     ) => {
       const index = state.notifications.findIndex(
         (notification) => notification.id === payload

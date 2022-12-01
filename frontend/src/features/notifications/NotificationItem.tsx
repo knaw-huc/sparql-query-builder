@@ -4,7 +4,7 @@ import {dismissNotification} from './notificationsSlice';
 import {useAppDispatch} from '../../app/hooks';
 import styles from './Notifications.module.scss';
 
-export type NotificationTypes = 'success' | 'error' | 'warning' | 'info';
+type NotificationTypes = 'success' | 'error' | 'warning' | 'info';
 
 export interface Notification {
   id: string;
@@ -17,9 +17,7 @@ interface NotificationProps {
   notification: Notification;
 }
 
-export function NotificationItem({
-  notification: {id, message, onClose, type = 'info'},
-}: NotificationProps) {
+export function NotificationItem({notification: {id, message, onClose, type = 'info'}}: NotificationProps) {
   const dispatch = useAppDispatch();
   const isPresent = useIsPresent();
 
