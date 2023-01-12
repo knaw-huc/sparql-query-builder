@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+/*import React, {useState, useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
 import {setActiveQuery} from './queryBuilderSlice';
@@ -249,4 +249,6 @@ const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, leve
         theme={theme} />
     </div>
   );
-}
+}*/
+
+export {}

@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import styles from './QueryBuilder.module.scss';
-import {Builder} from './Builder';
+import {Builder} from './BuilderRedux';
 import {Editor} from './Editor';
 import {QueryCookies} from './QueryCookies';
 import {Datasets} from '../datasets/Datasets';

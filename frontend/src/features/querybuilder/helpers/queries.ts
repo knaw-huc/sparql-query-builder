@@ -1,11 +1,18 @@
-import type {EntityState, PropertyState, SubPropertyState} from '../Builder';
+import type {Entity, Property} from '../BuilderRedux';
 
-export function getLabel(schema: string | undefined) {
-  if (!schema) return '';
+export function getLabel(item: any, type?: string) {
+  if (!item.hasOwnProperty('c') && !item.hasOwnProperty('pred')) {
+    return '';
+  }
+  if (item.hasOwnProperty('l') && type !== 'ot') {
+    return item.l.value;
+  }
+  // either an entity or property
+  const labelData = type === 'ot' ? item.ot : item.c || item.pred;
   // check for hash or slash, grab value after it
-  var hash = schema.lastIndexOf('#');
-  var slash = schema.lastIndexOf('/');
-  return schema.substring((hash !== -1 ? hash : slash) + 1);
+  var hash = labelData.value.lastIndexOf('#');
+  var slash = labelData.value.lastIndexOf('/');
+  return labelData.value.substring((hash !== -1 ? hash : slash) + 1);
 }
 
 export const entityQuery = `
@@ -37,17 +44,17 @@ export const propertyQuery = (schema: string) => `
 
 // Shows up in the Query code editor and gets sent to the endpoint
 // Ugly formatting here for nice formatting in the code editor
-export const resultQuery = (entity: EntityState, properties: PropertyState[], subProperties: SubPropertyState[]) => {
-  const propertyLabels = properties.map((item: any) => '?' + item.label).join(' ');
+export const resultQuery = (entity: Entity, properties: Property[]) => {
+  const propertyLabels = properties.map((item: any) => '?' + item[0].label).join(' ');
   const propertySelectors = properties.map((item: any) => '?' + entity.label + ' <' + item.value + '> ?' + item.label + '.').join('\n  ');
-  const subPropertySelectors = subProperties.map((item: any) => '?' + item.label + ' <' + item.value + '> ?' + item.subLabel + '.').join('\n  ');
-  const subPropertyLabels = subProperties.map((item: any) => '?' + item.subLabel).join(' ');
+  // const subPropertySelectors = subProperties.map((item: any) => '?' + item.label + ' <' + item.value + '> ?' + item.subLabel + '.').join('\n  ');
+  // const subPropertyLabels = subProperties.map((item: any) => '?' + item.subLabel).join(' ');
   return (
     !entity ? '' :  
-`SELECT ?${entity.label} ${propertyLabels} ${subPropertyLabels}
+`SELECT ?${entity.label} ${propertyLabels} {subPropertyLabels}
 WHERE {
   ?${entity.label} a <${entity.value}>.
   ${propertySelectors}
-  ${subPropertySelectors}
+  {subPropertySelectors}
 } LIMIT 1000`
 )};
