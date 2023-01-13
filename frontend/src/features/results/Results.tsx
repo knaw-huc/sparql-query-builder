@@ -43,6 +43,8 @@ export function Results() {
   // Get table headers from returned JSON. 
   // Some basic cell formatting.
   const columns = data?.head.vars.map( (h: string) => {
+    console.log('Results columns')
+    console.log(h)
     return {
       name: <span className={styles.header}>{h}</span>, 
       selector: (row: ResultsObject) => row[h],

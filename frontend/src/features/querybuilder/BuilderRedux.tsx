@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import update from 'immutability-helper';
 import {setActiveQuery} from './queryBuilderSlice';
-import Select from 'react-select';
+import Select, {components, OptionProps} from 'react-select';
 import type {PropsValue, Theme} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
@@ -53,6 +53,7 @@ export type Property = {
   ot: string;
   otLabel: string;
   uuid: string;
+  labelForQuery: string;
 }
 
 const theme = (theme: Theme) => ({
@@ -114,8 +115,6 @@ export const Builder = () => {
     }
   }
 
-  console.log(selectedProperties)
-
   return (
     <>
       <h5 className={styles.header}>Build your query</h5>
@@ -135,9 +134,10 @@ export const Builder = () => {
           propertyArray.map((property: Property, j: number) =>
             property.ot.length > 0 &&
               <PropertySelect 
-                key={`${property.uuid}`}
+                key={property.uuid}
                 parentUri={property.ot} 
-                parentLabel={`${property.label}`}
+                parentLabel={property.label}
+                labelForQuery={property.labelForQuery}
                 onChange={setProperties} 
                 multiSelect={false}
                 parentLevel={i}
@@ -160,13 +160,20 @@ const EntitySelector = ({onChange}: any) => {
 
   const results = data?.results.bindings;
 
+  console.log('Entity results')
+  console.log(results)
+
   // Reformat results
   const resultsOptions = results && 
-    results.map((item: any) => {
+    results.map((item: EntityData) => {
       return {
         label: queries.getLabel(item),
         value: item.c.value,
       }
+    }).sort((a: Entity, b: Entity) => {
+      const la = a.label.toLowerCase(),
+            lb = b.label.toLowerCase();
+      return la < lb ? -1 : (la > lb ? 1 : 0)
     });
 
   return (
@@ -188,7 +195,7 @@ interface SparqlSelectTypes {
   multiSelect: boolean;
 }
 
-const PropertySelect = ({parentUri, parentLabel, onChange, multiSelect, level, parentLevel, value}: any) => {
+const PropertySelect = ({parentUri, parentLabel, labelForQuery, onChange, multiSelect, level, parentLevel, value}: any) => {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
@@ -198,17 +205,29 @@ const PropertySelect = ({parentUri, parentLabel, onChange, multiSelect, level, p
 
   const results = data?.results.bindings;
 
+  console.log('Property results')
+  console.log(results)
+
   // Reformat results
   const resultsOptions = results && 
-    results.map((item: any) => {
+    results.map((item: PropertyData) => {
       const otLabel = item.hasOwnProperty('ot') && queries.getLabel(item, 'ot');
+      const label = queries.getLabel(item);
+      const newLabelForQuery = labelForQuery ? 
+        `${labelForQuery}_${label}${otLabel ? `_${otLabel}` : ''}` : 
+        `${label}${otLabel ? `_${otLabel}` : ''}`;
       return {
-        label: `${queries.getLabel(item)}${otLabel ? `: ${otLabel}` : ''}`,
+        label: `${label}${otLabel ? `: ${otLabel}` : ''}`,
         value: item.pred.value,
-        ot: item.hasOwnProperty('ot') && item.ot.value,
+        ot: item.hasOwnProperty('ot') && item.ot?.value,
         otLabel: item.hasOwnProperty('ot') && queries.getLabel(item, 'ot'),
+        labelForQuery: newLabelForQuery,
       }
-    });
+    }).sort((a: Property, b: Property) => {
+      const la = a.label.toLowerCase(),
+            lb = b.label.toLowerCase();
+      return la < lb ? -1 : (la > lb ? 1 : 0)
+    });;
 
 
   return (
@@ -227,6 +246,17 @@ const PropertySelect = ({parentUri, parentLabel, onChange, multiSelect, level, p
   );
 }
 
+const CustomOption = (props: any) => {
+  return (
+    <components.Option {...props}>
+      {props.data.label} 
+      <span className={styles.schema}>
+        {props.data.value} 
+      </span>
+    </components.Option>
+  )
+}
+
 const SelectDropdown = ({label, placeholder, isFetching, isError, multiSelect, resultsOptions, onChange, level, parentLevel, value}: any) => {
   return (
     <div style={{paddingLeft: `${level * 1.5}rem`}}>
@@ -234,6 +264,7 @@ const SelectDropdown = ({label, placeholder, isFetching, isError, multiSelect, r
         {label}
       </label>
       <Select 
+        components={{ Option: CustomOption }}
         className={styles.select}
         options={resultsOptions} 
         placeholder={placeholder}

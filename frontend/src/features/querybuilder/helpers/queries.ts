@@ -44,17 +44,25 @@ export const propertyQuery = (schema: string) => `
 
 // Shows up in the Query code editor and gets sent to the endpoint
 // Ugly formatting here for nice formatting in the code editor
-export const resultQuery = (entity: Entity, properties: Property[]) => {
-  const propertyLabels = properties.map((item: any) => '?' + item[0].label).join(' ');
-  const propertySelectors = properties.map((item: any) => '?' + entity.label + ' <' + item.value + '> ?' + item.label + '.').join('\n  ');
-  // const subPropertySelectors = subProperties.map((item: any) => '?' + item.label + ' <' + item.value + '> ?' + item.subLabel + '.').join('\n  ');
-  // const subPropertyLabels = subProperties.map((item: any) => '?' + item.subLabel).join(' ');
+export const resultQuery = (entity: Entity, properties: Property[][]) => {
+
+  const propertyLabels = properties.map(
+    (propertyPath: Property[]) => propertyPath.map(
+      (property: Property) => '?' + property.labelForQuery
+    ).join(' ')
+  ).join(' ');
+
+  const propertySelectors = properties.map(
+    (propertyPath: Property[]) => propertyPath.map(
+      (property: Property, i: number) => '?' + (i > 0 ? propertyPath[i-1].labelForQuery : entity.label) + ' <' + property.value + '> ?' + property.labelForQuery + '.'
+    ).join('\n  ')
+  ).join('\n  ');
+
   return (
     !entity ? '' :  
-`SELECT ?${entity.label} ${propertyLabels} {subPropertyLabels}
+`SELECT ?${entity.label} ${propertyLabels}
 WHERE {
   ?${entity.label} a <${entity.value}>.
   ${propertySelectors}
-  {subPropertySelectors}
 } LIMIT 1000`
 )};
