@@ -48,7 +48,6 @@ export function Results() {
     return {
       name: <span className={styles.header}>{h}</span>, 
       selector: (row: ResultsObject) => row[h],
-      grow: h === 'year' ? 0 : 1,
       cell: (row: ResultsObject) => 
         <CustomCell type={row[h].type} value={row[h].value} />,
       sortable: true,

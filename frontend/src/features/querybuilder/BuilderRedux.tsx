@@ -12,65 +12,48 @@ import {useSendSparqlQuery} from '../sparql/sparqlApi';
 import {selectedDatasets} from '../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import {FadeDiv} from '../animations/Animations';
-
-// Ga naar entity selector en een property selector. Property selector heeft eigen children met nieuwe property selectors.
+import Form from 'react-bootstrap/Form';
 
 interface SparqlObject {
+  // as returned by a sparql db
   type: string;
   value: string;
 }
 
-// l = label
-// c = uri to get properties of in next step
-// p = parent, we don't do anything with this yet
 interface EntityData {
-  c: SparqlObject;
-  l?: SparqlObject;
-  p?: SparqlObject;
+  c: SparqlObject; // uri to get properties of in next step
+  l?: SparqlObject; // label
+  p?: SparqlObject; // parent, we don't do anything with this yet
 }
 
-// l = label
-// pred = uri to use in the sparql query
-// tpe = data type
-// dt = 
-// ot = entity the property belongs to, we use this to delve deeper
 interface PropertyData {
-  l?: SparqlObject;
-  pred: SparqlObject;
-  tpe: SparqlObject;
-  dt?: SparqlObject;
-  ot?: SparqlObject;
+  l?: SparqlObject; // label
+  pred: SparqlObject; // uri to use in the sparql query
+  tpe: SparqlObject; // type of property
+  dt?: SparqlObject; // type of data
+  ot?: SparqlObject; // entity the property belongs to, we use this to delve deeper
 }
 
 export type Entity = {
-  label: string;
-  value: string; // this is the uri
+  label: string; // appears in the dropdown
+  value: string; // this is the uri (value from c)
 }
 
 export type Property = {
-  label: string;
+  label: string; // appears in the dropdown
   value: string; // this is the uri
-  ot: string;
-  otLabel: string;
-  uuid: string;
-  labelForQuery: string;
+  ot: string; // value of ot
+  otLabel: string; // label derived from value of ot
+  dataType: string; // derived from optional dt
+  uuid: string; // unique id/key for use in array map
+  labelForQuery: string; // value that gets passed as a label to the sparql query
 }
-
-const theme = (theme: Theme) => ({
-  ...theme,
-  borderRadius: 0,
-  colors: {
-    ...theme.colors,
-    primary25: '#efc501',
-    primary: 'black',
-  }
-});
 
 export const Builder = () => {
   const dispatch = useAppDispatch();
 
   const [selectedEntity, setSelectedEntity] = useState<Entity>({label: '', value: ''});
-  const [selectedProperties, setSelectedProperties] = useState<any>([]);
+  const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
@@ -85,7 +68,7 @@ export const Builder = () => {
     setSelectedProperties([]);
   }
 
-  const setProperties = (data: Property, level: number, parentLevel: number, changedValue: any) => {
+  const setProperties = (data: Property, changedValue: any, level: any, parentLevel?: any) => {
     // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
     // Keep track of these arrays using the parentLevel (index # of parent array) and level (index # of object being selected)
     if (level === 0) {
@@ -107,6 +90,8 @@ export const Builder = () => {
       }
     }
     if (level > 0) {
+      console.log(`level: ${level}`)
+      console.log(`parentlevel: ${parentLevel}`)
       // set children
       const uuid = uuidv4();
       const newProperty = [...selectedProperties[parentLevel].slice(0, level), ...[{...data, uuid: uuid}]];
@@ -114,6 +99,12 @@ export const Builder = () => {
       setSelectedProperties(newState);
     }
   }
+
+  const addFilter = (data: string, level: any, parentLevel: any) => {
+
+  }
+
+  console.log(selectedProperties)
 
   return (
     <>
@@ -131,8 +122,8 @@ export const Builder = () => {
             value={selectedProperties.map( (property: Property[]) => property[0] )} />
         }
         {selectedProperties.map((propertyArray: Property[], i: number) =>
-          propertyArray.map((property: Property, j: number) =>
-            property.ot.length > 0 &&
+          propertyArray.map((property: Property, j: number) => [
+            property.ot.length > 0 && 
               <PropertySelect 
                 key={property.uuid}
                 parentUri={property.ot} 
@@ -142,7 +133,17 @@ export const Builder = () => {
                 multiSelect={false}
                 parentLevel={i}
                 level={j+1}
-                value={selectedProperties[i][j+1]} />
+                value={selectedProperties[i][j+1]} />,
+
+            property.dataType.length > 0 && 
+              property.dataType === 'string' && 
+                <Form key={`stringFilter-${property.uuid}`}>
+                  <Form.Group controlId={`stringFilter-${property.uuid}`}>
+                    <Form.Label>{property.label} must contain</Form.Label>
+                    <Form.Control type="text" placeholder="TODO" />
+                  </Form.Group>
+                </Form>
+            ]
           )
         )}
 
@@ -150,7 +151,11 @@ export const Builder = () => {
   )
 }
 
-const EntitySelector = ({onChange}: any) => {
+interface EntitySelectorProps {
+  onChange: (data: Entity) => void;
+}
+
+const EntitySelector = ({onChange}: EntitySelectorProps) => {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
@@ -189,13 +194,18 @@ const EntitySelector = ({onChange}: any) => {
   );
 }
 
-interface SparqlSelectTypes {
-  dataSelector?: Property;
-  onChange: (newData: any, parent: any) => void;
+interface PropertySelectProps {
+  parentUri: string;
+  parentLabel: string;
+  labelForQuery?: string;
+  onChange: (data: any, changedValue: any, level: any, parentLevel?: any) => void;
   multiSelect: boolean;
+  level: number;
+  parentLevel?: number;
+  value: Property[] | Property;
 }
 
-const PropertySelect = ({parentUri, parentLabel, labelForQuery, onChange, multiSelect, level, parentLevel, value}: any) => {
+const PropertySelect = ({parentUri, parentLabel, labelForQuery, onChange, multiSelect, level, parentLevel, value}: PropertySelectProps) => {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
@@ -216,11 +226,15 @@ const PropertySelect = ({parentUri, parentLabel, labelForQuery, onChange, multiS
       const newLabelForQuery = labelForQuery ? 
         `${labelForQuery}_${label}${otLabel ? `_${otLabel}` : ''}` : 
         `${label}${otLabel ? `_${otLabel}` : ''}`;
+      const dataType = item.hasOwnProperty('dt') && 
+        // todo: define some more data types
+        (item.dt?.value === 'http://www.w3.org/2001/XMLSchema#string' ? 'string' : false);
       return {
         label: `${label}${otLabel ? `: ${otLabel}` : ''}`,
         value: item.pred.value,
         ot: item.hasOwnProperty('ot') && item.ot?.value,
         otLabel: item.hasOwnProperty('ot') && queries.getLabel(item, 'ot'),
+        dataType: dataType, 
         labelForQuery: newLabelForQuery,
       }
     }).sort((a: Property, b: Property) => {
@@ -257,9 +271,33 @@ const CustomOption = (props: any) => {
   )
 }
 
-const SelectDropdown = ({label, placeholder, isFetching, isError, multiSelect, resultsOptions, onChange, level, parentLevel, value}: any) => {
+// theme for the selection boxes
+const theme = (theme: Theme) => ({
+  ...theme,
+  borderRadius: 0,
+  colors: {
+    ...theme.colors,
+    primary25: '#efc501',
+    primary: 'black',
+  }
+});
+
+interface SelectDropdownProps {
+  label: string;
+  placeholder: string;
+  isFetching: boolean;
+  isError: boolean;
+  multiSelect: boolean;
+  resultsOptions: any;
+  onChange: (data: any, changedValue?: any, level?: number, parentLevel?: number) => void;
+  level?: number;
+  parentLevel?: number;
+  value?: Property[] | Property;
+}
+
+const SelectDropdown = ({label, placeholder, isFetching, isError, multiSelect, resultsOptions, onChange, level, parentLevel, value}: SelectDropdownProps) => {
   return (
-    <div style={{paddingLeft: `${level * 1.5}rem`}}>
+    <div style={{paddingLeft: `${level ? level * 1.5 : 0}rem`}}>
       <label className={styles.label}>
         {label}
       </label>
@@ -280,7 +318,7 @@ const SelectDropdown = ({label, placeholder, isFetching, isError, multiSelect, r
           /> : 
           ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
         }
-        onChange={(e: any, changedValue: any) => onChange(e, level, parentLevel, changedValue)}
+        onChange={(e: any, changedValue: any) => onChange(e, changedValue, level, parentLevel)}
         theme={theme} />
     </div>
   )
