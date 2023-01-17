@@ -48,13 +48,17 @@ export const resultQuery = (entity: Entity, properties: Property[][]) => {
 
   const propertyLabels = properties.map(
     (propertyPath: Property[]) => propertyPath.map(
-      (property: Property) => '?' + property.labelForQuery
+      (property: Property) => !property.filterType ? `?${property.labelForQuery}` : ''
     ).join(' ')
   ).join(' ');
 
   const propertySelectors = properties.map(
     (propertyPath: Property[]) => propertyPath.map(
-      (property: Property, i: number) => '?' + (i > 0 ? propertyPath[i-1].labelForQuery : entity.label) + ' <' + property.value + '> ?' + property.labelForQuery + '.'
+      (property: Property, i: number) => 
+        property.filterType === 'stringFilter' ?
+        `filter contains (?${propertyPath[i-1].labelForQuery}, "${property.value}")`
+        :
+        `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`
     ).join('\n  ')
   ).join('\n  ');
 
