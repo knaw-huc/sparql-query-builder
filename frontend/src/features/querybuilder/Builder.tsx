@@ -1,68 +1,298 @@
-/*import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
+import type {ReactElement, FormEvent} from 'react';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
-import {AnimatePresence} from 'framer-motion';
+import {v4 as uuidv4} from 'uuid';
+import update from 'immutability-helper';
 import {setActiveQuery} from './queryBuilderSlice';
-import Select from 'react-select';
-import type {PropsValue, Theme} from 'react-select';
+import Select, {components, OptionProps} from 'react-select';
+import type {PropsValue, Theme, Options} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
 import {selectedDatasets} from '../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
-import {FadeDiv} from '../animations/Animations';
 
-// TODO: 
-// Check Typescript types?
-// Do some additional filtering/labeling for duplicate results?
+// TODO
+// better typescript
 
 interface SparqlObject {
+  // as returned by a sparql db
   type: string;
   value: string;
 }
 
-interface EntityResults {
-  c: SparqlObject;
-  l?: SparqlObject;
-  p?: SparqlObject;
+interface EntityData {
+  c: SparqlObject; // uri to get properties of in next step
+  l?: SparqlObject; // label
+  p?: SparqlObject; // parent, we don't do anything with this yet
   pred?: never;
   tpe?: never;
   dt?: never;
   ot?: never;
 }
 
-interface PropertyResults {
+interface PropertyData {
+  l?: SparqlObject; // label
+  pred: SparqlObject; // uri to use in the sparql query
+  tpe: SparqlObject; // type of property
+  dt?: SparqlObject; // type of data
+  ot?: SparqlObject; // entity the property belongs to, we use this to delve deeper
   c?: never;
   p?: never;
-  pred: SparqlObject;
-  tpe: SparqlObject;
-  dt?: SparqlObject;
-  ot?: SparqlObject;
-  l?: SparqlObject;
 }
 
-type SparqlResults = EntityResults | PropertyResults;
-
-interface SelectedData {
-  value: SparqlResults;
-  label: string;
+export type Entity = {
+  label: string; // appears in the dropdown
+  value: string; // this is the uri (value from c)
 }
 
-export interface EntityState {
-  value: string;
-  label: string;
+type DataType = 'string' | 'date' | 'stringFilter' | 'dataFilter';
+
+export type Property = {
+  label: string; // appears in the dropdown
+  value: string; // this is the uri, or filter
+  ot?: string; // value of ot
+  propertyType?: string;
+  dataType?: string; // derived from optional dt
+  uuid?: string; // unique id/key for use in array map
+  labelForQuery?: string; // value that gets passed as a label to the sparql query
 }
 
-export interface PropertyState extends EntityState {
-  ot?: string;
+interface OnChangeData {
+  (data: Property | Entity, changedValue?: any, level?: number, parentLevel?: number): void;
 }
 
-export interface SubPropertyState extends EntityState {
-  subLabel: string;
-  parent: string;
+interface OnChangeFilter {
+  (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType): void;
 }
 
-interface SelectorData extends EntityState {}
+export const Builder = () => {
+  const dispatch = useAppDispatch();
 
+  const [selectedEntity, setSelectedEntity] = useState<Entity>({label: '', value: ''});
+  const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
+
+  // Set query in code editor when one of these values changes
+  useEffect(() => {
+    const theQuery = queries.resultQuery(selectedEntity, selectedProperties);
+    selectedEntity.value && dispatch(setActiveQuery(theQuery));
+  }, [selectedEntity, selectedProperties, dispatch]);
+  
+  // Keep track of selections and set tree accordingly
+  const setEntity = (data: Entity) => {
+    setSelectedEntity(data);
+    // reset properties
+    setSelectedProperties([]);
+  }
+
+  const setProperties = (data: Property, changedValue: any, level?: number, parentLevel?: number) => {
+    console.log(changedValue)
+    // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
+    // Keep track of these arrays using the parentLevel (index # of parent array) and level (index # of object being selected)
+    if (level !== undefined && level === 0) {
+      if (changedValue.action === 'select-option') {
+        // add value to state
+        const uuid = uuidv4();
+        setSelectedProperties([...selectedProperties, [{...changedValue.option, uuid: uuid}]])
+      }
+      if (changedValue.action === 'remove-value') {
+        // remove value from state
+        const removeIndex = selectedProperties.findIndex( 
+          (oldProp: Property[]) => changedValue.removedValue.label === oldProp[0].label
+        );
+        const newState = update(selectedProperties, {$splice: [[removeIndex, 1]]});
+        setSelectedProperties(newState);
+      }
+      if (changedValue.action === 'clear') {
+        setSelectedProperties([]);
+      }
+    }
+    if (level !== undefined && level > 0) {
+      // set children
+      const uuid = uuidv4();
+      const newProperty = [...selectedProperties[parentLevel as number].slice(0, level as number), ...[{...data, uuid: uuid}]];
+      const newState = update(selectedProperties, {[parentLevel as number]: {$set: newProperty}});    
+      setSelectedProperties(newState);
+    }
+  }
+
+  const setFilter = (e: any, level: number, parentLevel: number, dataType: DataType) => {
+    const newProperty = e.target.value ? 
+      [...selectedProperties[parentLevel].slice(0, level), ...[{
+        label: '',
+        value: e.target.value,
+        dataType: dataType + 'Filter',
+      }]] 
+      :
+      [...selectedProperties[parentLevel].slice(0, level)];
+    const newState = update(selectedProperties, {[parentLevel]: {$set: newProperty}});    
+    setSelectedProperties(newState);
+  }
+
+  return (
+    <>
+      <h5 className={styles.header}>Build your query</h5>
+
+      <Selector 
+        onChange={setEntity}
+        type="entity"
+        multiSelect={false} />
+
+      {selectedEntity.value.length > 0 &&
+        <Selector
+          type="property"
+          parentUri={selectedEntity.value} 
+          parentLabel={selectedEntity.label}
+          onChange={setProperties} 
+          multiSelect={true}
+          level={0}
+          value={selectedProperties.map( (property: Property[]) => property[0] )} />
+      }
+      {selectedProperties.map((propertyArray: Property[], i: number) =>
+        <div 
+          key={`group-${propertyArray[0].uuid}`}
+          className={propertyArray[0].dataType === 'string' || propertyArray[0].ot ? styles.propertyGroup : ''}>
+          {propertyArray.map((property: Property, j: number) => [
+            property.ot && 
+              <Selector
+                type="property" 
+                key={property.uuid}
+                parentUri={property.ot} 
+                parentLabel={property.label}
+                labelForQuery={property.labelForQuery}
+                onChange={setProperties} 
+                multiSelect={false}
+                parentLevel={i}
+                level={j+1}
+                value={selectedProperties[i][j+1]} />,
+
+            property.dataType && property.dataType === 'string' && 
+                <Input 
+                  key={`stringFilter-${property.uuid}`}
+                  level={j+1}
+                  parentLevel={i}
+                  onChange={setFilter}
+                  label={<label className={styles.label}><strong>{property.label}</strong> must contain</label>}
+                  placeholder="Enter optional text to filter on..."
+                  dataType={property.dataType}
+                  value={selectedProperties[i][j+1]?.value} />
+            ]
+          )}
+        </div>
+      )}
+    </>
+  )
+}
+
+interface SelectorProps {
+  onChange: OnChangeData;
+  type: 'entity' | 'property';
+  parentUri?: string;
+  parentLabel?: string;
+  labelForQuery?: string;
+  multiSelect: boolean;
+  level?: number;
+  parentLevel?: number;
+  value?: Property[] | Property;
+}
+
+const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, parentLevel, value}: SelectorProps) => {
+  const currentDatasets = useAppSelector(selectedDatasets);
+
+  const {data, isFetching, isError} = useSendSparqlQuery({
+    query: type === 'entity' ? queries.entityQuery : queries.propertyQuery(parentUri as string), 
+    datasets: currentDatasets
+  });
+
+  const results = data?.results.bindings;
+
+  // Reformat results
+  const resultsOptions = results && 
+    results.map((item: EntityData | PropertyData) => {
+      if (type === 'entity') {
+        return {
+          label: item.l ? item.l.value : queries.getLabel(item.c!.value),
+          value: item.c!.value,
+        }
+      }
+      else {
+        const otLabel = item.ot && queries.getLabel(item.ot!.value);
+        const label = item.l ? item.l.value : queries.getLabel(item.pred!.value);
+        const newLabelForQuery = labelForQuery ? 
+          `${labelForQuery}_${label}${otLabel ? `_${otLabel}` : ''}` : 
+          `${label}${otLabel ? `_${otLabel}` : ''}`;
+        return {
+          label: `${label}${otLabel ? `: ${otLabel}` : ''}`,
+          value: item.pred!.value,
+          ot: item.ot && item.ot?.value,
+          propertyType: queries.getLabel(item.tpe!.value),
+          dataType: item.dt && queries.getLabel(item.dt!.value), 
+          labelForQuery: newLabelForQuery,
+        }
+      }
+    }).sort((a: Entity | Property, b: Entity | Property) => {
+      const la = a.label.toLowerCase(),
+            lb = b.label.toLowerCase();
+      return la < lb ? -1 : (la > lb ? 1 : 0)
+    });
+
+  return (
+    <div style={{paddingLeft: `${level ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
+      {type === 'entity' ?
+        <label className={styles.label}>
+          Pick an entity you wish to explore
+        </label>
+        :
+        <label className={styles.label}>
+          Select properties for <strong>{parentLabel}</strong>
+        </label>
+      }
+      <Select 
+        components={{ Option: CustomOption }}
+        isOptionSelected={(option: any, selectValue: Options<any>) => 
+          selectValue.some((v: Property | Entity) => v.label === option.label && v.value === option.value)}
+        className={styles.select}
+        options={resultsOptions} 
+        placeholder="Select..."
+        isMulti={multiSelect}
+        value={value}
+        noOptionsMessage={() => isFetching ? 
+          <Spinner
+            as="span"
+            animation="border"
+            size="sm"
+            role="status"
+            aria-hidden="true"
+          /> : 
+          ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
+        }
+        onChange={(e: any, changedValue: any) => onChange(e, changedValue, level, parentLevel)}
+        theme={theme} />
+    </div>
+  );
+}
+
+interface CustomOptionProps extends OptionProps {
+  data: any;
+}
+
+const CustomOption = (props: CustomOptionProps) => {
+  return (
+    <components.Option {...props}>
+      {props.data.label} 
+      {props.data.propertyType && 
+        <span className={styles.propertyType}>
+          {props.data.propertyType} 
+        </span>
+      }
+      <span className={styles.schema}>
+        {props.data.value} 
+      </span>
+    </components.Option>
+  )
+}
+
+// theme for the selection boxes
 const theme = (theme: Theme) => ({
   ...theme,
   borderRadius: 0,
@@ -73,182 +303,26 @@ const theme = (theme: Theme) => ({
   }
 });
 
-export const Builder = () => {
-  const dispatch = useAppDispatch();
+interface InputProps {
+  label: ReactElement;
+  level: number;
+  parentLevel: number;
+  onChange: OnChangeFilter;
+  placeholder: string;
+  dataType: DataType;
+  value: string;
+}
 
-  const [selectedEntity, setSelectedEntity] = useState<EntityState>({value: '', label: ''});
-  const [selectedProperties, setSelectedProperties] = useState<PropertyState[]>([]);
-  const [selectedSubProperties, setSelectedSubProperties] = useState<SubPropertyState[]>([]);
-
-  // Set query in code editor when one of these values changes
-  useEffect(() => {
-    const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedSubProperties);
-    selectedEntity.value && dispatch(setActiveQuery(theQuery));
-  }, [selectedEntity, selectedProperties, selectedSubProperties, dispatch]);
-  
-  // Keep track of selected entities and set query accordingly
-  const setSelectedEntityObject = (selector: SelectorData, data: SelectedData) => {
-    setSelectedEntity({
-      value: data.value.c!.value, 
-      label: data.value.l?.value || queries.getLabel(data.value.c!.value)
-    });
-    setSelectedProperties([]);
-    setSelectedSubProperties([]);
-  }
-
-  // Keep track of selected properties for each entity, passed down to PropertySelect
-  const setSelectedPropertiesObject = (selector: SelectorData, data: SelectedData[]) => {
-    const dataForQuery = data.map((d: SelectedData) => { 
-      return {
-        value: d.value.pred!.value,
-        label: d.value.l?.value || queries.getLabel(d.value.pred!.value),
-        ot: d.value.ot?.value,
-      }
-    });
-    setSelectedProperties(dataForQuery);
-
-    // Check if subproperties are still applicable
-    const newArray = selectedSubProperties.filter(
-      (sp: SubPropertyState) => data.some((nd: SelectedData) => nd.value.ot?.value === sp.parent)
-    );
-    newArray && setSelectedSubProperties(newArray);
-  }
-
-  // Keep track of selected subproperties for each property that has an ot
-  const setSelectedSubPropertiesObject = (selector: SelectorData, data: SelectedData) => {
-    // Check if data already exists in properties array.
-    const newArray = selectedSubProperties.filter((o: SubPropertyState) => o.parent !== selector.value);
-    const dataForQuery = {
-        value: data.value.pred!.value,
-        label: selector.label,
-        subLabel: `${selector.label}_${data.value.l?.value || queries.getLabel(data.value.pred!.value)}`,
-        parent: selector.value,
-    };
-    setSelectedSubProperties([...newArray, dataForQuery]);
-  }
-
+const Input = ({label, level, parentLevel, onChange, placeholder, dataType, value}: InputProps) => {
   return (
-    <>
-      <h5 className={styles.header}>Build your query</h5>
-
-      <SparqlSelect 
-        selector={selectedEntity} 
-        onChange={setSelectedEntityObject} 
-        multiSelect={false}
-        label="Select entity"
-        placeholder="Give me every..."
-        level={0} />
-
-      <AnimatePresence mode="wait">
-        {selectedEntity.value &&
-          <FadeDiv key={selectedEntity.value}>
-            <SparqlSelect 
-              selector={selectedEntity} 
-              onChange={setSelectedPropertiesObject} 
-              multiSelect={true}
-              label="Select properties"
-              placeholder="must have a..."
-              level={1} />
-          </FadeDiv>
-        }
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {selectedProperties.map( (property: PropertyState) => {
-          return (
-            property.ot &&
-            <FadeDiv key={property.ot}>
-              <SparqlSelect
-                selector={{
-                  label: property.label, 
-                  value: property.ot
-                }} 
-                onChange={setSelectedSubPropertiesObject}
-                multiSelect={false}
-                label="Select sub-properties"
-                placeholder="must have a..."
-                level={2} />
-            </FadeDiv>
-          )
-        })}
-      </AnimatePresence>
-    </>
+    <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
+      {label}
+      <input 
+        type="text" 
+        className={styles.textInput} 
+        placeholder={placeholder}
+        value={value || ''}
+        onChange={(e: any) => onChange(e, level, parentLevel, dataType)}/>
+    </div>
   )
 }
-
-interface SparqlSelectTypes {
-  selector: SelectorData;
-  onChange: (selector: SelectorData, data: any) => void;
-  multiSelect: boolean;
-  label: string;
-  placeholder: string;
-  level: number;
-}
-
-const SparqlSelect = ({selector, onChange, multiSelect, label, placeholder, level}: SparqlSelectTypes) => {
-  const currentDatasets = useAppSelector(selectedDatasets);
-  const theQuery = level === 0 ? queries.entityQuery : queries.propertyQuery(selector.value);
-
-  const {data, isFetching, isError} = useSendSparqlQuery({
-    query: theQuery, 
-    datasets: currentDatasets
-  });
-
-  const results = data?.results.bindings;
-
-  // Reformat and rearrange results
-  const resultsOptions = results && 
-    results.map((item: SparqlResults) => {
-      return {
-        value: item,
-        label: (item.l?.value || queries.getLabel(item.c?.value || item.pred?.value)) +
-          (item.hasOwnProperty('ot') && level < 2 ? `: ${queries.getLabel(item.ot?.value)}` : ''),
-      }
-    })
-    .sort((a: SelectedData, b: SelectedData) => {
-      const la = a.label.toLowerCase(),
-            lb = b.label.toLowerCase();
-      return la < lb ? -1 : (la > lb ? 1 : 0)
-    })
-    // and no duplicate preds if final level, since we're not looking at the ot there
-    .filter((v: SelectedData, i: number, a: any[]) => 
-      level === 2 ? 
-        (a.findIndex((v2: SelectedData) => (v2.value.pred!.value === v.value.pred!.value)) === i) :
-        true
-    );
-
-  return (
-    <div>
-      <label id={`level-${level}-label`} htmlFor={`level-${level}-input`} className={styles.label}>
-        {label} 
-        {level > 0 && 
-          <span> for <span className={styles.labelEmphasis}>
-            {selector.label}
-            {level === 2 && `: ${queries.getLabel(selector.value)}`}
-          </span></span>
-        }
-      </label>
-      <Select 
-        aria-labelledby="property-label"
-        inputId="property-input"
-        className={styles.select}
-        options={resultsOptions} 
-        placeholder={`${selector.label} ${placeholder}`}
-        isMulti={multiSelect}
-        noOptionsMessage={() => isFetching ? 
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          /> : 
-          ( isError ? 'Nothing found' : 'Something\'s gone wrong with fetching the data')
-        }
-        onChange={(e: PropsValue<SelectedData>) => onChange(selector, e)}
-        theme={theme} />
-    </div>
-  );
-}*/
-
-export {}

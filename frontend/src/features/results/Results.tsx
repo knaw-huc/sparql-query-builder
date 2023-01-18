@@ -29,7 +29,8 @@ export function Results() {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError, error} = useSendSparqlQuery({
-    query: currentQuery, datasets: currentDatasets
+    query: currentQuery, 
+    datasets: currentDatasets
   }, {
     skip: !currentQuery,
   });
@@ -43,17 +44,23 @@ export function Results() {
   // Get table headers from returned JSON. 
   // Some basic cell formatting.
   const columns = data?.head.vars.map( (h: string) => {
-    console.log('Results columns')
-    console.log(h)
+    const emptyRow = {type:'', value:'',};
     return {
       name: <span className={styles.header}>{h}</span>, 
-      selector: (row: ResultsObject) => row[h],
-      cell: (row: ResultsObject) => 
-        <CustomCell type={row[h].type} value={row[h].value} />,
+      selector: (row: ResultsObject) => {
+        const selector = row[h] || emptyRow;
+        return selector
+      },
+      cell: (row: ResultsObject) => {
+        const selector = row[h] || emptyRow;
+        return <CustomCell type={selector.type} value={selector.value} />
+      },
       sortable: true,
       sortFunction: (rowA: ResultsObject, rowB: ResultsObject) => {
-        const a = rowA[h].value.toLowerCase();
-        const b = rowB[h].value.toLowerCase();
+        const selectorA = rowA[h] || emptyRow;
+        const selectorB = rowB[h] || emptyRow;
+        const a = selectorA.value.toLowerCase();
+        const b = selectorB.value.toLowerCase();
         return a > b ? 1 : ( b > a ? -1 : 0 );
       },
     }

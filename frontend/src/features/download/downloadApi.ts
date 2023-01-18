@@ -5,11 +5,15 @@ import {sparqlApi} from '../sparql/sparqlApi';
 export const downloadApi = sparqlApi.injectEndpoints({
   endpoints: (build) => ({
     downloadFile: build.mutation({
-      query(currentQuery) {
+      query: ({query, datasets}) => {
+        const params = new URLSearchParams({ 
+          query: query,
+          datasets: datasets, 
+        });
         return {
           url: 'sparql',
           method: "POST",
-          body: {query: currentQuery},
+          body: params,
           responseHandler: async (response) => {
             window.location.assign(
               window.URL.createObjectURL(await response.blob())

@@ -32,6 +32,12 @@
   margin-bottom: 2rem;
 }
 
+.propertyGroup {
+  background: var(--bs-light);
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 1rem;
+}
+
 .item,
 .activeItem  {
   border: 0 !important;
@@ -81,21 +87,6 @@
   font-weight: 700;
 }
 
-// .level {
-//   position: relative;
-//   &::before {
-//     position: absolute;
-//     z-index: 0;
-//     content: '';
-//     top: -100vh;
-//     bottom: 1rem;
-//     width: 1rem;
-//     margin-left: -1rem;
-//     border-left: 1px solid var(--bs-gray);
-//     border-bottom: 1px solid var(--bs-gray);
-//   }
-// }
-
 .textInput {
   display: block;
   width: 100%;
@@ -111,11 +102,16 @@
 }
 
 // inside dropdown
-.schema {
+.schema,
+.propertyType {
   font-size: 70%;
   margin-left: 0.5rem;
   padding: 0.1rem 0.25rem;
-  background: var(--bs-light);
+  background: var(--bs-gray-200);
   color: var(--bs-black) !important;
   border-radius: 3px;
+}
+
+.propertyType {
+  background: var(--bs-gray-400);
 }

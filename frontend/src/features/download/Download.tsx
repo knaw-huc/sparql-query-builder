@@ -5,6 +5,7 @@ import styles from './Download.module.scss';
 import {useDownloadFileMutation} from './downloadApi';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
+import {selectedDatasets} from '../datasets/datasetsSlice';
 import {selectDataType, setDataType} from './downloadSlice';
 
 interface DownloadFn {
@@ -20,6 +21,7 @@ interface DownloadProps {
 
 export function Download() {
   const currentQuery = useAppSelector(selectSentQuery);
+  const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
   const activeDataType = useAppSelector(selectDataType);
 
@@ -28,7 +30,7 @@ export function Download() {
   const handleDownload = async (type: string) => {
     dispatch(setDataType(type));
     try {
-      await downloadFile(currentQuery);
+      await downloadFile({query: currentQuery, datasets: currentDatasets});
       // after requesting download, reset datatype to JSON
       dispatch(setDataType('json'));
     } catch {

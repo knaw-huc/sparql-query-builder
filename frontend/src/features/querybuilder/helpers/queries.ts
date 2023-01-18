@@ -1,18 +1,10 @@
-import type {Entity, Property} from '../BuilderRedux';
+import type {Entity, Property} from '../Builder';
 
-export function getLabel(item: any, type?: string) {
-  if (!item.hasOwnProperty('c') && !item.hasOwnProperty('pred')) {
-    return '';
-  }
-  if (item.hasOwnProperty('l') && type !== 'ot') {
-    return item.l.value;
-  }
-  // either an entity or property
-  const labelData = type === 'ot' ? item.ot : item.c || item.pred;
+export function getLabel(schema: string) {
   // check for hash or slash, grab value after it
-  var hash = labelData.value.lastIndexOf('#');
-  var slash = labelData.value.lastIndexOf('/');
-  return labelData.value.substring((hash !== -1 ? hash : slash) + 1);
+  var hash = schema.lastIndexOf('#');
+  var slash = schema.lastIndexOf('/');
+  return schema.substring((hash !== -1 ? hash : slash) + 1);
 }
 
 export const entityQuery = `
@@ -48,15 +40,15 @@ export const resultQuery = (entity: Entity, properties: Property[][]) => {
 
   const propertyLabels = properties.map(
     (propertyPath: Property[]) => propertyPath.map(
-      (property: Property) => !property.filterType ? `?${property.labelForQuery}` : ''
+      (property: Property) => property.label ? `?${property.labelForQuery}` : ''
     ).join(' ')
   ).join(' ');
 
   const propertySelectors = properties.map(
     (propertyPath: Property[]) => propertyPath.map(
       (property: Property, i: number) => 
-        property.filterType === 'stringFilter' ?
-        `filter contains (?${propertyPath[i-1].labelForQuery}, "${property.value}")`
+        property.dataType && property.dataType === 'stringFilter' && property.value ?
+        `FILTER(CONTAINS(LCASE(?${propertyPath[i-1].labelForQuery}), "${property.value.toLowerCase()}"))`
         :
         `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`
     ).join('\n  ')
