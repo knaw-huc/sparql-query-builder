@@ -139,7 +139,7 @@ export function Results() {
   );
 }
 
-interface FilterProps {
+type FilterProps = {
   filterText: string;
   onFilter: React.ChangeEventHandler;
   onClear: React.MouseEventHandler;
@@ -160,7 +160,7 @@ const FilterComponent = ({filterText, onFilter, onClear}: FilterProps) => (
   </InputGroup>
 );
 
-interface CellProps {
+type CellProps = {
   type: string;
   value: string;
 };

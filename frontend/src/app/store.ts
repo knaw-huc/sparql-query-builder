@@ -6,7 +6,6 @@ import {
 } from '@reduxjs/toolkit';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import type {MiddlewareAPI, Middleware} from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
 import queryBuilderReducer from '../features/querybuilder/queryBuilderSlice';
 import downloadReducer from '../features/download/downloadSlice';
 import notificationsReducer, {addNotification} from '../features/notifications/notificationsSlice';
@@ -42,7 +41,6 @@ export const store = configureStore({
     [sparqlApi.reducerPath]: sparqlApi.reducer,
     [datasetsApi.reducerPath]: datasetsApi.reducer,
     selectedDatasets: datasetsReducer,
-    counter: counterReducer,
     download: downloadReducer,
   },
   middleware: (getDefaultMiddleware) =>

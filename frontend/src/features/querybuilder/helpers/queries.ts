@@ -39,14 +39,14 @@ export const propertyQuery = (schema: string) => `
 export const resultQuery = (entity: Entity, properties: Property[][]) => {
 
   const propertyLabels = properties.map(
-    (propertyPath: Property[]) => propertyPath.map(
-      (property: Property) => property.label ? `?${property.labelForQuery}` : ''
+    (propertyPath) => propertyPath.map(
+      (property) => property.label ? `?${property.labelForQuery}` : ''
     ).join(' ')
   ).join(' ');
 
   const propertySelectors = properties.map(
-    (propertyPath: Property[]) => propertyPath.map(
-      (property: Property, i: number) => 
+    (propertyPath) => propertyPath.map(
+      (property, i) => 
         property.dataType && property.dataType === 'stringFilter' && property.value ?
         `FILTER(CONTAINS(LCASE(?${propertyPath[i-1].labelForQuery}), "${property.value.toLowerCase()}"))`
         :

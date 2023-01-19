@@ -15,13 +15,13 @@ import Spinner from 'react-bootstrap/Spinner';
 // TODO
 // better typescript?
 
-interface SparqlObject {
+type SparqlObject = {
   // as returned by a sparql db
   type: string;
   value: string;
 }
 
-interface EntityData {
+type EntityData = {
   c: SparqlObject; // uri to get properties of in next step
   l?: SparqlObject; // label
   p?: SparqlObject; // parent, we don't do anything with this yet
@@ -31,7 +31,7 @@ interface EntityData {
   ot?: never;
 }
 
-interface PropertyData {
+type PropertyData = {
   l?: SparqlObject; // label
   pred: SparqlObject; // uri to use in the sparql query
   tpe: SparqlObject; // type of property
@@ -60,8 +60,8 @@ export type Property = {
 
 type ActionTypes = {
   action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
-  option?: unknown;
-  removedValue?: unknown;
+  option?: Property | Entity;
+  removedValue?: Property | Entity;
 }
 
 export const Builder = () => {
@@ -96,9 +96,7 @@ export const Builder = () => {
       }
       if (changedValue.action === 'remove-value') {
         // remove value from state
-        const removeIndex = selectedProperties.findIndex( 
-          (oldProp: Property[]) => removedValue.label === oldProp[0].label
-        );
+        const removeIndex = selectedProperties.findIndex(oldProp => removedValue.label === oldProp[0].label);
         const newState = update(selectedProperties, {$splice: [[removeIndex, 1]]});
         setSelectedProperties(newState);
       }
@@ -130,7 +128,7 @@ export const Builder = () => {
   }
 
   return (
-    <>
+    <div className={styles.queryBuilder}>
       <h5 className={styles.header}>Build your query</h5>
 
       <Selector 
@@ -146,13 +144,13 @@ export const Builder = () => {
           onChange={setProperties} 
           multiSelect={true}
           level={0}
-          value={selectedProperties.map( (property: Property[]) => property[0] )} />
+          value={selectedProperties.map( (property) => property[0] )} />
       }
-      {selectedProperties.map((propertyArray: Property[], i: number) =>
+      {selectedProperties.map((propertyArray, i) =>
         <div 
           key={`group-${propertyArray[0].uuid}`}
           className={propertyArray[0].dataType === 'string' || propertyArray[0].ot ? styles.propertyGroup : ''}>
-          {propertyArray.map((property: Property, j: number) => [
+          {propertyArray.map((property, j) => [
             property.ot && 
               <Selector
                 type="property" 
@@ -180,7 +178,7 @@ export const Builder = () => {
           )}
         </div>
       )}
-    </>
+    </div>
   )
 }
 
@@ -193,7 +191,7 @@ interface OnChangeData {
   ): void;
 }
 
-interface SelectorProps {
+type SelectorProps = {
   onChange: OnChangeData;
   type: 'entity' | 'property';
   parentUri?: string;
@@ -279,7 +277,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
           /> : 
           ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
         }
-        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue, level, parentLevel)}
+        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, parentLevel)}
         theme={theme} />
     </div>
   );
@@ -293,7 +291,7 @@ const CustomOption = (props: CustomOptionProps) => {
   const propertyData = props.data as Property;
   const propertyOrEntityData = props.data as Property | Entity;
   return (
-    <components.Option {...props}>
+    <components.Option  className='boooo' {...props}>
       {propertyOrEntityData.label} 
       {propertyData.propertyType && 
         <span className={styles.propertyType}>
@@ -322,7 +320,7 @@ interface OnChangeFilter {
   (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType): void;
 }
 
-interface InputProps {
+type InputProps = {
   label: ReactElement;
   level: number;
   parentLevel: number;

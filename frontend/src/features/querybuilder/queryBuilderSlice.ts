@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-export interface QueryState {
+export type QueryState = {
   active: string;
   sent: string;
 }

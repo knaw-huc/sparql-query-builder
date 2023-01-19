@@ -16,7 +16,7 @@ export interface QueryCookieObject {
   datasets: Dataset[];
 }
 
-interface QueryCookiesTypes {
+interface QueryCookiesFn {
   setKey: () => void;
 }
 
@@ -29,7 +29,7 @@ interface QueryCookiesTypes {
  * Load: gets the value of the selected query, selected data sets, and saves this to the redux store
 */
 
-export function QueryCookies({setKey}: QueryCookiesTypes) {
+export function QueryCookies({setKey}: QueryCookiesFn) {
   const [cookies, setCookie] = useCookies(['querylist']);
   const currentQuery = useAppSelector(selectActiveQuery);
   const currentDatasets = useAppSelector(selectedDatasets);

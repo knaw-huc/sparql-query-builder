@@ -12,7 +12,7 @@ interface DownloadFn {
   (subString: string): Promise<void>;
 }
 
-interface DownloadProps {
+type DownloadProps = {
   download: 'json' | 'csv' | 'xml';
   onClick: DownloadFn;
   isLoading: boolean;

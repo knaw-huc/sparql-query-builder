@@ -2,12 +2,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
 import Cookies from 'universal-cookie';
 
-export interface Dataset {
+export type Dataset = {
   id: string;
   name: string;
 }
 
-export interface DatasetsState {
+export type DatasetsState = {
   sets: Dataset[];
 }
 

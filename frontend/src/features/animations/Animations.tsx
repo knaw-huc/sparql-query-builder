@@ -1,7 +1,7 @@
 import {motion} from 'framer-motion';
 import type {ReactNode, Ref} from 'react';
 
-interface MotionProps {
+type MotionProps = {
   children: ReactNode;
   refProps?: Ref<HTMLDivElement>;
   className?: string;
