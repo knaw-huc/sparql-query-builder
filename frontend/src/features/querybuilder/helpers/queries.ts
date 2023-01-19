@@ -11,9 +11,9 @@ export const entityQuery = `
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
   SELECT DISTINCT ?c ?l ?p
   WHERE {
-    { ?s a ?c . }
-    OPTIONAL { ?c rdfs:label ?l }
-    OPTIONAL { ?c rdfs:subClassOf ?p }
+    {?s a ?c .}
+    OPTIONAL {?c rdfs:label ?l}
+    OPTIONAL {?c rdfs:subClassOf ?p}
   }
 `;
 
@@ -28,9 +28,9 @@ export const propertyQuery = (schema: string) => `
         owl:ObjectProperty,
         owl:DatatypeProperty) AS ?tpe
       ) .
-    BIND ( DATATYPE(?obj) AS ?dt).
+    BIND(DATATYPE(?obj) AS ?dt).
     OPTIONAL {?obj a ?ot}.
-    OPTIONAL { ?pred rdfs:label ?l }
+    OPTIONAL {?pred rdfs:label ?l}
   }
 `;
 

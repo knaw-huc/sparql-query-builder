@@ -5,7 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 import update from 'immutability-helper';
 import {setActiveQuery} from './queryBuilderSlice';
 import Select, {components, OptionProps} from 'react-select';
-import type {PropsValue, Theme, Options} from 'react-select';
+import type {Theme} from 'react-select';
 import styles from './QueryBuilder.module.scss';
 import * as queries from './helpers/queries';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
@@ -13,7 +13,7 @@ import {selectedDatasets} from '../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 
 // TODO
-// better typescript
+// better typescript?
 
 interface SparqlObject {
   // as returned by a sparql db
@@ -46,7 +46,7 @@ export type Entity = {
   value: string; // this is the uri (value from c)
 }
 
-type DataType = 'string' | 'date' | 'stringFilter' | 'dataFilter';
+type DataType = 'string' | 'date' | 'stringFilter' | 'dateFilter';
 
 export type Property = {
   label: string; // appears in the dropdown
@@ -58,12 +58,10 @@ export type Property = {
   labelForQuery?: string; // value that gets passed as a label to the sparql query
 }
 
-interface OnChangeData {
-  (data: Property | Entity, changedValue?: any, level?: number, parentLevel?: number): void;
-}
-
-interface OnChangeFilter {
-  (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType): void;
+type ActionTypes = {
+  action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
+  option?: unknown;
+  removedValue?: unknown;
 }
 
 export const Builder = () => {
@@ -85,20 +83,21 @@ export const Builder = () => {
     setSelectedProperties([]);
   }
 
-  const setProperties = (data: Property, changedValue: any, level?: number, parentLevel?: number) => {
-    console.log(changedValue)
+  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, parentLevel?: number) => {
+    const option = changedValue.option as Property;
+    const removedValue = changedValue.removedValue as Property;
     // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
     // Keep track of these arrays using the parentLevel (index # of parent array) and level (index # of object being selected)
     if (level !== undefined && level === 0) {
       if (changedValue.action === 'select-option') {
         // add value to state
         const uuid = uuidv4();
-        setSelectedProperties([...selectedProperties, [{...changedValue.option, uuid: uuid}]])
+        setSelectedProperties([...selectedProperties, [{...option, uuid: uuid}]])
       }
       if (changedValue.action === 'remove-value') {
         // remove value from state
         const removeIndex = selectedProperties.findIndex( 
-          (oldProp: Property[]) => changedValue.removedValue.label === oldProp[0].label
+          (oldProp: Property[]) => removedValue.label === oldProp[0].label
         );
         const newState = update(selectedProperties, {$splice: [[removeIndex, 1]]});
         setSelectedProperties(newState);
@@ -116,11 +115,12 @@ export const Builder = () => {
     }
   }
 
-  const setFilter = (e: any, level: number, parentLevel: number, dataType: DataType) => {
-    const newProperty = e.target.value ? 
+  const setFilter = (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType) => {
+    const target = e.target as HTMLInputElement;
+    const newProperty = target.value ? 
       [...selectedProperties[parentLevel].slice(0, level), ...[{
         label: '',
-        value: e.target.value,
+        value: target.value,
         dataType: dataType + 'Filter',
       }]] 
       :
@@ -182,6 +182,15 @@ export const Builder = () => {
       )}
     </>
   )
+}
+
+interface OnChangeData {
+  (
+    data: Property | Entity,
+    changedValue: ActionTypes, 
+    level?: number, 
+    parentLevel?: number
+  ): void;
 }
 
 interface SelectorProps {
@@ -249,8 +258,12 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
       }
       <Select 
         components={{ Option: CustomOption }}
-        isOptionSelected={(option: any, selectValue: Options<any>) => 
-          selectValue.some((v: Property | Entity) => v.label === option.label && v.value === option.value)}
+        isOptionSelected={(option, selectValue) =>
+          selectValue.some(v => 
+            (v as Property | Entity).label === (option as Property | Entity).label && 
+            (v as Property | Entity).value === (option as Property | Entity).value
+          )
+        }
         className={styles.select}
         options={resultsOptions} 
         placeholder="Select..."
@@ -266,27 +279,29 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
           /> : 
           ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
         }
-        onChange={(e: any, changedValue: any) => onChange(e, changedValue, level, parentLevel)}
+        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue, level, parentLevel)}
         theme={theme} />
     </div>
   );
 }
 
 interface CustomOptionProps extends OptionProps {
-  data: any;
+  data: unknown;
 }
 
 const CustomOption = (props: CustomOptionProps) => {
+  const propertyData = props.data as Property;
+  const propertyOrEntityData = props.data as Property | Entity;
   return (
     <components.Option {...props}>
-      {props.data.label} 
-      {props.data.propertyType && 
+      {propertyOrEntityData.label} 
+      {propertyData.propertyType && 
         <span className={styles.propertyType}>
-          {props.data.propertyType} 
+          {propertyData.propertyType} 
         </span>
       }
       <span className={styles.schema}>
-        {props.data.value} 
+        {propertyOrEntityData.value} 
       </span>
     </components.Option>
   )
@@ -302,6 +317,10 @@ const theme = (theme: Theme) => ({
     primary: 'black',
   }
 });
+
+interface OnChangeFilter {
+  (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType): void;
+}
 
 interface InputProps {
   label: ReactElement;
@@ -322,7 +341,7 @@ const Input = ({label, level, parentLevel, onChange, placeholder, dataType, valu
         className={styles.textInput} 
         placeholder={placeholder}
         value={value || ''}
-        onChange={(e: any) => onChange(e, level, parentLevel, dataType)}/>
+        onChange={e => onChange(e, level, parentLevel, dataType)}/>
     </div>
   )
 }
