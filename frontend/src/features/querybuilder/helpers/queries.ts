@@ -40,17 +40,18 @@ export const resultQuery = (entity: Entity, properties: Property[][]) => {
 
   const propertyLabels = properties.map(
     (propertyPath) => propertyPath.map(
-      (property) => property.label ? `?${property.labelForQuery}` : ''
+      (property) => property.label !== '' && property.label !== undefined ? `?${property.labelForQuery}` : ''
     ).join(' ')
   ).join(' ');
 
   const propertySelectors = properties.map(
     (propertyPath) => propertyPath.map(
-      (property, i) => 
-        property.dataType && property.dataType === 'stringFilter' && property.value ?
+      (property, i) => property.value !== '' && property.value !== undefined ?
+        (property.dataType && property.dataType === 'stringFilter' && property.value !== '' && property.value !== undefined ?
         `FILTER(CONTAINS(LCASE(?${propertyPath[i-1].labelForQuery}), "${property.value.toLowerCase()}"))`
         :
-        `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`
+        `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`)
+        : ''
     ).join('\n  ')
   ).join('\n  ');
 

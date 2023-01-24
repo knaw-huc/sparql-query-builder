@@ -12,8 +12,7 @@ import {useSendSparqlQuery} from '../sparql/sparqlApi';
 import {selectedDatasets} from '../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 
-// TODO
-// better typescript?
+// TODO: some more filters? Not only text, also data/year etc
 
 type SparqlObject = {
   // as returned by a sparql db
@@ -44,17 +43,18 @@ type PropertyData = {
 export type Entity = {
   label: string; // appears in the dropdown
   value: string; // this is the uri (value from c)
+  uuid: string;
 }
 
-type DataType = 'string' | 'date' | 'stringFilter' | 'dateFilter';
+type DataType = string; // possibly narrow this down later on, depending on the data types we might get
 
 export type Property = {
   label: string; // appears in the dropdown
   value: string; // this is the uri, or filter
+  uuid: string; // unique id/key for use in array map
   ot?: string; // value of ot
   propertyType?: string;
   dataType?: string; // derived from optional dt
-  uuid?: string; // unique id/key for use in array map
   labelForQuery?: string; // value that gets passed as a label to the sparql query
 }
 
@@ -62,12 +62,15 @@ type ActionTypes = {
   action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
   option?: Property | Entity;
   removedValue?: Property | Entity;
+  removedValues: Property[] | Entity[];
 }
+
+const defaultPropEntState = {label: '', value: '', uuid: ''};
 
 export const Builder = () => {
   const dispatch = useAppDispatch();
 
-  const [selectedEntity, setSelectedEntity] = useState<Entity>({label: '', value: ''});
+  const [selectedEntity, setSelectedEntity] = useState<Entity>(defaultPropEntState);
   const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
 
   // Set query in code editor when one of these values changes
@@ -78,52 +81,64 @@ export const Builder = () => {
   
   // Keep track of selections and set tree accordingly
   const setEntity = (data: Entity) => {
-    setSelectedEntity(data);
+    setSelectedEntity(data ? data : defaultPropEntState);
     // reset properties
     setSelectedProperties([]);
   }
 
-  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, parentLevel?: number) => {
-    const option = changedValue.option as Property;
-    const removedValue = changedValue.removedValue as Property;
+  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
     // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
-    // Keep track of these arrays using the parentLevel (index # of parent array) and level (index # of object being selected)
-    if (level !== undefined && level === 0) {
-      if (changedValue.action === 'select-option') {
-        // add value to state
-        const uuid = uuidv4();
-        setSelectedProperties([...selectedProperties, [{...option, uuid: uuid}]])
-      }
-      if (changedValue.action === 'remove-value') {
-        // remove value from state
-        const removeIndex = selectedProperties.findIndex(oldProp => removedValue.label === oldProp[0].label);
+    // Keep track of these arrays using the propertyArrayIndex (index # of parent array) and level (index # of object being selected)
+    switch(changedValue.action) {
+      case 'select-option':
+        // add new value to state, or change existing value
+        if (propertyArrayIndex === undefined) {
+          // first property, so new property tree
+          setSelectedProperties([...selectedProperties, [changedValue.option as Property]]);
+        }
+        else {
+          // add or change existing property tree
+          const newPropertyTree = [...selectedProperties[propertyArrayIndex].slice(0, level), data];
+          const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newPropertyTree}});    
+          setSelectedProperties(newState);
+        }
+        break;
+
+      case 'clear':
+        // clear: pressing the X in selectbox
+        if (propertyArrayIndex === undefined) {
+          // reset all if entity properties are cleared
+          setSelectedProperties([]);
+        }
+        else {
+          // single selection for sub-properties, just remove object from array tree
+          const newPropertyTree = [...selectedProperties[propertyArrayIndex].slice(0, level)];
+          const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newPropertyTree}});
+          setSelectedProperties(newState);
+        }
+        break;
+
+      case 'remove-value':
+        // Only for multiselect, remove individual values
+        const removeIndex = selectedProperties.findIndex(oldPropArr => oldPropArr.some(oldProp => changedValue.removedValue!.uuid === oldProp.uuid));
         const newState = update(selectedProperties, {$splice: [[removeIndex, 1]]});
         setSelectedProperties(newState);
-      }
-      if (changedValue.action === 'clear') {
-        setSelectedProperties([]);
-      }
-    }
-    if (level !== undefined && level > 0) {
-      // set children
-      const uuid = uuidv4();
-      const newProperty = [...selectedProperties[parentLevel as number].slice(0, level as number), ...[{...data, uuid: uuid}]];
-      const newState = update(selectedProperties, {[parentLevel as number]: {$set: newProperty}});    
-      setSelectedProperties(newState);
+        break;
     }
   }
 
-  const setFilter = (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType) => {
+  const setFilter = (e: FormEvent<HTMLInputElement>, level: number, propertyArrayIndex: number, dataType: DataType) => {
     const target = e.target as HTMLInputElement;
     const newProperty = target.value ? 
-      [...selectedProperties[parentLevel].slice(0, level), ...[{
+      [...selectedProperties[propertyArrayIndex].slice(0, level), ...[{
         label: '',
         value: target.value,
         dataType: dataType + 'Filter',
+        uuid: '',
       }]] 
       :
-      [...selectedProperties[parentLevel].slice(0, level)];
-    const newState = update(selectedProperties, {[parentLevel]: {$set: newProperty}});    
+      [...selectedProperties[propertyArrayIndex].slice(0, level)];
+    const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newProperty}});    
     setSelectedProperties(newState);
   }
 
@@ -160,7 +175,7 @@ export const Builder = () => {
                 labelForQuery={property.labelForQuery}
                 onChange={setProperties} 
                 multiSelect={false}
-                parentLevel={i}
+                propertyArrayIndex={i}
                 level={j+1}
                 value={selectedProperties[i][j+1]} />,
 
@@ -168,7 +183,7 @@ export const Builder = () => {
                 <Input 
                   key={`stringFilter-${property.uuid}`}
                   level={j+1}
-                  parentLevel={i}
+                  propertyArrayIndex={i}
                   onChange={setFilter}
                   label={<label className={styles.label}><strong>{property.label}</strong> must contain</label>}
                   placeholder="Enter optional text to filter on..."
@@ -187,7 +202,7 @@ interface OnChangeData {
     data: Property | Entity,
     changedValue: ActionTypes, 
     level?: number, 
-    parentLevel?: number
+    propertyArrayIndex?: number
   ): void;
 }
 
@@ -199,11 +214,11 @@ type SelectorProps = {
   labelForQuery?: string;
   multiSelect: boolean;
   level?: number;
-  parentLevel?: number;
+  propertyArrayIndex?: number;
   value?: Property[] | Property;
 }
 
-const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, parentLevel, value}: SelectorProps) => {
+const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, propertyArrayIndex, value}: SelectorProps) => {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
@@ -216,10 +231,12 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
   // Reformat results
   const resultsOptions = results && 
     results.map((item: EntityData | PropertyData) => {
+      const uuid = uuidv4();
       if (type === 'entity') {
         return {
           label: item.l ? item.l.value : queries.getLabel(item.c!.value),
           value: item.c!.value,
+          uuid: uuid,
         }
       }
       else {
@@ -235,6 +252,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
           propertyType: queries.getLabel(item.tpe!.value),
           dataType: item.dt && queries.getLabel(item.dt!.value), 
           labelForQuery: newLabelForQuery,
+          uuid: uuid,
         }
       }
     }).sort((a: Entity | Property, b: Entity | Property) => {
@@ -267,6 +285,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
         placeholder="Select..."
         isMulti={multiSelect}
         value={value}
+        isClearable={true}
         noOptionsMessage={() => isFetching ? 
           <Spinner
             as="span"
@@ -277,7 +296,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
           /> : 
           ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
         }
-        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, parentLevel)}
+        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, propertyArrayIndex)}
         theme={theme} />
     </div>
   );
@@ -317,20 +336,20 @@ const theme = (theme: Theme) => ({
 });
 
 interface OnChangeFilter {
-  (e: FormEvent<HTMLInputElement>, level: number, parentLevel: number, dataType: DataType): void;
+  (e: FormEvent<HTMLInputElement>, level: number, propertyArrayIndex: number, dataType: DataType): void;
 }
 
 type InputProps = {
   label: ReactElement;
   level: number;
-  parentLevel: number;
+  propertyArrayIndex: number;
   onChange: OnChangeFilter;
   placeholder: string;
   dataType: DataType;
   value: string;
 }
 
-const Input = ({label, level, parentLevel, onChange, placeholder, dataType, value}: InputProps) => {
+const Input = ({label, level, propertyArrayIndex, onChange, placeholder, dataType, value}: InputProps) => {
   return (
     <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
       {label}
@@ -339,7 +358,7 @@ const Input = ({label, level, parentLevel, onChange, placeholder, dataType, valu
         className={styles.textInput} 
         placeholder={placeholder}
         value={value || ''}
-        onChange={e => onChange(e, level, parentLevel, dataType)}/>
+        onChange={e => onChange(e, level, propertyArrayIndex, dataType)}/>
     </div>
   )
 }
