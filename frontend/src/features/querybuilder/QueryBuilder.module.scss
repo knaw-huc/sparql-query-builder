@@ -92,18 +92,27 @@
   font-weight: 700;
 }
 
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
 .textInput {
   display: block;
-  width: 100%;
   outline: none;
   border: 1px solid hsl(0, 0%, 80%);
   padding: 6px 9px;
-  margin-bottom: 1rem;
+  flex: 1;
 
   &::focus,
   &::active {
     border-color: var(--bs-black);
   }
+}
+
+.selectFilter {
+  margin-right: 1rem;
 }
 
 // inside dropdown

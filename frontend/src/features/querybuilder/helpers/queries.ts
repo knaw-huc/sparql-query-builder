@@ -34,6 +34,24 @@ export const propertyQuery = (schema: string) => `
   }
 `;
 
+// Get filter value
+const getFilterValue = (filterType: string, labelForQuery: string, value: string, additionalFilter: string) => {
+  switch(filterType) {
+    case 'stringFilter':
+      return `FILTER(CONTAINS(LCASE(?${labelForQuery}), "${value.toLowerCase()}"))`;
+    case 'dateFilter':
+      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:date)`;
+    case 'integerFilter':
+      return `FILTER(?${labelForQuery} ${additionalFilter} ${value})`;
+    case 'gYearFilter':
+      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:gYear)`;
+    case 'gYearMonthFilter':
+      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:gYearMonth)`;
+    default: 
+      return '';
+  }
+}
+
 // Shows up in the Query code editor and gets sent to the endpoint
 // Ugly formatting here for nice formatting in the code editor
 export const resultQuery = (entity: Entity, properties: Property[][]) => {
@@ -47,10 +65,16 @@ export const resultQuery = (entity: Entity, properties: Property[][]) => {
   const propertySelectors = properties.map(
     (propertyPath) => propertyPath.map(
       (property, i) => property.value !== '' && property.value !== undefined ?
-        (property.dataType && property.dataType === 'stringFilter' && property.value !== '' && property.value !== undefined ?
-        `FILTER(CONTAINS(LCASE(?${propertyPath[i-1].labelForQuery}), "${property.value.toLowerCase()}"))`
-        :
-        `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`)
+        (property.dataType && property.dataType.indexOf('Filter') !== -1 ?
+          getFilterValue(
+            property.dataType as string, 
+            propertyPath[i-1].labelForQuery as string,
+            property.value as string, 
+            property.additionalFilter as string
+          )
+          :
+          `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`
+        )
         : ''
     ).join('\n  ')
   ).join('\n  ');

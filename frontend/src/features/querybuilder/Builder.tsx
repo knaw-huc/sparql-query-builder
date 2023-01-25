@@ -52,6 +52,7 @@ export type Property = {
   label: string; // appears in the dropdown
   value: string; // this is the uri, or filter
   uuid: string; // unique id/key for use in array map
+  additionalFilter?: string; // for date/number filtering 
   ot?: string; // value of ot
   propertyType?: string;
   dataType?: string; // derived from optional dt
@@ -127,14 +128,14 @@ export const Builder = () => {
     }
   }
 
-  const setFilter = (e: FormEvent<HTMLInputElement>, level: number, propertyArrayIndex: number, dataType: DataType) => {
-    const target = e.target as HTMLInputElement;
-    const newProperty = target.value ? 
+  const setFilter = (filter: FilterState, level: number, propertyArrayIndex: number, dataType: DataType) => {
+    const newProperty = filter.value !== '' ? 
       [...selectedProperties[propertyArrayIndex].slice(0, level), ...[{
         label: '',
-        value: target.value,
+        value: filter.value,
         dataType: dataType + 'Filter',
         uuid: '',
+        additionalFilter: filter.select,
       }]] 
       :
       [...selectedProperties[propertyArrayIndex].slice(0, level)];
@@ -164,7 +165,7 @@ export const Builder = () => {
       {selectedProperties.map((propertyArray, i) =>
         <div 
           key={`group-${propertyArray[0].uuid}`}
-          className={propertyArray[0].dataType === 'string' || propertyArray[0].ot ? styles.propertyGroup : ''}>
+          className={propertyArray[0].dataType !== undefined || propertyArray[0].ot ? styles.propertyGroup : ''}>
           {propertyArray.map((property, j) => [
             property.ot && 
               <Selector
@@ -179,14 +180,13 @@ export const Builder = () => {
                 level={j+1}
                 value={selectedProperties[i][j+1]} />,
 
-            property.dataType && property.dataType === 'string' && 
-                <Input 
-                  key={`stringFilter-${property.uuid}`}
+            property.dataType && property.dataType.indexOf('Filter') === -1 &&
+                <DataTypeFilter 
+                  key={`filter-${property.uuid}`}
                   level={j+1}
+                  label={property.label}
                   propertyArrayIndex={i}
                   onChange={setFilter}
-                  label={<label className={styles.label}><strong>{property.label}</strong> must contain</label>}
-                  placeholder="Enter optional text to filter on..."
                   dataType={property.dataType}
                   value={selectedProperties[i][j+1]?.value} />
             ]
@@ -228,6 +228,8 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
 
   const results = data?.results.bindings;
 
+  console.log(results)
+
   // Reformat results
   const resultsOptions = results && 
     results.map((item: EntityData | PropertyData) => {
@@ -262,7 +264,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
     });
 
   return (
-    <div style={{paddingLeft: `${level ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
+    <div style={{paddingLeft: `${level !== undefined ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
       {type === 'entity' ?
         <label className={styles.label}>
           Pick an entity you wish to explore
@@ -315,6 +317,7 @@ const CustomOption = (props: CustomOptionProps) => {
       {propertyData.propertyType && 
         <span className={styles.propertyType}>
           {propertyData.propertyType} 
+          {propertyData.dataType ? `: ${propertyData.dataType}` : ''}
         </span>
       }
       <span className={styles.schema}>
@@ -336,29 +339,80 @@ const theme = (theme: Theme) => ({
 });
 
 interface OnChangeFilter {
-  (e: FormEvent<HTMLInputElement>, level: number, propertyArrayIndex: number, dataType: DataType): void;
+  (filter: FilterState, level: number, propertyArrayIndex: number, dataType: DataType): void;
 }
 
-type InputProps = {
-  label: ReactElement;
+type DataTypeProps = {
   level: number;
   propertyArrayIndex: number;
   onChange: OnChangeFilter;
-  placeholder: string;
   dataType: DataType;
   value: string;
+  label: string;
 }
 
-const Input = ({label, level, propertyArrayIndex, onChange, placeholder, dataType, value}: InputProps) => {
+const typeMap: {[key: string]: {input: string; label: string; placeholder: string}} = {
+    string: {
+      input: 'text',
+      label: 'must contain this text',
+      placeholder: 'Enter optional text to filter on...',
+    },
+    date: {
+      input: 'date',
+      label: 'must have this date',
+      placeholder: 'yyyy-mm-dd',
+    },
+    integer: {
+      input: 'number',
+      label: 'must have this number',
+      placeholder: 'Set number...',
+    },
+    gYear: {
+      input: 'text',
+      label: 'must be in this year',
+      placeholder: 'yyyy',
+    },
+    gYearMonth: {
+      input: 'text',
+      label: 'must be in this year and month',
+      placeholder: 'yyyy-mm',
+    }
+}
+
+type FilterState = {
+  value: string;
+  select: string;
+}
+
+const DataTypeFilter = ({level, propertyArrayIndex, onChange, dataType, value, label}: DataTypeProps) => {
+  const [currentFilter, setCurrentFilter] = useState<FilterState>({value: '', select: '='});
+
+  useEffect(() => {
+    onChange(currentFilter, level, propertyArrayIndex, dataType)
+  }, [currentFilter]);
+
+
   return (
     <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
-      {label}
-      <input 
-        type="text" 
-        className={styles.textInput} 
-        placeholder={placeholder}
-        value={value || ''}
-        onChange={e => onChange(e, level, propertyArrayIndex, dataType)}/>
+      <label className={styles.label}><strong>{label}</strong> {typeMap[dataType].label}</label>
+      <div className={styles.inputWrapper}>
+        {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
+          <select 
+            className={styles.selectFilter} 
+            onChange={e => setCurrentFilter({value: currentFilter.value, select: e.target.value})}
+            value={currentFilter.select}>
+            <option value="<">{dataType === 'integer' ? 'Less than' : 'Before'}</option>
+            <option value="=">Exactly</option>
+            <option value=">">{dataType === 'integer' ? 'More than' : 'After'}</option>
+          </select>
+        }
+        <input 
+          type={typeMap[dataType].input} 
+          className={styles.textInput} 
+          placeholder={typeMap[dataType].placeholder}
+          value={value || ''}
+          onChange={e => setCurrentFilter({value: e.target.value, select: currentFilter.select})}/>
+      </div>
     </div>
   )
 }
