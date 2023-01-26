@@ -1,0 +1,21 @@
+.label {
+  font-size: 0.9rem;
+}
+
+.select {
+  margin-bottom: 1rem;
+}
+
+.schema,
+.propertyType {
+  font-size: 70%;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.25rem;
+  background: var(--bs-gray-200);
+  color: var(--bs-black) !important;
+  border-radius: 3px;
+}
+
+.propertyType {
+  background: var(--bs-gray-400);
+}

@@ -1,4 +1,4 @@
-import type {Entity, Property} from '../Builder';
+import type {Entity, Property} from '../components/Builder';
 
 export function getLabel(schema: string) {
   // check for hash or slash, grab value after it

@@ -1,0 +1,14 @@
+.builder {
+  position: relative;
+  z-index: 10;
+}
+
+.header {
+  margin: 1rem 0;
+}
+
+.propertyGroup {
+  background: var(--bs-light);
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 1rem;
+}

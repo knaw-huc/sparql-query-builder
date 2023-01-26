@@ -28,7 +28,7 @@ export function Results() {
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
 
-  const {data, isFetching, isError, error} = useSendSparqlQuery({
+  const {data, isFetching, isError} = useSendSparqlQuery({
     query: currentQuery, 
     datasets: currentDatasets
   }, {
@@ -117,7 +117,7 @@ export function Results() {
                     data={filteredItems}
                     pagination 
                     paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                    title={<h5>Results</h5>}
+                    title={<h5>Results ({filteredItems.length} records)</h5>}
                     subHeader
                     subHeaderComponent={headerComponentMemo}
                     subHeaderWrap

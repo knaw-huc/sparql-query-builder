@@ -1,9 +1,9 @@
 import CodeMirror from '@uiw/react-codemirror';
 import {langs} from '@uiw/codemirror-extensions-langs';
-import {gaDark} from './helpers/CodemirrorTheme';
-import styles from './QueryBuilder.module.scss';
-import {useAppSelector, useAppDispatch} from '../../app/hooks';
-import {setActiveQuery, selectActiveQuery} from './queryBuilderSlice';
+import {gaDark} from '../helpers/CodemirrorTheme';
+import styles from './Editor.module.scss';
+import {useAppSelector, useAppDispatch} from '../../../app/hooks';
+import {setActiveQuery, selectActiveQuery} from '../queryBuilderSlice';
 
 export function Editor() {
   const query = useAppSelector(selectActiveQuery);

@@ -2,13 +2,13 @@ import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {useCookies} from 'react-cookie';
-import styles from './QueryBuilder.module.scss';
-import {useAppSelector, useAppDispatch} from '../../app/hooks';
-import {selectActiveQuery, setActiveQuery} from './queryBuilderSlice';
-import {addNotification} from '../notifications/notificationsSlice';
+import styles from './QueryCookies.module.scss';
+import {useAppSelector, useAppDispatch} from '../../../app/hooks';
+import {selectActiveQuery, setActiveQuery} from '../queryBuilderSlice';
+import {addNotification} from '../../notifications/notificationsSlice';
 import moment from 'moment';
-import {setSelectedDatasets, selectedDatasets} from '../datasets/datasetsSlice';
-import type {Dataset} from '../datasets/datasetsSlice';
+import {setSelectedDatasets, selectedDatasets} from '../../datasets/datasetsSlice';
+import type {Dataset} from '../../datasets/datasetsSlice';
 
 export interface QueryCookieObject {
   query: string;
