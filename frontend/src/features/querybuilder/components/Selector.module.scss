@@ -4,6 +4,7 @@
 
 .select {
   margin-bottom: 1rem;
+  border-radius: 3px;
 }
 
 .schema,
@@ -24,8 +25,9 @@
   &.gYear,
   &.gYearMonth,
   &.integer,
-  &.date
-   {
+  &.date,
+  &.datetime
+  {
     background: var(--bs-cyan);
   }
 }

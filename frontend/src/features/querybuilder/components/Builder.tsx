@@ -43,12 +43,13 @@ export const Builder = () => {
 
   const [selectedEntity, setSelectedEntity] = useState<Entity>(defaultSelectionObject);
   const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
+  const [selectedLimit, setSelectedLimit] = useState<number>(1000);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
-    const theQuery = queries.resultQuery(selectedEntity, selectedProperties);
-    selectedEntity.value && dispatch(setActiveQuery(theQuery));
-  }, [selectedEntity, selectedProperties, dispatch]);
+    const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedLimit);
+    dispatch(setActiveQuery(selectedEntity.value ? theQuery : ''));
+  }, [selectedEntity, selectedProperties, dispatch, selectedLimit]);
 
   // Keep track of selections and set tree accordingly
   const setEntity = useCallback((data: Entity) => {
@@ -170,6 +171,14 @@ export const Builder = () => {
           )}
         </div>
       )}
+      <div className={styles.limit}>
+        <label className={styles.label}>Limit results to</label>
+        <input 
+          className={styles.limitInput} 
+          type="number" value={selectedLimit} 
+          onChange={e => setSelectedLimit(parseInt(e.target.value) || 1000)}
+        />
+      </div>
     </div>
   )
 }

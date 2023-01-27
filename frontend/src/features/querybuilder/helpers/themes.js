@@ -29,7 +29,7 @@ export const gaDark = createTheme({
 // theme for the selection boxes
 export const selectorTheme = (theme: Theme) => ({
   ...theme,
-  borderRadius: 0,
+  borderRadius: 3,
   colors: {
     ...theme.colors,
     primary25: '#efc501',

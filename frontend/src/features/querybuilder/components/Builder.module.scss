@@ -11,4 +11,32 @@
   background: var(--bs-light);
   padding: 0.5rem 1.5rem;
   margin-bottom: 1rem;
+  border-radius: 3px;
+}
+
+.label {
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.limit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.limitInput {
+  display: block;
+  outline: none;
+  border: 1px solid hsl(0, 0%, 80%);
+  padding: 6px 9px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  width: 7rem;
+
+  &::focus,
+  &::active {
+    border-color: var(--bs-black);
+  }
 }

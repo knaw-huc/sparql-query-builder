@@ -54,7 +54,7 @@ const getFilterValue = (filterType: string, labelForQuery: string, value: string
 
 // Shows up in the Query code editor and gets sent to the endpoint
 // Ugly formatting here for nice formatting in the code editor
-export const resultQuery = (entity: Entity, properties: Property[][]) => {
+export const resultQuery = (entity: Entity, properties: Property[][], selectedLimit: number) => {
 
   const propertyLabels = properties.map(
     (propertyPath) => propertyPath.map(
@@ -85,5 +85,5 @@ export const resultQuery = (entity: Entity, properties: Property[][]) => {
 WHERE {
   ?${entity.label} a <${entity.value}>.
   ${propertySelectors}
-} LIMIT 1000`
+} LIMIT ${selectedLimit}`
 )};

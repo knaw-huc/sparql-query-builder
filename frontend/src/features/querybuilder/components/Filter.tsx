@@ -33,7 +33,7 @@ export const typeMap: {[key: string]: {input: string; label: string; placeholder
     string: {
       input: 'text',
       label: 'must contain this text',
-      placeholder: 'Enter optional text to filter on...',
+      placeholder: 'Enter text to filter on...',
     },
     date: {
       input: 'date',
@@ -43,17 +43,22 @@ export const typeMap: {[key: string]: {input: string; label: string; placeholder
     integer: {
       input: 'number',
       label: 'must have this number',
-      placeholder: 'Set number...',
+      placeholder: 'Enter number...',
     },
     gYear: {
-      input: 'text',
+      input: 'number',
       label: 'must be in this year',
       placeholder: 'yyyy',
     },
     gYearMonth: {
-      input: 'text',
+      input: 'month',
       label: 'must be in this year and month',
       placeholder: 'yyyy-mm',
+    },
+    datetime: {
+      input: 'datetime-local',
+      label: 'must at this date and time',
+      placeholder: '',
     },
 }
 
@@ -75,7 +80,7 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
       <div className={styles.inputWrapper}>
         {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
           <Select 
-            className={styles.select}
+            className={styles.selectFilter}
             options={options}
             value={currentFilter.select}
             onChange={data => setCurrentFilter({...currentFilter, select: data})}
