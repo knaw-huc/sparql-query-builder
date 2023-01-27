@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useAppDispatch} from '../../../app/hooks';
 import update from 'immutability-helper';
 import {setActiveQuery} from '../queryBuilderSlice';
 import styles from './Builder.module.scss';
 import * as queries from '../helpers/queries';
-import {Selector} from './Selector';
+import Selector from './Selector';
 import {Filter, typeMap} from './Filter';
 import type {FilterState, FilterDataType} from './Filter';
 
@@ -49,15 +49,15 @@ export const Builder = () => {
     const theQuery = queries.resultQuery(selectedEntity, selectedProperties);
     selectedEntity.value && dispatch(setActiveQuery(theQuery));
   }, [selectedEntity, selectedProperties, dispatch]);
-  
+
   // Keep track of selections and set tree accordingly
-  const setEntity = (data: Entity) => {
+  const setEntity = useCallback((data: Entity) => {
     setSelectedEntity(data ? data : defaultSelectionObject);
     // reset properties
     setSelectedProperties([]);
-  }
+  }, []);
 
-  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
+  const setProperties = useCallback((data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
     // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
     // Keep track of these arrays using the propertyArrayIndex (index # of parent array) and level (index # of object being selected)
     switch(changedValue.action) {
@@ -65,13 +65,13 @@ export const Builder = () => {
         // add new value to state, or change existing value
         if (propertyArrayIndex === undefined) {
           // first property, so new property tree
-          setSelectedProperties([...selectedProperties, [changedValue.option as Property]]);
+          setSelectedProperties(oldProperties => [...oldProperties, [changedValue.option as Property]]);
         }
         else {
           // add or change existing property tree
-          const newPropertyTree = [...selectedProperties[propertyArrayIndex].slice(0, level), data];
-          const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newPropertyTree}});    
-          setSelectedProperties(newState);
+          setSelectedProperties(oldProperties => 
+            update(oldProperties, {[propertyArrayIndex]: {$set: [...oldProperties[propertyArrayIndex].slice(0, level), data]}})
+          );
         }
         break;
 
@@ -83,35 +83,39 @@ export const Builder = () => {
         }
         else {
           // single selection for sub-properties, just remove object from array tree
-          const newPropertyTree = [...selectedProperties[propertyArrayIndex].slice(0, level)];
-          const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newPropertyTree}});
-          setSelectedProperties(newState);
+          setSelectedProperties(oldProperties => 
+            update(oldProperties, {[propertyArrayIndex]: {$set: [...oldProperties[propertyArrayIndex].slice(0, level)]}})
+          );
         }
         break;
 
       case 'remove-value':
         // Only for multiselect, remove individual values
-        const removeIndex = selectedProperties.findIndex(oldPropArr => oldPropArr.some(oldProp => changedValue.removedValue!.uuid === oldProp.uuid));
-        const newState = update(selectedProperties, {$splice: [[removeIndex, 1]]});
-        setSelectedProperties(newState);
+        setSelectedProperties(oldProperties => 
+          update(oldProperties, {$splice: [[oldProperties.findIndex(oldPropArr => 
+            oldPropArr.some(oldProp => changedValue.removedValue!.uuid === oldProp.uuid)), 1]]}
+          )
+        );
         break;
     }
-  }
+  }, []);
 
-  const setFilter = (filter: FilterState, level: number, propertyArrayIndex: number, dataType: FilterDataType) => {
-    const newProperty = filter.value !== '' ? 
-      [...selectedProperties[propertyArrayIndex].slice(0, level), ...[{
-        label: '',
-        value: filter.value,
-        dataType: dataType + 'Filter',
-        uuid: '',
-        additionalFilter: filter.select,
-      }]] 
-      :
-      [...selectedProperties[propertyArrayIndex].slice(0, level)];
-    const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newProperty}});    
-    setSelectedProperties(newState);
-  }
+  const setFilter = useCallback((filter: FilterState, level: number, propertyArrayIndex: number, dataType: FilterDataType) => {    
+    setSelectedProperties((oldProperties) => {
+      const newProperty = filter.value !== '' ? 
+        [...oldProperties[propertyArrayIndex].slice(0, level), ...[{
+          label: '',
+          value: filter.value,
+          dataType: dataType + 'Filter',
+          uuid: '',
+          additionalFilter: filter.select!.value,
+        }]] 
+        :
+        [...oldProperties[propertyArrayIndex].slice(0, level)];
+      const newState = update(oldProperties, {[propertyArrayIndex]: {$set: newProperty}});
+      return newState;
+    });
+  }, []);
 
   return (
     <div className={styles.builder}>
@@ -124,6 +128,7 @@ export const Builder = () => {
 
       {selectedEntity.value.length > 0 &&
         <Selector
+          key={selectedEntity.value}
           type="property"
           parentUri={selectedEntity.value} 
           parentLabel={selectedEntity.label}

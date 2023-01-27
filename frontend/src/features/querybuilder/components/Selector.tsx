@@ -1,7 +1,6 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {v4 as uuidv4} from 'uuid';
 import Select, {components, OptionProps} from 'react-select';
-import type {Theme} from 'react-select';
 import {useAppSelector} from '../../../app/hooks';
 import * as queries from '../helpers/queries';
 import {useSendSparqlQuery} from '../../sparql/sparqlApi';
@@ -9,6 +8,7 @@ import {selectedDatasets} from '../../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
 import type {Property, Entity, ActionTypes} from './Builder';
+import {selectorTheme} from '../helpers/themes';
 
 interface OnChangeData {
   (
@@ -57,7 +57,7 @@ type PropertyData = {
   p?: never;
 }
 
-export const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, propertyArrayIndex, value}: SelectorProps) => {
+const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, propertyArrayIndex, value}: SelectorProps) => {
   const currentDatasets = useAppSelector(selectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
@@ -138,10 +138,12 @@ export const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery,
           ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
         }
         onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, propertyArrayIndex)}
-        theme={theme} />
+        theme={selectorTheme} />
     </div>
   );
 }
+
+export default memo(Selector);
 
 interface CustomOptionProps extends OptionProps {
   data: unknown;
@@ -154,7 +156,7 @@ const CustomOption = (props: CustomOptionProps) => {
     <components.Option {...props}>
       {propertyOrEntityData.label} 
       {propertyData.propertyType && 
-        <span className={styles.propertyType}>
+        <span className={`${styles.propertyType} ${propertyData.dataType ? styles[propertyData.dataType] : ''}`}>
           {propertyData.propertyType} 
           {propertyData.dataType ? `: ${propertyData.dataType}` : ''}
         </span>
@@ -165,14 +167,3 @@ const CustomOption = (props: CustomOptionProps) => {
     </components.Option>
   )
 }
-
-// theme for the selection boxes
-const theme = (theme: Theme) => ({
-  ...theme,
-  borderRadius: 0,
-  colors: {
-    ...theme.colors,
-    primary25: '#efc501',
-    primary: 'black',
-  }
-});

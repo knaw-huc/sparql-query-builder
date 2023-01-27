@@ -1,6 +1,6 @@
 import CodeMirror from '@uiw/react-codemirror';
 import {langs} from '@uiw/codemirror-extensions-langs';
-import {gaDark} from '../helpers/CodemirrorTheme';
+import {gaDark} from '../helpers/themes';
 import styles from './Editor.module.scss';
 import {useAppSelector, useAppDispatch} from '../../../app/hooks';
 import {setActiveQuery, selectActiveQuery} from '../queryBuilderSlice';

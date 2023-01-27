@@ -17,5 +17,15 @@
 }
 
 .propertyType {
-  background: var(--bs-gray-400);
+  background: var(--bs-teal);
+  color: var(--bs-white) !important;
+
+  &.string,
+  &.gYear,
+  &.gYearMonth,
+  &.integer,
+  &.date
+   {
+    background: var(--bs-cyan);
+  }
 }

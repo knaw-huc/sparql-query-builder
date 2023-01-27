@@ -1,6 +1,8 @@
 import {tags as t} from '@lezer/highlight';
 import {createTheme} from '@uiw/codemirror-themes';
+import type {Theme} from 'react-select';
 
+// theme for code editor
 export const gaDark = createTheme({
   theme: 'dark',
   settings: {
@@ -22,4 +24,15 @@ export const gaDark = createTheme({
     {tag: [t.emphasis], color: '#d2a8ff', fontStyle: 'italic'},
     {tag: [t.deleted], color: '#ffdcd7', backgroundColor: 'ffeef0'},
   ],
+});
+
+// theme for the selection boxes
+export const selectorTheme = (theme: Theme) => ({
+  ...theme,
+  borderRadius: 0,
+  colors: {
+    ...theme.colors,
+    primary25: '#efc501',
+    primary: 'black',
+  }
 });

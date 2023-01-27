@@ -1,8 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
 
 export type QueryState = {
   active: string;
@@ -10,8 +7,7 @@ export type QueryState = {
 }
 
 const initialState: QueryState = {
-  // set latest saved query to active
-  active: cookies.get('querylist') && cookies.get('querylist')[0].query,
+  active: '',
   sent: '',
 };
 

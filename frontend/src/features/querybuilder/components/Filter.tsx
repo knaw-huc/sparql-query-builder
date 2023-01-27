@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import Select from 'react-select';
+import type {SingleValue} from 'react-select';
 import styles from './Filter.module.scss';
+import {selectorTheme} from '../helpers/themes';
 
 export type FilterDataType = string; // possibly narrow this down later on, depending on the data types we might get
 
@@ -16,9 +19,14 @@ type DataTypeProps = {
   label: string;
 }
 
+type SelectOption = {
+  value: string;
+  label: string;
+}
+
 export type FilterState = {
   value: string;
-  select: string;
+  select: SingleValue<SelectOption>;
 }
 
 export const typeMap: {[key: string]: {input: string; label: string; placeholder: string}} = {
@@ -50,7 +58,12 @@ export const typeMap: {[key: string]: {input: string; label: string; placeholder
 }
 
 export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, label}: DataTypeProps) => {
-  const [currentFilter, setCurrentFilter] = useState<FilterState>({value: '', select: '='});
+  const options = [
+    {value: '<', label: ['gYear', 'gYearMonth', 'date'].includes(dataType) ? 'Earlier than' : 'Smaller than'},
+    {value: '=', label: 'Exactly'},
+    {value: '>', label: ['gYear', 'gYearMonth', 'date'].includes(dataType) ? 'Later than' : 'Larger than'},
+  ];
+  const [currentFilter, setCurrentFilter] = useState<FilterState>({value: '', select: options[1]});
 
   useEffect(() => {
     onChange(currentFilter, level, propertyArrayIndex, dataType)
@@ -61,21 +74,19 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
       <label className={styles.label}><strong>{label}</strong> {typeMap[dataType].label}</label>
       <div className={styles.inputWrapper}>
         {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
-          <select 
-            className={styles.selectFilter} 
-            onChange={e => setCurrentFilter({value: currentFilter.value, select: e.target.value})}
-            value={currentFilter.select}>
-            <option value="<">{dataType === 'integer' ? 'Less than' : 'Before'}</option>
-            <option value="=">Exactly</option>
-            <option value=">">{dataType === 'integer' ? 'More than' : 'After'}</option>
-          </select>
+          <Select 
+            className={styles.select}
+            options={options}
+            value={currentFilter.select}
+            onChange={data => setCurrentFilter({...currentFilter, select: data})}
+            theme={selectorTheme} />
         }
         <input 
           type={typeMap[dataType].input} 
           className={styles.textInput} 
           placeholder={typeMap[dataType].placeholder}
-          value={value || ''}
-          onChange={e => setCurrentFilter({value: e.target.value, select: currentFilter.select})}/>
+          value={currentFilter.value}
+          onChange={e => setCurrentFilter({...currentFilter, value: e.target.value})}/>
       </div>
     </div>
   )

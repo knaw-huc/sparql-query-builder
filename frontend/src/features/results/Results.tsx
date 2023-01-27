@@ -28,12 +28,14 @@ export function Results() {
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
 
-  const {data, isFetching, isError} = useSendSparqlQuery({
+  const {data, isFetching, isError, error} = useSendSparqlQuery({
     query: currentQuery, 
     datasets: currentDatasets
   }, {
     skip: !currentQuery,
   });
+
+  console.log(error)
 
   // makes sure results scroll into view when new results are available/query has been run
   const resultsRef = useRef<null | HTMLDivElement>(null);
