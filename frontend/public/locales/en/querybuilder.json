@@ -1,0 +1,56 @@
+{
+  "queryBuilder": {
+    "createQueryWarning": "Create a query first",
+    "resultsShownWarning": "Results for current query are already shown",
+    "selectDatasetsWarning": "Select one or more data sets",
+    "tabBuilder": "Query Builder",
+    "tabEditor": "Sparql Code Editor",
+    "sendQuery": "Run Query"
+  },
+  "builder": {
+    "header": "Build your query",
+    "limit": "Limit results to"
+  },
+  "editor": {
+    "header": "Manually edit your Sparql code"
+  },
+  "filter": {
+    "labelEarlier": "Earlier than",
+    "labelSmaller": "Smaller than",
+    "labelExact": "Exactly",
+    "labelLater": "Later than",
+    "labelLarger": "Larger than",
+    "typeMap": {
+      "textLabel": "must contain this text",
+      "textPlaceholder": "Enter text to filter on...",
+      "dateLabel": "must have this date",
+      "datePlaceholder": "yyyy-mm-dd",
+      "numberLabel": "must have this number",
+      "numberPlaceholder": "Enter number...",
+      "gYearLabel": "must be in this year",
+      "gYearPlaceholder": "yyyy",
+      "gYearMonthLabel": "must be in this year and month",
+      "gYearMonthPlaceholder": "yyyy-mm",
+      "datetimeLabel": "must at this date and time",
+      "datetimePlaceholder": ""
+    }
+  },
+  "queryCookies": {
+    "buildWarning": "Build a query first",
+    "existsWarning": "Query already in list",
+    "saved": "Query succesfully saved",
+    "loaded": "Query succesfully loaded into the code editor. Click <b>Run Query</b> to execute.",
+    "save": "Save Query",
+    "load": "Load Query",
+    "number": "Query #{{number}}",
+    "savedOn": "Saved on {{datetime}}",
+    "empty": "No saved queries"
+  },
+  "selector": {
+    "entityLabel": "Pick an entity you wish to explore",
+    "propertyLabel": "Select properties for <strong>{{parentLabel}}</strong>",
+    "placeholder": "Select...",
+    "error": "Something's gone wrong with fetching the data",
+    "noResults": "Nothing found"
+  }
+}

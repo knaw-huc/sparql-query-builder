@@ -25,7 +25,7 @@ export function Download() {
   const dispatch = useAppDispatch();
   const activeDataType = useAppSelector(selectDataType);
 
-  const [ downloadFile, {isLoading} ] = useDownloadFileMutation();
+  const [downloadFile, {isLoading}] = useDownloadFileMutation();
 
   const handleDownload = async (type: string) => {
     dispatch(setDataType(type));
@@ -54,7 +54,7 @@ export function Download() {
   )
 }
 
-const DownloadButton = ({download, onClick, isLoading, activeType}: DownloadProps) =>
+const DownloadButton = ({download, onClick, isLoading, activeType}: DownloadProps) => 
   <Button 
     variant="secondary" 
     size="sm" 

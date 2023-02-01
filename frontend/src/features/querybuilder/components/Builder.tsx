@@ -7,6 +7,7 @@ import * as queries from '../helpers/queries';
 import Selector from './Selector';
 import {Filter, typeMap} from './Filter';
 import type {FilterState, FilterDataType} from './Filter';
+import {useTranslation} from 'react-i18next';
 
 // TODO: some more filters? Not only text, also data/year etc
 // split this file into chunks
@@ -44,6 +45,7 @@ export const Builder = () => {
   const [selectedEntity, setSelectedEntity] = useState<Entity>(defaultSelectionObject);
   const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
   const [selectedLimit, setSelectedLimit] = useState<number>(1000);
+  const {t} = useTranslation(['querybuilder']);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
@@ -120,7 +122,7 @@ export const Builder = () => {
 
   return (
     <div className={styles.builder}>
-      <h5 className={styles.header}>Build your query</h5>
+      <h5 className={styles.header}>{t('builder.header')}</h5>
 
       <Selector 
         onChange={setEntity}
@@ -172,7 +174,7 @@ export const Builder = () => {
         </div>
       )}
       <div className={styles.limit}>
-        <label className={styles.label}>Limit results to</label>
+        <label className={styles.label}>{t('builder.limit')}</label>
         <input 
           className={styles.limitInput} 
           type="number" value={selectedLimit} 

@@ -9,6 +9,7 @@ import {addNotification} from '../../notifications/notificationsSlice';
 import moment from 'moment';
 import {setSelectedDatasets, selectedDatasets} from '../../datasets/datasetsSlice';
 import type {Dataset} from '../../datasets/datasetsSlice';
+import {useTranslation} from 'react-i18next';
 
 export interface QueryCookieObject {
   query: string;
@@ -34,6 +35,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   const currentQuery = useAppSelector(selectActiveQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation(['querybuilder']);
 
   function onSave() {
     const newList = !cookies.hasOwnProperty('querylist') ? 
@@ -46,7 +48,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
     if (!currentQuery) {
       dispatch(
         addNotification({
-          message: 'Build a query first',
+          message: t('queryCookies.buildWarning'),
           type: 'warning',
         })
       );
@@ -56,7 +58,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
     if (newList.filter((q: QueryCookieObject) => q.query === currentQuery).length > 0) {
       dispatch(
         addNotification({
-          message: `Query already in list`,
+          message: t('queryCookies.existsWarning'),
           type: 'warning',
         })
       );
@@ -78,7 +80,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
 
     dispatch(
       addNotification({
-        message: `Query succesfully saved`,
+        message: t('queryCookies.saved'),
         type: 'info',
       })
     );
@@ -89,7 +91,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
     dispatch(setSelectedDatasets(query.datasets));
     dispatch(
       addNotification({
-        message: `Query succesfully loaded into the code editor. Click <b>Run Query</b> to execute.`,
+        message: t('queryCookies.loaded'),
         type: 'info',
       })
     );
@@ -103,11 +105,11 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
         variant="secondary" 
         className={styles.groupButton} 
         onClick={() => onSave() }>
-        Save Query
+        {t('queryCookies.save')}
       </Button>
       <Dropdown as={ButtonGroup}>
         <Dropdown.Toggle variant="secondary">
-          Load Query
+          {t('queryCookies.load')}
         </Dropdown.Toggle>
         <Dropdown.Menu className={styles.loadQuery} variant="secondary">
           {cookies.hasOwnProperty('querylist') ?
@@ -118,12 +120,12 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
                 className={currentQuery === query.query ? styles.loadQueryItemActive : styles.loadQueryItem}
               >
                 <div>
-                  <span className={styles.cookieQueryHeader}>Query #{i + 1}</span>
-                  <span className={styles.cookieQueryDescription}>Saved on {query.datetime}</span>
+                  <span className={styles.cookieQueryHeader}>{t('queryCookies.number', {number: i + 1})}</span>
+                  <span className={styles.cookieQueryDescription}>{t('queryCookies.savedOn', {datetime: query.datetime})}</span>
                 </div>
               </Dropdown.Item>)
             :
-            <Dropdown.Item>No saved queries</Dropdown.Item>
+            <Dropdown.Item>{t('queryCookies.empty')}</Dropdown.Item>
           }
         </Dropdown.Menu>
       </Dropdown>

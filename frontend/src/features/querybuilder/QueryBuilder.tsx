@@ -16,6 +16,7 @@ import {Datasets} from '../datasets/Datasets';
 import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
 import {addNotification} from '../notifications/notificationsSlice';
 import {selectedDatasets} from '../datasets/datasetsSlice';
+import {useTranslation} from 'react-i18next';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
@@ -24,18 +25,19 @@ export function QueryBuilder() {
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
   const dataSetEnabled = typeof process.env.REACT_APP_DATASETS_API !== 'undefined';
+  const {t} = useTranslation(['querybuilder']);
 
   function sendQuery() {
     if (currentQuery === sentQuery || !currentQuery) {
       dispatch(addNotification({
-        message: !currentQuery ? 'Create a query first' : 'Results for current query are already shown',
+        message: !currentQuery ? t('queryBuilder.createQueryWarning') : t('queryBuilder.resultsShownWarning'),
         type: 'warning',
       }));
     }
     // TODO: Remove this optional check?
     else if (currentDatasets.length === 0 && dataSetEnabled) {
       dispatch(addNotification({
-        message: 'Select one or more data sets',
+        message: t('queryBuilder.selectDatasetsWarning'),
         type: 'warning',
       }));
     }
@@ -56,14 +58,14 @@ export function QueryBuilder() {
                 <Nav.Link 
                   eventKey="querybuilder" 
                   className={key === 'querybuilder' ? styles.activeItem : styles.item}>
-                  Query Builder
+                  {t('queryBuilder.tabBuilder')}
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link 
                   eventKey="editor" 
                   className={key === 'editor' ? styles.activeItem : styles.item}>
-                  Sparql Code Editor
+                  {t('queryBuilder.tabEditor')}
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -82,7 +84,7 @@ export function QueryBuilder() {
                 variant="primary"
                 size="lg"
                 onClick={sendQuery}>
-                Run Query
+                {t('queryBuilder.sendQuery')}
               </Button>
             </ButtonGroup>
             <QueryCookies setKey={() => setKey('editor')} />

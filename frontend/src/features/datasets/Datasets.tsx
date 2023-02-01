@@ -9,11 +9,13 @@ import Spinner from 'react-bootstrap/Spinner';
 import {setSelectedDatasets, selectedDatasets} from './datasetsSlice';
 import type {Dataset} from './datasetsSlice';
 import {FadeDiv} from '../animations/Animations';
+import {useTranslation} from 'react-i18next';
 
 export function Datasets() {
   const {data, isFetching, isError} = useGetDatasetsQuery(undefined);
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation(['datasets']);
 
   // enable all datasets by default/on load
   useEffect(() => {
@@ -27,7 +29,7 @@ export function Datasets() {
 
   return (
     <Card bg="light" className={styles.card}>
-      <Card.Header as="h5">Data sets</Card.Header>
+      <Card.Header as="h5">{t('header')}</Card.Header>
       <Card.Body>
         <AnimatePresence mode="wait">
           {isFetching ?
@@ -37,10 +39,10 @@ export function Datasets() {
             :
             <FadeDiv key="datasets">
               {isError ?
-                <Card.Title as="h6">Error fetching the data sets</Card.Title>
+                <Card.Title as="h6">{t('error')}</Card.Title>
                 :
                 <>
-                  <Card.Title as="h6">Select the data sets you wish to use</Card.Title>
+                  <Card.Title as="h6">{t('select')}</Card.Title>
                   <Form>
                     {data.map((set: Dataset) => (
                       <Form.Check 

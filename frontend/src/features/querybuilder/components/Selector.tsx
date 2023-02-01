@@ -9,6 +9,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
 import type {Property, Entity, ActionTypes} from './Builder';
 import {selectorTheme} from '../helpers/themes';
+import {useTranslation} from 'react-i18next';
 
 interface OnChangeData {
   (
@@ -67,6 +68,8 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
 
   const results = data?.results.bindings;
 
+  const {t} = useTranslation(['querybuilder']);
+
   console.log(results)
 
   // Reformat results
@@ -106,11 +109,11 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
     <div style={{paddingLeft: `${level !== undefined ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
       {type === 'entity' ?
         <label className={styles.label}>
-          Pick an entity you wish to explore
+          {t('selector.entityLabel')}
         </label>
         :
         <label className={styles.label}>
-          Select properties for <strong>{parentLabel}</strong>
+          {t('selector.propertyLabel', {parentLabel: parentLabel})}
         </label>
       }
       <Select 
@@ -123,7 +126,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
         }
         className={styles.select}
         options={resultsOptions} 
-        placeholder="Select..."
+        placeholder={t('selector.placeholder')}
         isMulti={multiSelect}
         value={value}
         isClearable={true}
@@ -135,7 +138,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
             role="status"
             aria-hidden="true"
           /> : 
-          ( isError ? 'Something\'s gone wrong with fetching the data' : 'Nothing found')
+          ( isError ? t('selector.error') : t('selector.noResults'))
         }
         onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, propertyArrayIndex)}
         theme={selectorTheme} />

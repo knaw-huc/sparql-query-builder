@@ -16,6 +16,7 @@ import {selectedDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
 import {FadeDiv, SlideDiv} from '../animations/Animations';
 import './DataTableTheme';
+import {useTranslation} from 'react-i18next';
 
 type ResultsObject = {
   [key: string]: any
@@ -24,6 +25,7 @@ type ResultsObject = {
 export function Results() {
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+  const {t} = useTranslation(['results']);
 
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
@@ -112,14 +114,14 @@ export function Results() {
               :
               <FadeDiv key="results-table" refProps={resultsRef}>
                 {isError ?
-                  <p className={styles.error}>Oh no, something has gone wrong.</p>
+                  <p className={styles.error}>{t('error')}</p>
                   :
                   <DataTable
                     columns={columns}
                     data={filteredItems}
                     pagination 
                     paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
-                    title={<h5>Results ({filteredItems.length} records)</h5>}
+                    title={<h5>{t('tableHeader', {items: filteredItems.length})}</h5>}
                     subHeader
                     subHeaderComponent={headerComponentMemo}
                     subHeaderWrap
@@ -147,20 +149,23 @@ type FilterProps = {
   onClear: React.MouseEventHandler;
 }
 
-const FilterComponent = ({filterText, onFilter, onClear}: FilterProps) => (
-  <InputGroup className={styles.filter} size="sm">
-    <Form.Control
-      placeholder="Filter results..."
-      value={filterText}
-      onChange={onFilter}
-    />
-    <Button 
-      variant="outline-primary"
-      onClick={onClear}>
-      Clear
-    </Button>
-  </InputGroup>
-);
+const FilterComponent = ({filterText, onFilter, onClear}: FilterProps) => {
+  const {t} = useTranslation(['results']);
+  return (
+    <InputGroup className={styles.filter} size="sm">
+      <Form.Control
+        placeholder={t('placeholder') as string}
+        value={filterText}
+        onChange={onFilter}
+      />
+      <Button 
+        variant="outline-primary"
+        onClick={onClear}>
+        {t('clear')}
+      </Button>
+    </InputGroup>
+  )
+};
 
 type CellProps = {
   type: string;

@@ -4,14 +4,16 @@ import {gaDark} from '../helpers/themes';
 import styles from './Editor.module.scss';
 import {useAppSelector, useAppDispatch} from '../../../app/hooks';
 import {setActiveQuery, selectActiveQuery} from '../queryBuilderSlice';
+import {useTranslation} from 'react-i18next';
 
 export function Editor() {
   const query = useAppSelector(selectActiveQuery);
   const dispatch = useAppDispatch();
+  const {t} = useTranslation(['querybuilder']);
 
   return (
     <div>
-      <h5 className={styles.header}>Manually edit your Sparql code</h5>
+      <h5 className={styles.header}>{t('editor.header', {ns: 'querybuilder'})}</h5>
       <CodeMirror
         value={query}
         height="20rem"

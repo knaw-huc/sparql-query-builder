@@ -1,0 +1,6 @@
+{
+  "error": "Oh no, something has gone wrong.",
+  "tableHeader": "Results ({{items}} records)",
+  "placeholder": "Filter results...",
+  "clear": "Clear"
+}
