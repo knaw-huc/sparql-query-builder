@@ -76,6 +76,22 @@ PROP_QUERY = """
     """
 
 
+PROP_QUERY = """
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    SELECT DISTINCT ?pred ?tpe ?dt WHERE {
+    ?sub ?pred ?obj .
+    ?sub a <ENTITY_URI> .
+    BIND (IF(isURI(?obj),
+                    owl:ObjectProperty,
+                    owl:DatatypeProperty) AS ?tpe
+        ) .
+    BIND ( DATATYPE(?obj) AS ?dt)
+    }
+    LIMIT 20
+    """
+
+
 def sparql_query(qry, uri):
     uri, default_graph_uri = uri
     sparql = SPARQLWrapper(uri)
