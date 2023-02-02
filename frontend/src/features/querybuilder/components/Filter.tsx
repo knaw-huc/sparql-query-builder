@@ -78,7 +78,7 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
 
   return (
     <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
-      <label className={styles.label}><strong>{label}</strong> {t(`filter.typeMap.${typeMap[dataType].label}`)}</label>
+      <label className={styles.label}><strong>{label}</strong> {t(`filter.typeMap.${dataType}.label`)}</label>
       <div className={styles.inputWrapper}>
         {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
           <Select 
@@ -91,7 +91,7 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
         <input 
           type={typeMap[dataType].input} 
           className={styles.textInput} 
-          placeholder={t(`filter.typeMap.${typeMap[dataType].placeholder}`) as string}
+          placeholder={t(`filter.typeMap.${dataType}.placeholder`) as string}
           value={currentFilter.value}
           onChange={e => setCurrentFilter({...currentFilter, value: e.target.value})}/>
       </div>

@@ -21,7 +21,6 @@ interface QueryCookiesFn {
   setKey: () => void;
 }
 
-
 /* 
  * Getter and setter for query cookies.
  * Saves a max of 10 queries in a cookie 'querylist'
@@ -40,7 +39,8 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   function onSave() {
     const newList = !cookies.hasOwnProperty('querylist') ? 
       [] :
-      ( cookies.querylist.length < 10 ?
+      ( 
+        cookies.querylist.length < 10 ?
         cookies.querylist :
         cookies.querylist.slice(0, -1)
       );
@@ -73,8 +73,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
           datetime: moment().format('D-M-YYYY H:mm'),
           datasets: currentDatasets,
         }, 
-        ...newList
-      ],
+        ...newList],
       {path: '/' }
     );
 
@@ -113,7 +112,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
         </Dropdown.Toggle>
         <Dropdown.Menu className={styles.loadQuery} variant="secondary">
           {cookies.hasOwnProperty('querylist') ?
-            cookies.querylist.map( (query: QueryCookieObject, i: number) => 
+            cookies.querylist.map((query: QueryCookieObject, i: number) => 
               <Dropdown.Item 
                 key={`query-${i}`} 
                 onClick={() => onLoad(query) }
@@ -123,7 +122,8 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
                   <span className={styles.cookieQueryHeader}>{t('queryCookies.number', {number: i + 1})}</span>
                   <span className={styles.cookieQueryDescription}>{t('queryCookies.savedOn', {datetime: query.datetime})}</span>
                 </div>
-              </Dropdown.Item>)
+              </Dropdown.Item>
+            )
             :
             <Dropdown.Item>{t('queryCookies.empty')}</Dropdown.Item>
           }
