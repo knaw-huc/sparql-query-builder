@@ -173,6 +173,7 @@ def get_resources():
 @app.route('/ga/sparql', methods=['POST'])
 def sparql():
     """This route is for direct sparql queries"""
+    print('HALLO')
     # get accept / content type headers
     accept_header = request.headers.get('Accept', type=str)
     content_type = request.headers.get('Content-Type', type=str)
@@ -214,6 +215,7 @@ def sparql():
             response.set_data(create_response_from_cache(bindings))
 
         elif bool(query):
+            print(query)
             # send a real query to the GA backend
             backend_response = requests.post(
                 f'{API_URL}/sparql',
@@ -221,7 +223,7 @@ def sparql():
                 params={ 'format': format }
             )
             response.set_data(backend_response._content)
-            
+
         else:
             response.set_data(json.dumps({ 'message': 'no clue'}))
 

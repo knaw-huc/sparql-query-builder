@@ -41,11 +41,26 @@ ENT_QUERY = """
     LIMIT 200
     """
 
+ENT_QUERY = """
+    SELECT DISTINCT ?s ?p ?o
+    WHERE {
+        GRAPH <https://data.goldenagents.org/datasets/u692bc364e9d7fa97b3510c6c0c8f2bb9a0e5123b/ga_ontology_20210730> {?s ?p ?o}
+    }
+    """
+
+ENT_QUERY = """
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX owl: <http://www.w3.org/2002/07/owl#>
+    SELECT DISTINCT ?c WHERE {
+        ?c a owl:Class
+    }
+    """
+
 
 PROP_QUERY = """
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX owl: <http://www.w3.org/2002/07/owl#>
-    SELECT ?pred ?tpe ?dt ?ot ?l WHERE {
+    SELECT DISTINCT ?pred ?tpe ?dt ?ot ?l WHERE {
         ?sub ?pred ?obj .
         ?sub a <ENTITY_URI> .
         BIND (
@@ -57,15 +72,16 @@ PROP_QUERY = """
         OPTIONAL {?obj a ?ot}.
         OPTIONAL { ?pred rdfs:label ?l }
     }
-    LIMIT 10000
+    LIMIT 100
     """
 
 
-def sparql_query(qry, default_graph_uri=None):
-    sparql = SPARQLWrapper('https://sparql.goldenagents.org/')
+def sparql_query(qry, uri):
+    uri, default_graph_uri = uri
+    sparql = SPARQLWrapper(uri)
     sparql.setReturnFormat(JSON)
     sparql.setQuery(qry)
-    if default_graph_uri:
+    if bool(default_graph_uri):
         sparql.addParameter(
             'default-graph-uri',
             default_graph_uri
@@ -125,13 +141,12 @@ def insert_entity(conn, entity):
     name = __get_name(value)
     entity['l'] = { 'type': 'literal', 'value': name }
     data = json.dumps(entity)
-    print(data)
     entity = (name, value, data)
 
     # create cursor
     cursor = conn.cursor()
     # see if this value exists
-    qry = f'SELECT id, name FROM entities WHERE value="{value}"'
+    qry = f'SELECT id, value FROM entities WHERE value="{value}"'
     cursor.execute(qry)
     result = cursor.fetchone()
     if result:
@@ -201,41 +216,71 @@ if __name__ == '__main__':
 
     entities = {}
 
-    default_graphs = [
-        'https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/onstage_20200316',
-        'https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/stcn_20200226',
-        'https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ecartico_20200316',
-        'https://data.goldenagents.org/datasets/ufab7d657a250e3461361c982ce9b38f3816e0c4b/ead_5001_xml_20210712',
+    uris = [
+        # ('https://sparql2.goldenagents.org/ecartico', ''),
+        # ('https://sparql2.goldenagents.org/onstage', ''),
+        # ('https://sparql2.goldenagents.org/stcn', ''),
+        ('https://sparql.goldenagents.org/', '')
     ]
 
     # loop over graph_uris
-    for graph in default_graphs:
-        print(graph, '\n')
-        ent_res = sparql_query(ENT_QUERY, graph)
+    for uri in uris:
+        print(uri[0], '\n')
+        ent_res = sparql_query(ENT_QUERY, uri)
 
-        # loop over entities
-        for e in ent_res:
-            # and store entity
-            value = e['c']['value']
+        entities = []
+        for item in ent_res:
+            value = item['c']['value']
+            if '/ontology/' in value:
+                entities.append(item)
 
-            if valid_entity(value):
-                print(value)
-                ent_summary = insert_entity(conn, e)
+        for ent in entities:
+            # store entity
+            ent_summary = insert_entity(conn, ent)
 
-                # sparql query to find properties 
-                # of this entity
-                prop_query = PROP_QUERY.replace(
-                    '<ENTITY_URI>',
-                    f'<{value}>'
-                )
-                prop_res = sparql_query(prop_query)
-                print(len(prop_res))
-                
-                # loop over properties
+            # sparql query to find properties 
+            # of this entity
+            value = ent['c']['value']
+            prop_query = PROP_QUERY.replace(
+                '<ENTITY_URI>',
+                f'<{value}>'
+            )
+            prop_res = sparql_query(prop_query, uri)
+
+            if len(prop_res) > 0 and value == 'https://data.goldenagents.org/ontology/Person':
                 for p in prop_res:
-                    p_value = p['pred']['value']
-                    # print('\t', p)
+                    print(p['pred']['value'])
+                    insert_property(conn, p, ent_summary)
 
-                    # store property
-                    if valid_property(p_value):
-                        insert_property(conn, p, ent_summary)
+                print('\n\n')
+
+
+
+
+
+        # # loop over entities
+        # for e in ent_res:
+        #     # and store entity
+        #     value = e['c']['value']
+
+        #     if valid_entity(value):
+        #         print(value)
+        #         ent_summary = insert_entity(conn, e)
+
+        #         # sparql query to find properties 
+        #         # of this entity
+        #         prop_query = PROP_QUERY.replace(
+        #             '<ENTITY_URI>',
+        #             f'<{value}>'
+        #         )
+        #         prop_res = sparql_query(prop_query, uri)
+        #         print(len(prop_res))
+                
+        #         # loop over properties
+        #         for p in prop_res:
+        #             p_value = p['pred']['value']
+        #             # print('\t', p)
+
+        #             # store property
+        #             if valid_property(p_value):
+        #                 insert_property(conn, p, ent_summary)
