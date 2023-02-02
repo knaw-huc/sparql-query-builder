@@ -9,7 +9,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
 import type {Property, Entity, ActionTypes} from './Builder';
 import {selectorTheme} from '../helpers/themes';
-import {useTranslation} from 'react-i18next';
+import {useTranslation, Trans} from 'react-i18next';
 
 interface OnChangeData {
   (
@@ -113,7 +113,12 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
         </label>
         :
         <label className={styles.label}>
-          {t('selector.propertyLabel', {parentLabel: parentLabel})}
+          <Trans
+            i18nKey="selector.propertyLabel"
+            ns="querybuilder"
+            values={{ parentLabel: parentLabel}}
+            components={{bold: <strong />}}
+          />
         </label>
       }
       <Select 

@@ -3,59 +3,61 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import styles from './Topbar.module.scss';
 import Logo from "../../images/logo-ga.png";
+import {useTranslation} from 'react-i18next';
 
-export function Topbar() {
+export const Topbar = () => {
+  const {t} = useTranslation(['topbar']);
   return (
     <Navbar bg="primary" variant="light" expand="lg" className={styles.topbar}>
       <Navbar.Brand href="/" className={styles.brand}>
         <img 
           src={Logo} 
           className={styles.logo}
-          alt="Golden Agents"
-          title="Golden Agents" />
-          <span className="d-none d-sm-inline">Search the Golden Agents</span>
+          alt={t('title') as string}
+          title={t('title') as string} />
+          <span className="d-none d-sm-inline">{t('header')}</span>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" className={styles.toggler}/>
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         <Nav className={styles.nav}>
-          <NavDropdown title="About" menuVariant="dark" align="end">
+          <NavDropdown title={t('about.title') as string} menuVariant="dark" align="end">
             <NavDropdown.Item href="https://ga.sd.di.huc.knaw.nl/">
-              About this tool
+              {t('about.dropdown.item1')}
             </NavDropdown.Item>
             <NavDropdown.Item href="https://ga-wp3.sd.di.huc.knaw.nl/">
-              About the Golden Agents project
+              {t('about.dropdown.item2')}
             </NavDropdown.Item>
             <NavDropdown.Item href="https://www.goldenagents.org/">
-              Visit goldenagents.org
+              {t('about.dropdown.item3')}      
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title="More tools" menuVariant="dark" align="end">
+          <NavDropdown title={t('tools.title') as string} menuVariant="dark" align="end">
             <NavDropdown.Item href="https://ga.sd.di.huc.knaw.nl/">
-              Dataset Browser
+              {t('tools.dropdown.item1')}
             </NavDropdown.Item>
             <NavDropdown.Item href="https://ga-wp3.sd.di.huc.knaw.nl/">
-              Golden Agent Search
+              {t('tools.dropdown.item2')}
             </NavDropdown.Item>
             <NavDropdown.Item href="https://lenticularlens.org/">
-              Lenticular Lens
+              {t('tools.dropdown.item3')}
             </NavDropdown.Item>
             <NavDropdown.Item href="#">
-              Analiticcl
+              {t('tools.dropdown.item4')}
             </NavDropdown.Item>
           </NavDropdown>
-          <NavDropdown title="Help" menuVariant="dark" align="end">
+          <NavDropdown title={t('help.title') as string} menuVariant="dark" align="end">
             <NavDropdown.Item href="#">
-              Watch instruction videos
+              {t('help.dropdown.item1')}
             </NavDropdown.Item>
             <NavDropdown.Item href="#">
-              Find a dataset
+              {t('help.dropdown.item2')}
             </NavDropdown.Item>
             <NavDropdown.Item href="#">
-              Documentation
+              {t('help.dropdown.item3')}
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  );
+  )
 }

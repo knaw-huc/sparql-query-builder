@@ -17,29 +17,41 @@
   "filter": {
     "labelEarlier": "Earlier than",
     "labelSmaller": "Smaller than",
-    "labelExact": "Exactly",
+    "labelExactly": "Exactly",
     "labelLater": "Later than",
     "labelLarger": "Larger than",
     "typeMap": {
-      "textLabel": "must contain this text",
-      "textPlaceholder": "Enter text to filter on...",
-      "dateLabel": "must have this date",
-      "datePlaceholder": "yyyy-mm-dd",
-      "numberLabel": "must have this number",
-      "numberPlaceholder": "Enter number...",
-      "gYearLabel": "must be in this year",
-      "gYearPlaceholder": "yyyy",
-      "gYearMonthLabel": "must be in this year and month",
-      "gYearMonthPlaceholder": "yyyy-mm",
-      "datetimeLabel": "must at this date and time",
-      "datetimePlaceholder": ""
+      "text": {
+        "label": "must contain this text",
+        "placeholder": "Enter text to filter on..."
+      },
+      "date": {
+        "label": "must have this date",
+        "placeholder": "yyyy-mm-dd"
+      },
+      "number": {
+        "label": "must have this number",
+        "placeholder": "Enter number..."
+      },
+      "gYear": {
+        "label": "must be in this year",
+        "placeholder": "yyyy"
+      },
+      "gYearMonth": {
+        "label": "must be in this year and month",
+        "placeholder": "yyyy-mm"
+      },
+      "datetime": {
+        "label": "must at this date and time",
+        "placeholder": ""
+      }
     }
   },
   "queryCookies": {
     "buildWarning": "Build a query first",
     "existsWarning": "Query already in list",
     "saved": "Query succesfully saved",
-    "loaded": "Query succesfully loaded into the code editor. Click <b>Run Query</b> to execute.",
+    "loaded": "Query succesfully loaded into the code editor. Click <strong>Run Query</strong> to execute.",
     "save": "Save Query",
     "load": "Load Query",
     "number": "Query #{{number}}",
@@ -48,7 +60,7 @@
   },
   "selector": {
     "entityLabel": "Pick an entity you wish to explore",
-    "propertyLabel": "Select properties for <strong>{{parentLabel}}</strong>",
+    "propertyLabel": "Select properties for <bold>{{parentLabel}}</bold>",
     "placeholder": "Select...",
     "error": "Something's gone wrong with fetching the data",
     "noResults": "Nothing found"

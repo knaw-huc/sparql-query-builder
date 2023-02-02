@@ -9,9 +9,6 @@ import {Filter, typeMap} from './Filter';
 import type {FilterState, FilterDataType} from './Filter';
 import {useTranslation} from 'react-i18next';
 
-// TODO: some more filters? Not only text, also data/year etc
-// split this file into chunks
-
 export type Entity = {
   label: string; // appears in the dropdown
   value: string; // this is the uri (value from c)
@@ -20,12 +17,12 @@ export type Entity = {
 
 export type Property = {
   label: string; // appears in the dropdown
-  value: string; // this is the uri, or filter
+  value: string; // this is the uri or filter
   uuid: string; // unique id/key for use in array map
-  additionalFilter?: string; // for date/number filtering 
   ot?: string; // value of ot
   propertyType?: string;
   dataType?: string; // derived from optional dt
+  additionalFilter?: string; // for date/number filtering 
   labelForQuery?: string; // value that gets passed as a label to the sparql query
 }
 
@@ -104,14 +101,14 @@ export const Builder = () => {
   }, []);
 
   const setFilter = useCallback((filter: FilterState, level: number, propertyArrayIndex: number, dataType: FilterDataType) => {    
-    setSelectedProperties((oldProperties) => {
+    setSelectedProperties(oldProperties => {
       const newProperty = filter.value !== '' ? 
         [...oldProperties[propertyArrayIndex].slice(0, level), ...[{
           label: '',
           value: filter.value,
           dataType: dataType + 'Filter',
           uuid: '',
-          additionalFilter: filter.select!.value,
+          equalityOperator: filter.select!.value,
         }]] 
         :
         [...oldProperties[propertyArrayIndex].slice(0, level)];
@@ -142,7 +139,7 @@ export const Builder = () => {
       }
       {selectedProperties.map((propertyArray, i) =>
         ((propertyArray[0].dataType !== undefined && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
-        // No need to show anything if there's no OT or filterable datatype
+        // Only show this if there's an OT or filterable datatype
         <div 
           key={`group-${propertyArray[0].uuid}`}
           className={styles.propertyGroup}>

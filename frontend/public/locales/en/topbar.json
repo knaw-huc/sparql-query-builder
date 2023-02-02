@@ -1,0 +1,29 @@
+{
+  "title": "Golden Agents",
+  "header": "Search the Golden Agents",
+  "about": {
+    "title": "About",
+    "dropdown": {
+      "item1":"About this tool",
+      "item2":"About the Golden Agents project",
+      "item3":"Visit goldenagents.org"
+    }
+  },
+  "tools": {
+    "title": "More tools",
+    "dropdown": {
+      "item1":"Dataset Browser",
+      "item2":"Golden Agent Search",
+      "item3":"Lenticular Lens",
+      "item4":"Analiticcl"
+    }
+  },
+  "help": {
+    "title": "Help",
+    "dropdown": {
+      "item1":"Watch instruction videos",
+      "item2":"Find a dataset",
+      "item3":"Documentation"
+    }
+  }
+}

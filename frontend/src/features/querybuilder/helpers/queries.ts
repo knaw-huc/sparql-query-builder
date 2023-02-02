@@ -35,25 +35,26 @@ export const propertyQuery = (schema: string) => `
 `;
 
 // Get filter value
-const getFilterValue = (filterType: string, labelForQuery: string, value: string, additionalFilter: string) => {
+const getFilterValue = (filterType: string, labelForQuery: string, value: string, equalityOperator: string) => {
   switch(filterType) {
     case 'stringFilter':
       return `FILTER(CONTAINS(LCASE(?${labelForQuery}), "${value.toLowerCase()}"))`;
     case 'dateFilter':
-      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:date)`;
+      return `FILTER(?${labelForQuery} ${equalityOperator} "${value}"^^xsd:date)`;
     case 'integerFilter':
-      return `FILTER(?${labelForQuery} ${additionalFilter} ${value})`;
+      return `FILTER(?${labelForQuery} ${equalityOperator} ${value})`;
     case 'gYearFilter':
-      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:gYear)`;
+      return `FILTER(?${labelForQuery} ${equalityOperator} "${value}"^^xsd:gYear)`;
     case 'gYearMonthFilter':
-      return `FILTER(?${labelForQuery} ${additionalFilter} "${value}"^^xsd:gYearMonth)`;
+      return `FILTER(?${labelForQuery} ${equalityOperator} "${value}"^^xsd:gYearMonth)`;
+    case 'datetimeFilter':
+      return `FILTER(?${labelForQuery} ${equalityOperator} "${value}"^^xsd:dateTime)`;
     default: 
       return '';
   }
 }
 
 // Shows up in the Query code editor and gets sent to the endpoint
-// Ugly formatting here for nice formatting in the code editor
 export const resultQuery = (entity: Entity, properties: Property[][], selectedLimit: number) => {
 
   const propertyLabels = properties.map(
@@ -67,7 +68,7 @@ export const resultQuery = (entity: Entity, properties: Property[][], selectedLi
       (property, i) => property.value !== '' && property.value !== undefined ?
         (property.dataType && property.dataType.indexOf('Filter') !== -1 ?
           getFilterValue(
-            property.dataType as string, 
+            property.dataType, 
             propertyPath[i-1].labelForQuery as string,
             property.value as string, 
             property.additionalFilter as string
@@ -79,6 +80,7 @@ export const resultQuery = (entity: Entity, properties: Property[][], selectedLi
     ).join('\n  ')
   ).join('\n  ');
 
+  // Ugly formatting here for nice formatting in the code editor
   return (
     !entity ? '' :  
 `SELECT ?${entity.label} ${propertyLabels}
