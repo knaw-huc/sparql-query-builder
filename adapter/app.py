@@ -222,6 +222,7 @@ def sparql():
                 data=query,
                 params={ 'format': format }
             )
+            print(backend_response.text)
             response.set_data(backend_response._content)
 
         else:

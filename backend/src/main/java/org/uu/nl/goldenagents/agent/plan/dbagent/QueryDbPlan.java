@@ -109,6 +109,7 @@ public class QueryDbPlan extends MessagePlan  {
 				handleEmptyModel();
 			} else {
 				// Results found. Send as next batch to broker agent
+				model.write(System.out, "TURTLE");
 				sendResults(model);
 			}
 		} catch (Exception e) {
