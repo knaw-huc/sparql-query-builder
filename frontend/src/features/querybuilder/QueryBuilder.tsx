@@ -17,6 +17,9 @@ import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSl
 import {addNotification} from '../notifications/notificationsSlice';
 import {selectedDatasets} from '../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
+import {useRefetchErroredQueryMutation, selectCurrentResults} from '../sparql/sparqlApi';
+
+// TODO: make query firing consistent. Now whn loading a saved query, it gets executed right away if old results are already shown
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
@@ -26,9 +29,15 @@ export function QueryBuilder() {
   const dispatch = useAppDispatch();
   const dataSetEnabled = typeof process.env.REACT_APP_DATASETS_API !== 'undefined';
   const {t} = useTranslation(['querybuilder']);
+  const [refetch] = useRefetchErroredQueryMutation();
+
+  const currentQueryState = selectCurrentResults.useQueryState({
+    query: currentQuery, 
+    datasets: currentDatasets
+  });
 
   function sendQuery() {
-    if (currentQuery === sentQuery || !currentQuery) {
+    if ((currentQuery === sentQuery || !currentQuery) && !currentQueryState.isError) {
       dispatch(addNotification({
         message: !currentQuery ? t('queryBuilder.createQueryWarning') : t('queryBuilder.resultsShownWarning'),
         type: 'warning',
@@ -42,7 +51,8 @@ export function QueryBuilder() {
       }));
     }
     else {
-      dispatch(setSentQuery(currentQuery))
+      currentQueryState.isError && refetch();
+      dispatch(setSentQuery(currentQuery));
     }
   }
 

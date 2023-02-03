@@ -4,12 +4,16 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {useCookies} from 'react-cookie';
 import styles from './QueryCookies.module.scss';
 import {useAppSelector, useAppDispatch} from '../../../app/hooks';
-import {selectActiveQuery, setActiveQuery} from '../queryBuilderSlice';
+import {selectActiveQuery, setActiveQuery, setSelectedEntity, setSelectedProperties, selectSelectedEntity, selectSelectedProperties} from '../queryBuilderSlice';
+import {defaultSelectionObject} from './Builder';
 import {addNotification} from '../../notifications/notificationsSlice';
 import moment from 'moment';
 import {setSelectedDatasets, selectedDatasets} from '../../datasets/datasetsSlice';
 import type {Dataset} from '../../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
+
+// TODO: load query must reset query builder, qb behaviour when switchign tabs??
+// Save QB to cookie? What happens when typing? Which one gets saved?
 
 export interface QueryCookieObject {
   query: string;
@@ -33,6 +37,8 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   const [cookies, setCookie] = useCookies(['querylist']);
   const currentQuery = useAppSelector(selectActiveQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
+  const selectedEntity = useAppSelector(selectSelectedEntity);
+  const selectedProperties = useAppSelector(selectSelectedProperties);
   const dispatch = useAppDispatch();
   const {t} = useTranslation(['querybuilder']);
 
@@ -55,7 +61,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
       return;
     }
 
-    if (newList.filter((q: QueryCookieObject) => q.query === currentQuery).length > 0) {
+    if (newList.filter((q: QueryCookieObject) => q.query === currentQuery && q.datasets === currentDatasets).length > 0) {
       dispatch(
         addNotification({
           message: t('queryCookies.existsWarning'),
@@ -86,6 +92,10 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   }
 
   function onLoad(query: QueryCookieObject) {
+    // Reset the query builder?
+    // dispatch(setSelectedEntity(defaultSelectionObject));
+    // dispatch(setSelectedProperties([]));
+    // Then load the query
     dispatch(setActiveQuery(query.query));
     dispatch(setSelectedDatasets(query.datasets));
     dispatch(
@@ -116,7 +126,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
               <Dropdown.Item 
                 key={`query-${i}`} 
                 onClick={() => onLoad(query) }
-                className={currentQuery === query.query ? styles.loadQueryItemActive : styles.loadQueryItem}
+                className={currentQuery === query.query && currentDatasets === query.datasets ? styles.loadQueryItemActive : styles.loadQueryItem}
               >
                 <div>
                   <span className={styles.cookieQueryHeader}>{t('queryCookies.number', {number: i + 1})}</span>

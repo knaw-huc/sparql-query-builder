@@ -6,6 +6,8 @@ import {useAppSelector, useAppDispatch} from '../../../app/hooks';
 import {setActiveQuery, selectActiveQuery} from '../queryBuilderSlice';
 import {useTranslation} from 'react-i18next';
 
+// TODO: Should typing here reset the QB?
+
 export function Editor() {
   const query = useAppSelector(selectActiveQuery);
   const dispatch = useAppDispatch();

@@ -24,6 +24,7 @@ const dynamicBaseQuery = fetchBaseQuery({
 export const sparqlApi = createApi({
   reducerPath: 'sparql',
   baseQuery: dynamicBaseQuery,
+  tagTypes: ['Query', 'FETCH_ERROR', 'PARSING_ERROR', 'OTHER_ERROR'],
   endpoints: (build) => ({
     // Send Sparql query to server and save results to state
     sendSparql: build.query({
@@ -40,10 +41,25 @@ export const sparqlApi = createApi({
           body: params,
         })
       },
+      providesTags: (result, error, {query, datasets}) => 
+        result ?
+        [{type:'Query', query: query, datasets: datasets}] :
+        error?.status === 'FETCH_ERROR' ?
+        ['FETCH_ERROR'] :
+        error?.status === 'PARSING_ERROR' ?
+        ['PARSING_ERROR'] :
+        ['OTHER_ERROR']
+    }),
+    refetchErroredQuery: build.mutation<null, void>({
+      queryFn: () => ({ data: null }),
+      invalidatesTags: ['FETCH_ERROR', 'OTHER_ERROR'],
     }),
   }),
 });
 
 export const {
   useSendSparqlQuery,
+  useRefetchErroredQueryMutation,
 } = sparqlApi;
+
+export const selectCurrentResults = sparqlApi.endpoints.sendSparql;

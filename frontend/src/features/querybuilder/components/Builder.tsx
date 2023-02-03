@@ -1,7 +1,15 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {useAppDispatch} from '../../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import update from 'immutability-helper';
-import {setActiveQuery} from '../queryBuilderSlice';
+import {
+  setActiveQuery, 
+  setSelectedEntity, 
+  setSelectedProperties, 
+  setSelectedLimit,
+  selectSelectedEntity,
+  selectSelectedProperties,
+  selectSelectedLimit,
+} from '../queryBuilderSlice';
 import styles from './Builder.module.scss';
 import * as queries from '../helpers/queries';
 import Selector from './Selector';
@@ -34,14 +42,13 @@ export type ActionTypes = {
   removedValues: Property[] | Entity[];
 }
 
-const defaultSelectionObject = {label: '', value: '', uuid: ''};
+export const defaultSelectionObject = {label: '', value: '', uuid: ''};
 
 export const Builder = () => {
   const dispatch = useAppDispatch();
-
-  const [selectedEntity, setSelectedEntity] = useState<Entity>(defaultSelectionObject);
-  const [selectedProperties, setSelectedProperties] = useState<Property[][]>([]);
-  const [selectedLimit, setSelectedLimit] = useState<number>(1000);
+  const selectedEntity = useAppSelector(selectSelectedEntity);
+  const selectedProperties = useAppSelector(selectSelectedProperties);
+  const selectedLimit = useAppSelector(selectSelectedLimit);
   const {t} = useTranslation(['querybuilder']);
 
   // Set query in code editor when one of these values changes
@@ -51,13 +58,13 @@ export const Builder = () => {
   }, [selectedEntity, selectedProperties, dispatch, selectedLimit]);
 
   // Keep track of selections and set tree accordingly
-  const setEntity = useCallback((data: Entity) => {
-    setSelectedEntity(data ? data : defaultSelectionObject);
+  const setEntity = (data: Entity) => {
+    dispatch(setSelectedEntity(data ? data : defaultSelectionObject));
     // reset properties
-    setSelectedProperties([]);
-  }, []);
+    dispatch(setSelectedProperties([]));
+  }
 
-  const setProperties = useCallback((data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
+  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
     // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
     // Keep track of these arrays using the propertyArrayIndex (index # of parent array) and level (index # of object being selected)
     switch(changedValue.action) {
@@ -65,13 +72,13 @@ export const Builder = () => {
         // add new value to state, or change existing value
         if (propertyArrayIndex === undefined) {
           // first property, so new property tree
-          setSelectedProperties(oldProperties => [...oldProperties, [changedValue.option as Property]]);
+          dispatch(setSelectedProperties([...selectedProperties, [changedValue.option as Property]]));
         }
         else {
           // add or change existing property tree
-          setSelectedProperties(oldProperties => 
-            update(oldProperties, {[propertyArrayIndex]: {$set: [...oldProperties[propertyArrayIndex].slice(0, level), data]}})
-          );
+          dispatch(setSelectedProperties( 
+            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level), data]}})
+          ));
         }
         break;
 
@@ -79,43 +86,26 @@ export const Builder = () => {
         // clear: pressing the X in selectbox
         if (propertyArrayIndex === undefined) {
           // reset all if entity properties are cleared
-          setSelectedProperties([]);
+          dispatch(setSelectedProperties([]));
         }
         else {
           // single selection for sub-properties, just remove object from array tree
-          setSelectedProperties(oldProperties => 
-            update(oldProperties, {[propertyArrayIndex]: {$set: [...oldProperties[propertyArrayIndex].slice(0, level)]}})
-          );
+          dispatch(setSelectedProperties(
+            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level)]}})
+          ));
         }
         break;
 
       case 'remove-value':
         // Only for multiselect, remove individual values
-        setSelectedProperties(oldProperties => 
-          update(oldProperties, {$splice: [[oldProperties.findIndex(oldPropArr => 
-            oldPropArr.some(oldProp => changedValue.removedValue!.uuid === oldProp.uuid)), 1]]}
+        dispatch(setSelectedProperties(
+          update(selectedProperties, {$splice: [[selectedProperties.findIndex(selectedPropArr => 
+            selectedPropArr.some(selectedProp => changedValue.removedValue!.uuid === selectedProp.uuid)), 1]]}
           )
-        );
+        ));
         break;
     }
-  }, []);
-
-  const setFilter = useCallback((filter: FilterState, level: number, propertyArrayIndex: number, dataType: FilterDataType) => {    
-    setSelectedProperties(oldProperties => {
-      const newProperty = filter.value !== '' ? 
-        [...oldProperties[propertyArrayIndex].slice(0, level), ...[{
-          label: '',
-          value: filter.value,
-          dataType: dataType + 'Filter',
-          uuid: '',
-          equalityOperator: filter.select!.value,
-        }]] 
-        :
-        [...oldProperties[propertyArrayIndex].slice(0, level)];
-      const newState = update(oldProperties, {[propertyArrayIndex]: {$set: newProperty}});
-      return newState;
-    });
-  }, []);
+  }
 
   return (
     <div className={styles.builder}>
@@ -138,7 +128,7 @@ export const Builder = () => {
           value={selectedProperties.map( (property) => property[0] )} />
       }
       {selectedProperties.map((propertyArray, i) =>
-        ((propertyArray[0].dataType !== undefined && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
+        ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
         // Only show this if there's an OT or filterable datatype
         <div 
           key={`group-${propertyArray[0].uuid}`}
@@ -163,7 +153,6 @@ export const Builder = () => {
                 level={j+1}
                 label={property.label}
                 propertyArrayIndex={i}
-                onChange={setFilter}
                 dataType={property.dataType}
                 value={selectedProperties[i][j+1]?.value} />
             ]
@@ -175,7 +164,7 @@ export const Builder = () => {
         <input 
           className={styles.limitInput} 
           type="number" value={selectedLimit} 
-          onChange={e => setSelectedLimit(parseInt(e.target.value) || 1000)}
+          onChange={e => dispatch(setSelectedLimit(parseInt(e.target.value) || 1000))}
         />
       </div>
     </div>

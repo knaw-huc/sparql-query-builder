@@ -10,8 +10,10 @@ import {setSelectedDatasets, selectedDatasets} from './datasetsSlice';
 import type {Dataset} from './datasetsSlice';
 import {FadeDiv} from '../animations/Animations';
 import {useTranslation} from 'react-i18next';
+import {Tip} from '../tooltip/Tooltip';
+import InfoCircle from "../../images/circle-info-solid.svg";
 
-export function Datasets() {
+export const Datasets = () => {
   const {data, isFetching, isError} = useGetDatasetsQuery(undefined);
   const currentDatasets = useAppSelector(selectedDatasets);
   const dispatch = useAppDispatch();
@@ -45,16 +47,22 @@ export function Datasets() {
                   <Card.Title as="h6">{t('select')}</Card.Title>
                   <Form>
                     {data.map((set: Dataset) => (
-                      <Form.Check 
-                        checked={currentDatasets.some( (s: Dataset) => s.id === set.id)}
-                        key={set.id} 
-                        type="switch"
-                        id={set.id}
-                        value={set.id}
-                        name={set.name}
-                        label={set.name}
-                        onChange={() => toggleDataset(set)}
-                      />
+                      <div key={set.id} className={styles.dataset}>
+                        <Form.Check 
+                          checked={currentDatasets.some((s: Dataset) => s.id === set.id)}
+                          type="switch"
+                          id={set.id}
+                          value={set.id}
+                          name={set.name}
+                          label={set.name}
+                          onChange={() => toggleDataset(set)}
+                        />
+                        <Tip 
+                          id={set.id}
+                          content="TODO via API: hier kort wat content over wat deze dataset is"
+                          triggerElement={<img src={InfoCircle} className={styles.info} alt=""/>}
+                        />
+                      </div>
                     ))}
                   </Form>
                 </>

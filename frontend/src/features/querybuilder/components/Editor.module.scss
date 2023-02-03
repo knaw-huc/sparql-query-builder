@@ -1,3 +1,10 @@
 .header {
   margin: 1rem 0;
 }
+
+:global {
+  .cm-editor {
+    border-radius: 3px;
+    overflow: hidden;
+  }
+}

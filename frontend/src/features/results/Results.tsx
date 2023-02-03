@@ -26,7 +26,6 @@ export function Results() {
   const [filterText, setFilterText] = useState('');
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
   const {t} = useTranslation(['results']);
-
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectedDatasets);
 
@@ -37,13 +36,11 @@ export function Results() {
     skip: !currentQuery,
   });
 
-  console.log(error)
-
   // makes sure results scroll into view when new results are available/query has been run
   const resultsRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     resultsRef.current && resultsRef.current.scrollIntoView()
-  }, [data, isError])
+  }, [currentQuery, isError])
 
   // Get table headers from returned JSON. 
   // Some basic cell formatting.

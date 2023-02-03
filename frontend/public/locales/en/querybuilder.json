@@ -21,7 +21,7 @@
     "labelLater": "Later than",
     "labelLarger": "Larger than",
     "typeMap": {
-      "text": {
+      "string": {
         "label": "must contain this text",
         "placeholder": "Enter text to filter on..."
       },
@@ -54,8 +54,8 @@
     "loaded": "Query succesfully loaded into the code editor. Click <strong>Run Query</strong> to execute.",
     "save": "Save Query",
     "load": "Load Query",
-    "number": "Query #{{number}}",
-    "savedOn": "Saved on {{datetime}}",
+    "number": "Query #{{number}} saved on",
+    "savedOn": "{{datetime}}",
     "empty": "No saved queries"
   },
   "selector": {

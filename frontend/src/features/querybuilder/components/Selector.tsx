@@ -70,7 +70,7 @@ const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiS
 
   const {t} = useTranslation(['querybuilder']);
 
-  console.log(results)
+  // console.log(results)
 
   // Reformat results
   const resultsOptions = results && 

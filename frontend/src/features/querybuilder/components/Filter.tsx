@@ -1,20 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
 import type {SingleValue} from 'react-select';
+import update from 'immutability-helper';
 import styles from './Filter.module.scss';
 import {selectorTheme} from '../helpers/themes';
 import {useTranslation} from 'react-i18next';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
+import {setSelectedProperties, selectSelectedProperties} from '../queryBuilderSlice';
 
 export type FilterDataType = string; // possibly narrow this down later on, depending on the data types we might get
-
-interface OnChangeFilter {
-  (filter: FilterState, level: number, propertyArrayIndex: number, dataType: FilterDataType): void;
-}
 
 type DataTypeProps = {
   level: number;
   propertyArrayIndex: number;
-  onChange: OnChangeFilter;
   dataType: FilterDataType;
   value: string;
   label: string;
@@ -30,40 +28,18 @@ export type FilterState = {
   select: SingleValue<SelectOption>;
 }
 
-export const typeMap: {[key: string]: {input: string; label: string; placeholder: string}} = {
-  string: {
-    input: 'text',
-    label: 'must contain this text',
-    placeholder: 'Enter text to filter on...',
-  },
-  date: {
-    input: 'date',
-    label: 'must have this date',
-    placeholder: 'yyyy-mm-dd',
-  },
-  integer: {
-    input: 'number',
-    label: 'must have this number',
-    placeholder: 'Enter number...',
-  },
-  gYear: {
-    input: 'number',
-    label: 'must be in this year',
-    placeholder: 'yyyy',
-  },
-  gYearMonth: {
-    input: 'month',
-    label: 'must be in this year and month',
-    placeholder: 'yyyy-mm',
-  },
-  datetime: {
-    input: 'datetime-local',
-    label: 'must at this date and time',
-    placeholder: '',
-  },
+export const typeMap: {[key: string]: string;} = {
+  string: 'text',
+  date: 'date',
+  integer: 'number',
+  gYear: 'number',
+  gYearMonth: 'month',
+  datetime: 'datetime-local',
 }
 
-export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, label}: DataTypeProps) => {
+export const Filter = ({level, propertyArrayIndex, dataType, value, label}: DataTypeProps) => {
+  const dispatch = useAppDispatch();
+  const selectedProperties = useAppSelector(selectSelectedProperties);
   const {t} = useTranslation(['querybuilder']);
   const options = [
     {value: '<', label: ['gYear', 'gYearMonth', 'date'].includes(dataType) ? t('filter.labelEarlier') : t('filter.labelSmaller')},
@@ -72,9 +48,24 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
   ];
   const [currentFilter, setCurrentFilter] = useState<FilterState>({value: '', select: options[1]});
 
+  const setFilter = () => { 
+    const newProperty = currentFilter.value !== '' ? 
+      [...selectedProperties[propertyArrayIndex].slice(0, level), ...[{
+        label: '',
+        value: currentFilter.value,
+        dataType: dataType + 'Filter',
+        uuid: '',
+        equalityOperator: currentFilter.select!.value,
+      }]] 
+      :
+      [...selectedProperties[propertyArrayIndex].slice(0, level)];
+    const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newProperty}});   
+    dispatch(setSelectedProperties(newState));
+  }
+
   useEffect(() => {
-    onChange(currentFilter, level, propertyArrayIndex, dataType)
-  }, [onChange, currentFilter, level, propertyArrayIndex, dataType]);
+    setFilter()
+  }, [currentFilter]);
 
   return (
     <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
@@ -89,7 +80,7 @@ export const Filter = ({level, propertyArrayIndex, onChange, dataType, value, la
             theme={selectorTheme} />
         }
         <input 
-          type={typeMap[dataType].input} 
+          type={typeMap[dataType]} 
           className={styles.textInput} 
           placeholder={t(`filter.typeMap.${dataType}.placeholder`) as string}
           value={currentFilter.value}

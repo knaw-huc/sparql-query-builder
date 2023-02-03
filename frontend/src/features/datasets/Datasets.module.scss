@@ -2,3 +2,20 @@
   margin-bottom: 2rem;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
 }
+
+.dataset {
+  display: flex;
+  align-items: center;
+
+  :global {
+    input,
+    label {
+      cursor: pointer;
+    }
+  }
+}
+
+.info {
+  width: 1rem;
+  margin-left: 0.5rem;
+}
