@@ -15,7 +15,7 @@ import {QueryCookies} from './components/QueryCookies';
 import {Datasets} from '../datasets/Datasets';
 import {selectActiveQuery, selectSentQuery, setSentQuery} from './queryBuilderSlice';
 import {addNotification} from '../notifications/notificationsSlice';
-import {selectedDatasets} from '../datasets/datasetsSlice';
+import {selectSelectedDatasets, selectSentDatasets, setSentDatasets} from '../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
 import {useRefetchErroredQueryMutation, selectCurrentResults} from '../sparql/sparqlApi';
 
@@ -25,7 +25,8 @@ export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
   const currentQuery = useAppSelector(selectActiveQuery);
   const sentQuery = useAppSelector(selectSentQuery);
-  const currentDatasets = useAppSelector(selectedDatasets);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
+  const sentDatasets = useAppSelector(selectSentDatasets);
   const dispatch = useAppDispatch();
   const dataSetEnabled = typeof process.env.REACT_APP_DATASETS_API !== 'undefined';
   const {t} = useTranslation(['querybuilder']);
@@ -37,7 +38,11 @@ export function QueryBuilder() {
   });
 
   function sendQuery() {
-    if ((currentQuery === sentQuery || !currentQuery) && !currentQueryState.isError) {
+    if (
+      ((currentQuery === sentQuery || !currentQuery) ||
+      (currentQuery === sentQuery && currentDatasets === sentDatasets)) &&
+      !currentQueryState.isError
+      ) {
       dispatch(addNotification({
         message: !currentQuery ? t('queryBuilder.createQueryWarning') : t('queryBuilder.resultsShownWarning'),
         type: 'warning',
@@ -53,6 +58,7 @@ export function QueryBuilder() {
     else {
       currentQueryState.isError && refetch();
       dispatch(setSentQuery(currentQuery));
+      dataSetEnabled && dispatch(setSentDatasets(currentDatasets));
     }
   }
 
@@ -97,7 +103,7 @@ export function QueryBuilder() {
                 {t('queryBuilder.sendQuery')}
               </Button>
             </ButtonGroup>
-            <QueryCookies setKey={() => setKey('editor')} />
+            <QueryCookies setKey={setKey} />
           </ButtonToolbar>
         </Col>
         {dataSetEnabled &&

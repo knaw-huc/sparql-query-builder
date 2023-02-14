@@ -6,7 +6,7 @@ import {useGetDatasetsQuery} from './datasetsApi';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {AnimatePresence} from 'framer-motion';
 import Spinner from 'react-bootstrap/Spinner';
-import {setSelectedDatasets, selectedDatasets} from './datasetsSlice';
+import {setSelectedDatasets, selectSelectedDatasets} from './datasetsSlice';
 import type {Dataset} from './datasetsSlice';
 import {FadeDiv} from '../animations/Animations';
 import {useTranslation} from 'react-i18next';
@@ -15,7 +15,7 @@ import InfoCircle from "../../images/circle-info-solid.svg";
 
 export const Datasets = () => {
   const {data, isFetching, isError} = useGetDatasetsQuery(undefined);
-  const currentDatasets = useAppSelector(selectedDatasets);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
   const dispatch = useAppDispatch();
   const {t} = useTranslation(['datasets']);
 
@@ -24,7 +24,7 @@ export const Datasets = () => {
     data?.length > 0 && dispatch(setSelectedDatasets(data));
   }, [data, dispatch]);
 
-  function toggleDataset(set: Dataset){
+  function toggleDataset(set: Dataset) {
     const filteredSets = currentDatasets.filter( (activeSet: Dataset) => activeSet.id !== set.id);
     dispatch(setSelectedDatasets(filteredSets.length < currentDatasets.length ? filteredSets : currentDatasets.concat(set)))
   }

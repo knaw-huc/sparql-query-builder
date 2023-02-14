@@ -4,7 +4,7 @@ import Select, {components, OptionProps} from 'react-select';
 import {useAppSelector} from '../../../app/hooks';
 import * as queries from '../helpers/queries';
 import {useSendSparqlQuery} from '../../sparql/sparqlApi';
-import {selectedDatasets} from '../../datasets/datasetsSlice';
+import {selectSelectedDatasets} from '../../datasets/datasetsSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
 import type {Property, Entity, ActionTypes} from './Builder';
@@ -29,7 +29,7 @@ type SelectorProps = {
   multiSelect: boolean;
   level?: number;
   propertyArrayIndex?: number;
-  value?: Property[] | Property;
+  value?: Property[] | Property | Entity | string;
 }
 
 // as returned by a sparql db
@@ -59,7 +59,7 @@ type PropertyData = {
 }
 
 const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, propertyArrayIndex, value}: SelectorProps) => {
-  const currentDatasets = useAppSelector(selectedDatasets);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
 
   const {data, isFetching, isError} = useSendSparqlQuery({
     query: type === 'entity' ? queries.entityQuery : queries.propertyQuery(parentUri as string), 

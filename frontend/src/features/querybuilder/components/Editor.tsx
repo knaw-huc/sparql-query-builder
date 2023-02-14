@@ -15,7 +15,8 @@ export function Editor() {
 
   return (
     <div>
-      <h5 className={styles.header}>{t('editor.header', {ns: 'querybuilder'})}</h5>
+      <h5 className={styles.header}>{t('editor.header')}</h5>
+      <p className={styles.note}>{t('editor.note')}</p>
       <CodeMirror
         value={query}
         height="20rem"

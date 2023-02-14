@@ -12,7 +12,7 @@ import styles from './Results.module.scss';
 import {useSendSparqlQuery} from '../sparql/sparqlApi';
 import {useAppSelector} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
-import {selectedDatasets} from '../datasets/datasetsSlice';
+import {selectSentDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
 import {FadeDiv, SlideDiv} from '../animations/Animations';
 import './DataTableTheme';
@@ -27,7 +27,7 @@ export function Results() {
   const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
   const {t} = useTranslation(['results']);
   const currentQuery = useAppSelector(selectSentQuery);
-  const currentDatasets = useAppSelector(selectedDatasets);
+  const currentDatasets = useAppSelector(selectSentDatasets);
 
   const {data, isFetching, isError, error} = useSendSparqlQuery({
     query: currentQuery, 
@@ -40,7 +40,7 @@ export function Results() {
   const resultsRef = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     resultsRef.current && resultsRef.current.scrollIntoView()
-  }, [currentQuery, isError])
+  }, [data, isError])
 
   // Get table headers from returned JSON. 
   // Some basic cell formatting.

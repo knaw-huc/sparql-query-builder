@@ -5,7 +5,7 @@ import styles from './Download.module.scss';
 import {useDownloadFileMutation} from './downloadApi';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
-import {selectedDatasets} from '../datasets/datasetsSlice';
+import {selectSentDatasets} from '../datasets/datasetsSlice';
 import {selectDataType, setDataType} from './downloadSlice';
 
 interface DownloadFn {
@@ -21,7 +21,7 @@ type DownloadProps = {
 
 export function Download() {
   const currentQuery = useAppSelector(selectSentQuery);
-  const currentDatasets = useAppSelector(selectedDatasets);
+  const currentDatasets = useAppSelector(selectSentDatasets);
   const dispatch = useAppDispatch();
   const activeDataType = useAppSelector(selectDataType);
 

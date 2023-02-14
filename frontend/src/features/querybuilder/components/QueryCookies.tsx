@@ -4,11 +4,20 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {useCookies} from 'react-cookie';
 import styles from './QueryCookies.module.scss';
 import {useAppSelector, useAppDispatch} from '../../../app/hooks';
-import {selectActiveQuery, setActiveQuery, setSelectedEntity, setSelectedProperties, selectSelectedEntity, selectSelectedProperties} from '../queryBuilderSlice';
-import {defaultSelectionObject} from './Builder';
+import {
+  selectActiveQuery, 
+  setActiveQuery, 
+  setSelectedEntity, 
+  setSelectedProperties, 
+  selectSelectedEntity, 
+  selectSelectedProperties,
+  setSelectedLimit,
+  selectSelectedLimit
+} from '../queryBuilderSlice';
+import {defaultSelectionObject, Entity, Property} from './Builder';
 import {addNotification} from '../../notifications/notificationsSlice';
 import moment from 'moment';
-import {setSelectedDatasets, selectedDatasets} from '../../datasets/datasetsSlice';
+import {setSelectedDatasets, selectSelectedDatasets} from '../../datasets/datasetsSlice';
 import type {Dataset} from '../../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
 
@@ -19,10 +28,13 @@ export interface QueryCookieObject {
   query: string;
   datetime: string;
   datasets: Dataset[];
+  // entity: Entity;
+  // properties: Property[][];
+  // limit: number;
 }
 
 interface QueryCookiesFn {
-  setKey: () => void;
+  setKey: (arg: string) => void;
 }
 
 /* 
@@ -36,9 +48,11 @@ interface QueryCookiesFn {
 export function QueryCookies({setKey}: QueryCookiesFn) {
   const [cookies, setCookie] = useCookies(['querylist']);
   const currentQuery = useAppSelector(selectActiveQuery);
-  const currentDatasets = useAppSelector(selectedDatasets);
-  const selectedEntity = useAppSelector(selectSelectedEntity);
-  const selectedProperties = useAppSelector(selectSelectedProperties);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
+  // Unfortunately we cannot save and set the QB from the cookie, as we're limited to 4 KB size
+  // const selectedEntity = useAppSelector(selectSelectedEntity);
+  // const selectedProperties = useAppSelector(selectSelectedProperties);
+  // const selectedLimit = useAppSelector(selectSelectedLimit);
   const dispatch = useAppDispatch();
   const {t} = useTranslation(['querybuilder']);
 
@@ -50,6 +64,9 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
         cookies.querylist :
         cookies.querylist.slice(0, -1)
       );
+
+    const now = new Date();
+    const newDate = new Date(now.getTime() + 86400000 * 14);
 
     if (!currentQuery) {
       dispatch(
@@ -78,9 +95,17 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
           query: currentQuery,
           datetime: moment().format('D-M-YYYY H:mm'),
           datasets: currentDatasets,
+          // entity: selectedEntity,
+          // properties: selectedProperties,
+          // limit: selectedLimit,
         }, 
-        ...newList],
-      {path: '/' }
+        ...newList
+      ],
+      {
+        path: '/',
+        expires: newDate,
+        sameSite: 'strict'
+      }
     );
 
     dispatch(
@@ -92,20 +117,20 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   }
 
   function onLoad(query: QueryCookieObject) {
-    // Reset the query builder?
-    // dispatch(setSelectedEntity(defaultSelectionObject));
-    // dispatch(setSelectedProperties([]));
-    // Then load the query
+    // Load the query
     dispatch(setActiveQuery(query.query));
     dispatch(setSelectedDatasets(query.datasets));
+    // dispatch(setSelectedEntity(query.entity));
+    // dispatch(setSelectedProperties(query.properties));
+    // dispatch(setSelectedLimit(query.limit));
     dispatch(
       addNotification({
         message: t('queryCookies.loaded'),
         type: 'info',
       })
     );
-    // Change tab view to code editor, as we're not setting query builder blocks
-    setKey();
+    // Change tab view to editor
+    setKey('editor');
   }
 
   return (

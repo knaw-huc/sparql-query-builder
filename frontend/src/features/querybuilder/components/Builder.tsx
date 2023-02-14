@@ -9,6 +9,7 @@ import {
   selectSelectedEntity,
   selectSelectedProperties,
   selectSelectedLimit,
+  selectActiveQuery,
 } from '../queryBuilderSlice';
 import styles from './Builder.module.scss';
 import * as queries from '../helpers/queries';
@@ -16,6 +17,8 @@ import Selector from './Selector';
 import {Filter, typeMap} from './Filter';
 import type {FilterState, FilterDataType} from './Filter';
 import {useTranslation} from 'react-i18next';
+import {AnimatePresence} from 'framer-motion';
+import {FadeDiv} from '../../animations/Animations';
 
 export type Entity = {
   label: string; // appears in the dropdown
@@ -46,16 +49,20 @@ export const defaultSelectionObject = {label: '', value: '', uuid: ''};
 
 export const Builder = () => {
   const dispatch = useAppDispatch();
+  const currentQuery = useAppSelector(selectActiveQuery);
   const selectedEntity = useAppSelector(selectSelectedEntity);
   const selectedProperties = useAppSelector(selectSelectedProperties);
   const selectedLimit = useAppSelector(selectSelectedLimit);
   const {t} = useTranslation(['querybuilder']);
+  const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedLimit);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
-    const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedLimit);
     dispatch(setActiveQuery(selectedEntity.value ? theQuery : ''));
-  }, [selectedEntity, selectedProperties, dispatch, selectedLimit]);
+  }, [selectedEntity, dispatch, theQuery]);
+
+  // Keep track of sync between QB and Editor
+  const isSynced = theQuery === currentQuery || !currentQuery;
 
   // Keep track of selections and set tree accordingly
   const setEntity = (data: Entity) => {
@@ -110,11 +117,13 @@ export const Builder = () => {
   return (
     <div className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
+      {!isSynced && <p className={styles.warning}>{t('builder.warning')}</p>}
 
       <Selector 
         onChange={setEntity}
         type="entity"
-        multiSelect={false} />
+        multiSelect={false}
+        value={selectedEntity.label ? selectedEntity : ''} />
 
       {selectedEntity.value.length > 0 &&
         <Selector

@@ -9,10 +9,12 @@
   },
   "builder": {
     "header": "Build your query",
+    "warning": "You've made changes to the Editor. Making changes to the Query Builder will reset the editor.",
     "limit": "Limit results to"
   },
   "editor": {
-    "header": "Manually edit your Sparql code"
+    "header": "Manually edit your Sparql code",
+    "note": "Note that typing here will invalidate the Query Builder"
   },
   "filter": {
     "labelEarlier": "Earlier than",
@@ -29,7 +31,7 @@
         "label": "must have this date",
         "placeholder": "yyyy-mm-dd"
       },
-      "number": {
+      "integer": {
         "label": "must have this number",
         "placeholder": "Enter number..."
       },

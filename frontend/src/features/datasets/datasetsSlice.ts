@@ -7,11 +7,13 @@ export type Dataset = {
 }
 
 export type DatasetsState = {
-  sets: Dataset[];
+  selectedSets: Dataset[];
+  sentSets: Dataset[];
 }
 
 const initialState: DatasetsState = {
-  sets: [],
+  selectedSets: [],
+  sentSets: [],
 };
 
 export const datasetsSlice = createSlice({
@@ -20,13 +22,17 @@ export const datasetsSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     setSelectedDatasets: (state, action: PayloadAction<Dataset[]>) => {
-      state.sets = action.payload;
+      state.selectedSets = action.payload;
+    },
+    setSentDatasets: (state, action: PayloadAction<Dataset[]>) => {
+      state.sentSets = action.payload;
     },
   },
 });
 
-export const {setSelectedDatasets} = datasetsSlice.actions;
+export const {setSelectedDatasets, setSentDatasets} = datasetsSlice.actions;
 
-export const selectedDatasets = (state: RootState) => state.selectedDatasets.sets;
+export const selectSelectedDatasets = (state: RootState) => state.selectedDatasets.selectedSets;
+export const selectSentDatasets = (state: RootState) => state.selectedDatasets.sentSets;
 
 export default datasetsSlice.reducer;

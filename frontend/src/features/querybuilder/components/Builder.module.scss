@@ -7,6 +7,15 @@
   margin: 1rem 0;
 }
 
+.warning {
+  background: var(--bs-warning);
+  font-size: 0.8rem;
+  color: var(--bs-white);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--bs-border-radius);
+  display: inline-block;
+}
+
 .propertyGroup {
   background: var(--bs-light);
   padding: 0.5rem 1.5rem;
