@@ -1,10 +1,7 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import update from 'immutability-helper';
 import {
   setActiveQuery, 
-  setSelectedEntity, 
-  setSelectedProperties, 
   setSelectedLimit,
   selectSelectedEntity,
   selectSelectedProperties,
@@ -13,12 +10,9 @@ import {
 } from '../queryBuilderSlice';
 import styles from './Builder.module.scss';
 import * as queries from '../helpers/queries';
-import Selector from './Selector';
+import {EntitySelector, PropertySelector} from './Selector';
 import {Filter, typeMap} from './Filter';
-import type {FilterState, FilterDataType} from './Filter';
 import {useTranslation} from 'react-i18next';
-import {AnimatePresence} from 'framer-motion';
-import {FadeDiv} from '../../animations/Animations';
 
 export type Entity = {
   label: string; // appears in the dropdown
@@ -37,16 +31,6 @@ export type Property = {
   labelForQuery?: string; // value that gets passed as a label to the sparql query
 }
 
-// Type appliccable changing selectbox
-export type ActionTypes = {
-  action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
-  option?: Property | Entity;
-  removedValue?: Property | Entity;
-  removedValues: Property[] | Entity[];
-}
-
-export const defaultSelectionObject = {label: '', value: '', uuid: ''};
-
 export const Builder = () => {
   const dispatch = useAppDispatch();
   const currentQuery = useAppSelector(selectActiveQuery);
@@ -61,80 +45,20 @@ export const Builder = () => {
     dispatch(setActiveQuery(selectedEntity.value ? theQuery : ''));
   }, [selectedEntity, dispatch, theQuery]);
 
-  // Keep track of sync between QB and Editor
+  // Keep track of sync between QB and Editor. Warn user when editor is out of sync with builder.
   const isSynced = theQuery === currentQuery || !currentQuery;
-
-  // Keep track of selections and set tree accordingly
-  const setEntity = (data: Entity) => {
-    dispatch(setSelectedEntity(data ? data : defaultSelectionObject));
-    // reset properties
-    dispatch(setSelectedProperties([]));
-  }
-
-  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
-    // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
-    // Keep track of these arrays using the propertyArrayIndex (index # of parent array) and level (index # of object being selected)
-    switch(changedValue.action) {
-      case 'select-option':
-        // add new value to state, or change existing value
-        if (propertyArrayIndex === undefined) {
-          // first property, so new property tree
-          dispatch(setSelectedProperties([...selectedProperties, [changedValue.option as Property]]));
-        }
-        else {
-          // add or change existing property tree
-          dispatch(setSelectedProperties( 
-            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level), data]}})
-          ));
-        }
-        break;
-
-      case 'clear':
-        // clear: pressing the X in selectbox
-        if (propertyArrayIndex === undefined) {
-          // reset all if entity properties are cleared
-          dispatch(setSelectedProperties([]));
-        }
-        else {
-          // single selection for sub-properties, just remove object from array tree
-          dispatch(setSelectedProperties(
-            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level)]}})
-          ));
-        }
-        break;
-
-      case 'remove-value':
-        // Only for multiselect, remove individual values
-        dispatch(setSelectedProperties(
-          update(selectedProperties, {$splice: [[selectedProperties.findIndex(selectedPropArr => 
-            selectedPropArr.some(selectedProp => changedValue.removedValue!.uuid === selectedProp.uuid)), 1]]}
-          )
-        ));
-        break;
-    }
-  }
 
   return (
     <div className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
       {!isSynced && <p className={styles.warning}>{t('builder.warning')}</p>}
-
-      <Selector 
-        onChange={setEntity}
-        type="entity"
-        multiSelect={false}
-        value={selectedEntity.label ? selectedEntity : ''} />
-
+      <EntitySelector />
       {selectedEntity.value.length > 0 &&
-        <Selector
+        <PropertySelector
           key={selectedEntity.value}
-          type="property"
-          parentUri={selectedEntity.value} 
-          parentLabel={selectedEntity.label}
-          onChange={setProperties} 
+          selector={selectedEntity}
           multiSelect={true}
-          level={0}
-          value={selectedProperties.map( (property) => property[0] )} />
+          level={0} />
       }
       {selectedProperties.map((propertyArray, i) =>
         ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
@@ -144,26 +68,18 @@ export const Builder = () => {
           className={styles.propertyGroup}>
           {propertyArray.map((property, j) => [
             property.ot && 
-              <Selector
-                type="property" 
+              <PropertySelector
                 key={property.uuid}
-                parentUri={property.ot} 
-                parentLabel={property.label}
-                labelForQuery={property.labelForQuery}
-                onChange={setProperties} 
+                selector={property}
                 multiSelect={false}
                 propertyArrayIndex={i}
-                level={j+1}
-                value={selectedProperties[i][j+1]} />,
-
+                level={j+1} />,
             property.dataType && typeMap[property.dataType] &&
               <Filter 
                 key={`filter-${property.uuid}`}
                 level={j+1}
-                label={property.label}
-                propertyArrayIndex={i}
-                dataType={property.dataType}
-                value={selectedProperties[i][j+1]?.value} />
+                selector={property}
+                propertyArrayIndex={i} />
             ]
           )}
         </div>

@@ -19,7 +19,8 @@ import {selectSelectedDatasets, selectSentDatasets, setSentDatasets} from '../da
 import {useTranslation} from 'react-i18next';
 import {useRefetchErroredQueryMutation, selectCurrentResults} from '../sparql/sparqlApi';
 
-// TODO: make query firing consistent. Now whn loading a saved query, it gets executed right away if old results are already shown
+// TODO: make query firing consistent. Now whn loading a saved query, it gets executed right away if old results are already shown.
+// RECHECK with datasets enabled!
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');

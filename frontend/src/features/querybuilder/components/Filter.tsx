@@ -7,15 +7,14 @@ import {selectorTheme} from '../helpers/themes';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {setSelectedProperties, selectSelectedProperties} from '../queryBuilderSlice';
+import type {Property} from './Builder';
 
 export type FilterDataType = string; // possibly narrow this down later on, depending on the data types we might get
 
 type DataTypeProps = {
   level: number;
   propertyArrayIndex: number;
-  dataType: FilterDataType;
-  value: string;
-  label: string;
+  selector: Property;
 }
 
 type SelectOption = {
@@ -37,10 +36,11 @@ export const typeMap: {[key: string]: string;} = {
   datetime: 'datetime-local',
 }
 
-export const Filter = ({level, propertyArrayIndex, dataType, value, label}: DataTypeProps) => {
+export const Filter = ({level, propertyArrayIndex, selector}: DataTypeProps) => {
   const dispatch = useAppDispatch();
   const selectedProperties = useAppSelector(selectSelectedProperties);
   const {t} = useTranslation(['querybuilder']);
+  const dataType = selector.dataType as string;
   const options = [
     {value: '<', label: ['gYear', 'gYearMonth', 'date'].includes(dataType) ? t('filter.labelEarlier') : t('filter.labelSmaller')},
     {value: '=', label: t('filter.labelExactly')},
@@ -61,7 +61,7 @@ export const Filter = ({level, propertyArrayIndex, dataType, value, label}: Data
       [...selectedProperties[propertyArrayIndex].slice(0, level)];
     const newState = update(selectedProperties, {[propertyArrayIndex]: {$set: newProperty}});   
     dispatch(setSelectedProperties(newState));
-  }
+  };
 
   useEffect(() => {
     setFilter()
@@ -69,7 +69,7 @@ export const Filter = ({level, propertyArrayIndex, dataType, value, label}: Data
 
   return (
     <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
-      <label className={styles.label}><strong>{label}</strong> {t(`filter.typeMap.${dataType}.label`)}</label>
+      <label className={styles.label}><strong>{selector.label}</strong> {t(`filter.typeMap.${dataType}.label`)}</label>
       <div className={styles.inputWrapper}>
         {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
           <Select 

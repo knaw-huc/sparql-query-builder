@@ -56,8 +56,8 @@
     "loaded": "Query succesfully loaded into the code editor. Click <strong>Run Query</strong> to execute.",
     "save": "Save Query",
     "load": "Load Query",
-    "number": "Query #{{number}} saved on",
-    "savedOn": "{{datetime}}",
+    "entity": "Query for: {{entity}}",
+    "savedOn": "Saved on: {{datetime}}",
     "empty": "No saved queries"
   },
   "selector": {

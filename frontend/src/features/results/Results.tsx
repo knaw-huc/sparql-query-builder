@@ -24,7 +24,7 @@ type ResultsObject = {
 
 export function Results() {
   const [filterText, setFilterText] = useState('');
-  const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
   const {t} = useTranslation(['results']);
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectSentDatasets);
@@ -117,7 +117,7 @@ export function Results() {
                     columns={columns}
                     data={filteredItems}
                     pagination 
-                    paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                    paginationResetDefaultPage={resetPaginationToggle}
                     title={<h5>{t('tableHeader', {items: filteredItems.length})}</h5>}
                     subHeader
                     subHeaderComponent={headerComponentMemo}

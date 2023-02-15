@@ -1,35 +1,28 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {v4 as uuidv4} from 'uuid';
 import Select, {components, OptionProps} from 'react-select';
-import {useAppSelector} from '../../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import * as queries from '../helpers/queries';
 import {useSendSparqlQuery} from '../../sparql/sparqlApi';
 import {selectSelectedDatasets} from '../../datasets/datasetsSlice';
+import update from 'immutability-helper';
+import {
+  setSelectedEntity, 
+  setSelectedProperties, 
+  selectSelectedEntity,
+  selectSelectedProperties,
+} from '../queryBuilderSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
-import type {Property, Entity, ActionTypes} from './Builder';
+import type {Property, Entity} from './Builder';
 import {selectorTheme} from '../helpers/themes';
 import {useTranslation, Trans} from 'react-i18next';
 
-interface OnChangeData {
-  (
-    data: Property | Entity,
-    changedValue: ActionTypes, 
-    level?: number, 
-    propertyArrayIndex?: number
-  ): void;
-}
-
 type SelectorProps = {
-  onChange: OnChangeData;
-  type: 'entity' | 'property';
-  parentUri?: string;
-  parentLabel?: string;
-  labelForQuery?: string;
   multiSelect: boolean;
-  level?: number;
+  selector: Property;
+  level: number;
   propertyArrayIndex?: number;
-  value?: Property[] | Property | Entity | string;
 }
 
 // as returned by a sparql db
@@ -58,100 +51,198 @@ type PropertyData = {
   p?: never;
 }
 
-const Selector = ({onChange, type, parentUri, parentLabel, labelForQuery, multiSelect, level, propertyArrayIndex, value}: SelectorProps) => {
-  const currentDatasets = useAppSelector(selectSelectedDatasets);
+type ActionTypes = {
+  action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
+  option?: Property | Entity;
+  removedValue?: Property | Entity;
+  removedValues: Property[] | Entity[];
+}
 
+export const PropertySelector = ({multiSelect, selector, level, propertyArrayIndex}: SelectorProps) => {
+  const dispatch = useAppDispatch();
+  const selectedProperties = useAppSelector(selectSelectedProperties);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
   const {data, isFetching, isError} = useSendSparqlQuery({
-    query: type === 'entity' ? queries.entityQuery : queries.propertyQuery(parentUri as string), 
+    query: queries.propertyQuery((selector.ot || selector.value) as string), 
     datasets: currentDatasets
   });
-
   const results = data?.results.bindings;
-
   const {t} = useTranslation(['querybuilder']);
-
-  // console.log(results)
 
   // Reformat results
   const resultsOptions = results && 
-    results.map((item: EntityData | PropertyData) => {
+    results.map((item: PropertyData) => {
       const uuid = uuidv4();
-      if (type === 'entity') {
-        return {
-          label: item.l ? item.l.value : queries.getLabel(item.c!.value),
-          value: item.c!.value,
-          uuid: uuid,
-        }
+      const otLabel = item.ot && queries.getLabel(item.ot!.value);
+      const label = item.l ? item.l.value : queries.getLabel(item.pred!.value);
+      const newLabelForQuery = selector.labelForQuery ? 
+        `${selector.labelForQuery}_${label}${otLabel ? `_${otLabel}` : ''}` : 
+        `${label}${otLabel ? `_${otLabel}` : ''}`;
+      return {
+        label: `${label}${otLabel ? `: ${otLabel}` : ''}`,
+        value: item.pred!.value,
+        ot: item.ot && item.ot?.value,
+        propertyType: queries.getLabel(item.tpe!.value),
+        dataType: item.dt && queries.getLabel(item.dt!.value), 
+        labelForQuery: newLabelForQuery,
+        uuid: uuid,
       }
-      else {
-        const otLabel = item.ot && queries.getLabel(item.ot!.value);
-        const label = item.l ? item.l.value : queries.getLabel(item.pred!.value);
-        const newLabelForQuery = labelForQuery ? 
-          `${labelForQuery}_${label}${otLabel ? `_${otLabel}` : ''}` : 
-          `${label}${otLabel ? `_${otLabel}` : ''}`;
-        return {
-          label: `${label}${otLabel ? `: ${otLabel}` : ''}`,
-          value: item.pred!.value,
-          ot: item.ot && item.ot?.value,
-          propertyType: queries.getLabel(item.tpe!.value),
-          dataType: item.dt && queries.getLabel(item.dt!.value), 
-          labelForQuery: newLabelForQuery,
-          uuid: uuid,
+    }).sort((a: Property, b: Property) => 
+      a.label.toLowerCase() < b.label.toLowerCase() ? -1 : (a.label.toLowerCase() > b.label.toLowerCase() ? 1 : 0)
+    );
+
+  const setProperties = (data: Property, changedValue: ActionTypes, level?: number, propertyArrayIndex?: number) => {
+    // Properties trees are arrays within the property array: [ [{propertyObject}, {propertyObject}], [{propertyObject}] ]
+    // Keep track of these arrays using the propertyArrayIndex (index # of parent array) and level (index # of object being selected)
+    switch(changedValue.action) {
+      case 'select-option':
+        // add new value to state, or change existing value
+        if (propertyArrayIndex === undefined) {
+          // first property, so new property tree
+          dispatch(setSelectedProperties([...selectedProperties, [changedValue.option as Property]]));
         }
-      }
-    }).sort((a: Entity | Property, b: Entity | Property) => {
-      const la = a.label.toLowerCase(),
-            lb = b.label.toLowerCase();
-      return la < lb ? -1 : (la > lb ? 1 : 0)
-    });
+        else {
+          // add or change existing property tree
+          dispatch(setSelectedProperties( 
+            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level), data]}})
+          ));
+        }
+        break;
+
+      case 'clear':
+        // clear: pressing the X in selectbox
+        if (propertyArrayIndex === undefined) {
+          // reset all if entity properties are cleared
+          dispatch(setSelectedProperties([]));
+        }
+        else {
+          // single selection for sub-properties, just remove object from array tree
+          dispatch(setSelectedProperties(
+            update(selectedProperties, {[propertyArrayIndex]: {$set: [...selectedProperties[propertyArrayIndex].slice(0, level)]}})
+          ));
+        }
+        break;
+
+      case 'remove-value':
+        // Only for multiselect, remove individual values
+        dispatch(setSelectedProperties(
+          update(selectedProperties, {$splice: [[selectedProperties.findIndex(selectedPropArr => 
+            selectedPropArr.some(selectedProp => changedValue.removedValue!.uuid === selectedProp.uuid)), 1]]}
+          )
+        ));
+        break;
+    }
+  }
 
   return (
     <div style={{paddingLeft: `${level !== undefined ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
-      {type === 'entity' ?
-        <label className={styles.label}>
-          {t('selector.entityLabel')}
-        </label>
-        :
-        <label className={styles.label}>
-          <Trans
-            i18nKey="selector.propertyLabel"
-            ns="querybuilder"
-            values={{ parentLabel: parentLabel}}
-            components={{bold: <strong />}}
-          />
-        </label>
-      }
+      <label className={styles.label}>
+        <Trans
+          i18nKey="selector.propertyLabel"
+          ns="querybuilder"
+          values={{ parentLabel: selector.label}}
+          components={{bold: <strong />}}
+        />
+      </label>
       <Select 
         components={{ Option: CustomOption }}
         isOptionSelected={(option, selectValue) =>
           selectValue.some(v => 
-            (v as Property | Entity).label === (option as Property | Entity).label && 
-            (v as Property | Entity).value === (option as Property | Entity).value
+            (v as Property).label === (option as Property).label && 
+            (v as Property).value === (option as Property).value
           )
         }
         className={styles.select}
         options={resultsOptions} 
         placeholder={t('selector.placeholder')}
         isMulti={multiSelect}
-        value={value}
+        value={!propertyArrayIndex ? selectedProperties.map(property => property[0]) : selectedProperties[level][propertyArrayIndex+1]}
         isClearable={true}
-        noOptionsMessage={() => isFetching ? 
-          <Spinner
-            as="span"
-            animation="border"
-            size="sm"
-            role="status"
-            aria-hidden="true"
-          /> : 
-          ( isError ? t('selector.error') : t('selector.noResults'))
-        }
-        onChange={(data, changedValue) => onChange(data as Property | Entity, changedValue as ActionTypes, level, propertyArrayIndex)}
+        noOptionsMessage={() => <NoOptionsMessage isFetching={isFetching} isError={isError} />}
+        onChange={(data, changedValue) => setProperties(data as Property, changedValue as ActionTypes, level, propertyArrayIndex)}
         theme={selectorTheme} />
     </div>
   );
 }
 
-export default memo(Selector);
+export const defaultSelectionObject = {label: '', value: '', uuid: ''};
+
+export const EntitySelector = () => {
+  const dispatch = useAppDispatch();
+  const selectedEntity = useAppSelector(selectSelectedEntity);
+  const currentDatasets = useAppSelector(selectSelectedDatasets);
+  const {data, isFetching, isError} = useSendSparqlQuery({
+    query: queries.entityQuery, 
+    datasets: currentDatasets
+  });
+  const results = data?.results.bindings;
+  const {t} = useTranslation(['querybuilder']);
+
+  const setEntity = (data: Entity) => {
+    dispatch(setSelectedEntity(data ? data : defaultSelectionObject));
+    // reset properties
+    dispatch(setSelectedProperties([]));
+  }
+
+  // Reformat results
+  const resultsOptions = results && 
+    results.map((item: EntityData) => {
+      const uuid = uuidv4();
+      return {
+        label: item.l ? item.l.value : queries.getLabel(item.c!.value),
+        value: item.c!.value,
+        uuid: uuid,
+      }
+    }).sort((a: Entity, b: Entity) => 
+      a.label.toLowerCase() < b.label.toLowerCase() ? -1 : (a.label.toLowerCase() > b.label.toLowerCase() ? 1 : 0)
+    );
+
+  return (
+    <div>
+      <label className={styles.label}>
+        {t('selector.entityLabel')}
+      </label>
+      <Select 
+        components={{ Option: CustomOption }}
+        isOptionSelected={(option, selectValue) =>
+          selectValue.some(v => 
+            (v as Entity).label === (option as Entity).label && 
+            (v as Entity).value === (option as Entity).value
+          )
+        }
+        className={styles.select}
+        options={resultsOptions} 
+        placeholder={t('selector.placeholder')}
+        value={selectedEntity.label ? selectedEntity : ''}
+        isClearable={true}
+        noOptionsMessage={() => <NoOptionsMessage isFetching={isFetching} isError={isError} />}
+        onChange={data => setEntity(data as Entity)}
+        theme={selectorTheme} />
+    </div>
+  );
+}
+
+type NoOptions = {
+  isFetching: boolean;
+  isError: boolean;
+}
+
+const NoOptionsMessage = ({isFetching, isError}: NoOptions) => {
+  const {t} = useTranslation(['querybuilder']);
+  return (
+    isFetching ? 
+      <Spinner
+        as="span"
+        animation="border"
+        size="sm"
+        role="status"
+        aria-hidden="true"
+      /> : 
+    isError ? 
+    <span>{t('selector.error')}</span> : 
+    <span>{t('selector.noResults')}</span>
+  )
+}
 
 interface CustomOptionProps extends OptionProps {
   data: unknown;

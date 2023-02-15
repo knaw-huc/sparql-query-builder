@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import {defaultSelectionObject, Entity, Property} from './components/Builder'
+import {Entity, Property} from './components/Builder';
+import {defaultSelectionObject} from './components/Selector';
 
 export type QueryState = {
   active: string;
