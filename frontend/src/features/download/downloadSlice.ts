@@ -1,9 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-
-export type RequestedData = {
-  dataType: string;
-}
+import type {RequestedData} from '../../types/download';
 
 const initialState: RequestedData = {
   dataType: 'json'

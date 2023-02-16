@@ -1,6 +1,7 @@
 {
   "queryBuilder": {
     "createQueryWarning": "Create a query first",
+    "stillFetching": "Still fetching data for your query; this can take a while",
     "resultsShownWarning": "Results for current query are already shown",
     "selectDatasetsWarning": "Select one or more data sets",
     "tabBuilder": "Query Builder",
@@ -9,12 +10,12 @@
   },
   "builder": {
     "header": "Build your query",
-    "warning": "You've made changes to the Editor. Making changes to the Query Builder will reset the editor.",
+    "warning": "You've made changes to the Sparql Code Editor. Making changes to the Query Builder will reset the Code Editor.",
     "limit": "Limit results to"
   },
   "editor": {
     "header": "Manually edit your Sparql code",
-    "note": "Note that typing here will invalidate the Query Builder"
+    "note": "Note that any editing here will invalidate the Query Builder"
   },
   "filter": {
     "labelEarlier": "Earlier than",

@@ -1,7 +1,7 @@
 import {useNotifications} from './notificationsSlice';
 import {NotificationItem} from './NotificationItem';
 import {NotificationList} from './NotificationList';
-import type {Notification} from './NotificationItem';
+import type {Notification} from '../../types/notifications';
 
 export function Notifications() {
   const notifications = useNotifications();

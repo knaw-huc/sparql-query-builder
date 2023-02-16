@@ -14,6 +14,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  span {
+    margin-left: 0.75rem;
+    font-size: 0.9rem;
+  }
 }
 
 .header {

@@ -1,12 +1,13 @@
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import type {OverlayInjectedProps} from 'react-bootstrap/Overlay';
+import type {TipProps} from '../../types/tooltip';
 
-export const Tip = ({id, content, triggerElement}: any) => {
-  const renderTooltip = (props: any) => (
+export const Tip = ({id, content, triggerElement}: TipProps) => {
+  const renderTooltip = (props: OverlayInjectedProps) => 
     <Tooltip id={id} {...props}>
       {content}
     </Tooltip>
-  );
 
   return (
     <OverlayTrigger

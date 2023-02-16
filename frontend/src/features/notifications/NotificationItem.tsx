@@ -3,19 +3,7 @@ import {useTimeoutFn, useUpdateEffect} from 'react-use';
 import {dismissNotification} from './notificationsSlice';
 import {useAppDispatch} from '../../app/hooks';
 import styles from './Notifications.module.scss';
-
-type NotificationTypes = 'success' | 'error' | 'warning' | 'info';
-
-export interface Notification {
-  id: string;
-  message: string;
-  type?: NotificationTypes;
-  onClose?: () => void;
-}
-
-interface NotificationProps {
-  notification: Notification;
-}
+import type {NotificationProps} from '../../types/notifications';
 
 export function NotificationItem({notification: {id, message, onClose, type = 'info'}}: NotificationProps) {
   const dispatch = useAppDispatch();

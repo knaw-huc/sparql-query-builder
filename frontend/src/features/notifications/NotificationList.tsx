@@ -1,10 +1,6 @@
-import type {ReactNode} from 'react';
 import {AnimatePresence, LayoutGroup} from 'framer-motion';
 import styles from './Notifications.module.scss';
-
-interface NotificationListProps {
-  children: ReactNode
-}
+import type {NotificationListProps} from '../../types/notifications';
 
 export const NotificationList = ({ children }: NotificationListProps) => 
   <ul className={styles.list}>

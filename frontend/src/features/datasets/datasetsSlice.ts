@@ -1,15 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-
-export type Dataset = {
-  id: string;
-  name: string;
-}
-
-export type DatasetsState = {
-  selectedSets: Dataset[];
-  sentSets: Dataset[];
-}
+import type {Dataset, DatasetsState} from '../../types/datasets';
 
 const initialState: DatasetsState = {
   selectedSets: [],

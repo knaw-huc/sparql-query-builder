@@ -1,12 +1,8 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {nanoid} from 'nanoid';
+import {v4 as uuidv4} from 'uuid';
 import {RootState} from '../../app/store';
 import {useAppSelector} from '../../app/hooks';
-import type {Notification} from './NotificationItem';
-
-interface NotificationsState {
-  notifications: Notification[]
-}
+import type {Notification, NotificationsState} from '../../types/notifications';
 
 const initialState: NotificationsState = {
   notifications: [],
@@ -21,7 +17,7 @@ const notificationsSlice = createSlice({
       {payload}: PayloadAction<Omit<Notification, 'id'>>
     ) => {
       const notification: Notification = {
-        id: nanoid(),
+        id: uuidv4(),
         ...payload,
       }
 

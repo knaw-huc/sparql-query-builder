@@ -1,31 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import Select from 'react-select';
-import type {SingleValue} from 'react-select';
 import update from 'immutability-helper';
 import styles from './Filter.module.scss';
 import {selectorTheme} from '../helpers/themes';
 import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {setSelectedProperties, selectSelectedProperties} from '../queryBuilderSlice';
-import type {Property} from './Builder';
-
-export type FilterDataType = string; // possibly narrow this down later on, depending on the data types we might get
-
-type DataTypeProps = {
-  level: number;
-  propertyArrayIndex: number;
-  selector: Property;
-}
-
-type SelectOption = {
-  value: string;
-  label: string;
-}
-
-export type FilterState = {
-  value: string;
-  select: SingleValue<SelectOption>;
-}
+import type {DataTypeProps, FilterState} from '../../../types/queryBuilder';
 
 export const typeMap: {[key: string]: string;} = {
   string: 'text',

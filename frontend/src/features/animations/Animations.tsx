@@ -1,13 +1,7 @@
 import {motion} from 'framer-motion';
-import type {ReactNode, Ref} from 'react';
+import type {MotionProps} from '../../types/animations';
 
-type MotionProps = {
-  children: ReactNode;
-  refProps?: Ref<HTMLDivElement>;
-  className?: string;
-}
-
-export const FadeDiv = ({ children, refProps, className }: MotionProps) =>
+export const FadeDiv = ({children, refProps, className}: MotionProps) =>
   <motion.div
     initial={{opacity: 0}}
     animate={{opacity: 1}}
@@ -17,7 +11,7 @@ export const FadeDiv = ({ children, refProps, className }: MotionProps) =>
     {children}
   </motion.div>
 
-export const SlideDiv = ({ children, refProps, className }: MotionProps) =>
+export const SlideDiv = ({children, refProps, className}: MotionProps) =>
   <motion.div
     initial={{y: "100%"}}
     animate={{y: 0}}

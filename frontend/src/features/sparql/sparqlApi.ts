@@ -33,7 +33,7 @@ export const sparqlApi = createApi({
         // otherwise, just throw this value into the body key
         const params = new URLSearchParams({ 
           query: query,
-          datasets: datasets, 
+          datasets: JSON.stringify(datasets),
         });
         return ({
           url: 'sparql', // to change, see datasets api and .env files

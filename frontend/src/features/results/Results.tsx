@@ -17,10 +17,7 @@ import {Download} from '../download/Download';
 import {FadeDiv, SlideDiv} from '../animations/Animations';
 import './DataTableTheme';
 import {useTranslation} from 'react-i18next';
-
-type ResultsObject = {
-  [key: string]: any
-}
+import type {ResultsObject, FilterProps, CellProps} from '../../types/results';
 
 export function Results() {
   const [filterText, setFilterText] = useState('');
@@ -29,7 +26,7 @@ export function Results() {
   const currentQuery = useAppSelector(selectSentQuery);
   const currentDatasets = useAppSelector(selectSentDatasets);
 
-  const {data, isFetching, isError, error} = useSendSparqlQuery({
+  const {data, isFetching, isError} = useSendSparqlQuery({
     query: currentQuery, 
     datasets: currentDatasets
   }, {
@@ -106,7 +103,7 @@ export function Results() {
             <Col lg={12}>
               {isFetching ?
               <FadeDiv key="results-spinner" className={styles.spinner}>
-                <Spinner animation="border" variant="primary" /> 
+                <Spinner animation="border" variant="primary" /><span>{t('fetchingResults')}</span>
               </FadeDiv>
               :
               <FadeDiv key="results-table" refProps={resultsRef}>
@@ -140,12 +137,6 @@ export function Results() {
   );
 }
 
-type FilterProps = {
-  filterText: string;
-  onFilter: React.ChangeEventHandler;
-  onClear: React.MouseEventHandler;
-}
-
 const FilterComponent = ({filterText, onFilter, onClear}: FilterProps) => {
   const {t} = useTranslation(['results']);
   return (
@@ -162,11 +153,6 @@ const FilterComponent = ({filterText, onFilter, onClear}: FilterProps) => {
       </Button>
     </InputGroup>
   )
-};
-
-type CellProps = {
-  type: string;
-  value: string;
 };
 
 const CustomCell = ({type, value}: CellProps) => (

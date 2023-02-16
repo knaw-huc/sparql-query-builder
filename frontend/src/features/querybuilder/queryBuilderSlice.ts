@@ -1,15 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
-import {Entity, Property} from './components/Builder';
+import type {Entity, Property, QueryState} from '../../types/queryBuilder';
 import {defaultSelectionObject} from './components/Selector';
-
-export type QueryState = {
-  active: string;
-  sent: string;
-  selectedEntity: Entity;
-  selectedProperties: Property[][];
-  selectedLimit: number;
-}
 
 const initialState: QueryState = {
   active: '',

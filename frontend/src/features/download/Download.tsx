@@ -7,17 +7,7 @@ import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {selectSentDatasets} from '../datasets/datasetsSlice';
 import {selectDataType, setDataType} from './downloadSlice';
-
-interface DownloadFn {
-  (subString: string): Promise<void>;
-}
-
-type DownloadProps = {
-  download: 'json' | 'csv' | 'xml';
-  onClick: DownloadFn;
-  isLoading: boolean;
-  activeType: string;
-};
+import type {DownloadProps} from '../../types/download';
 
 export function Download() {
   const currentQuery = useAppSelector(selectSentQuery);

@@ -1,4 +1,4 @@
-import type {Entity, Property} from '../components/Builder';
+import type {Entity, Property} from '../../../types/queryBuilder';
 
 export function getLabel(schema: string) {
   // check for hash or slash, grab value after it
@@ -71,7 +71,7 @@ export const resultQuery = (entity: Entity, properties: Property[][], selectedLi
             property.dataType, 
             propertyPath[i-1].labelForQuery as string,
             property.value as string, 
-            property.additionalFilter as string
+            property.equalityOperator as string
           )
           :
           `?${(i > 0 ? propertyPath[i-1].labelForQuery : entity.label)} <${property.value}> ?${property.labelForQuery}.`

@@ -14,27 +14,12 @@ import {
   // selectSelectedLimit
   // setSelectedLimit,
 } from '../queryBuilderSlice';
-import type {Entity /*, Property*/} from './Builder';
+import type {QueryCookiesFn, QueryCookieObject} from '../../../types/queryBuilder';
 import {addNotification} from '../../notifications/notificationsSlice';
 import moment from 'moment';
 import {setSelectedDatasets, selectSelectedDatasets} from '../../datasets/datasetsSlice';
-import type {Dataset} from '../../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
 import {v4 as uuidv4} from 'uuid';
-
-export interface QueryCookieObject {
-  query: string;
-  datetime: string;
-  datasets: Dataset[];
-  uuid: string;
-  entity: Entity;
-  // properties: Property[][];
-  // limit: number;
-}
-
-interface QueryCookiesFn {
-  setKey: (arg: string) => void;
-}
 
 /* 
  * Getter and setter for query cookies.
@@ -62,7 +47,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
   // Reverse the list to have newest query at the top
   const cookieList = Object.keys(cookies)
     .filter((c: string) => c.indexOf('querylist') !== -1)
-    .reduce((obj: any, key: string) => [...obj, cookies[key]], [])
+    .reduce((obj: QueryCookieObject[], key: string) => [...obj, cookies[key]], [])
     .reverse();
 
   function onSave() {
@@ -109,7 +94,7 @@ export function QueryCookies({setKey}: QueryCookiesFn) {
       {
         path: '/',
         expires: newDate,
-        sameSite: 'strict'
+        sameSite: 'lax'
       }
     );
 

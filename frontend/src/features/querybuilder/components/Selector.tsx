@@ -1,6 +1,6 @@
 import React from 'react';
 import {v4 as uuidv4} from 'uuid';
-import Select, {components, OptionProps} from 'react-select';
+import Select, {components} from 'react-select';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import * as queries from '../helpers/queries';
 import {useSendSparqlQuery} from '../../sparql/sparqlApi';
@@ -14,49 +14,18 @@ import {
 } from '../queryBuilderSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
-import type {Property, Entity} from './Builder';
 import {selectorTheme} from '../helpers/themes';
 import {useTranslation, Trans} from 'react-i18next';
-
-type SelectorProps = {
-  multiSelect: boolean;
-  selector: Property;
-  level: number;
-  propertyArrayIndex?: number;
-}
-
-// as returned by a sparql db
-type SparqlObject = {
-  type: string;
-  value: string;
-}
-
-type EntityData = {
-  c: SparqlObject; // uri to get properties of in next step
-  l?: SparqlObject; // label
-  p?: SparqlObject; // parent, we don't do anything with this yet
-  pred?: never;
-  tpe?: never;
-  dt?: never;
-  ot?: never;
-}
-
-type PropertyData = {
-  l?: SparqlObject; // label
-  pred: SparqlObject; // uri to use in the sparql query
-  tpe: SparqlObject; // type of property
-  dt?: SparqlObject; // type of data
-  ot?: SparqlObject; // entity the property belongs to, we use this to delve deeper
-  c?: never;
-  p?: never;
-}
-
-type ActionTypes = {
-  action: 'clear' | 'create-option' | 'deselect-option' | 'pop-value' | 'remove-value' | 'select-option' | 'set-value';
-  option?: Property | Entity;
-  removedValue?: Property | Entity;
-  removedValues: Property[] | Entity[];
-}
+import type {
+  SelectorProps, 
+  PropertyData, 
+  Property, 
+  EntityData, 
+  Entity, 
+  ActionTypes, 
+  NoOptions, 
+  CustomOptionProps
+} from '../../../types/queryBuilder';
 
 export const PropertySelector = ({multiSelect, selector, level, propertyArrayIndex}: SelectorProps) => {
   const dispatch = useAppDispatch();
@@ -222,10 +191,6 @@ export const EntitySelector = () => {
   );
 }
 
-type NoOptions = {
-  isFetching: boolean;
-  isError: boolean;
-}
 
 const NoOptionsMessage = ({isFetching, isError}: NoOptions) => {
   const {t} = useTranslation(['querybuilder']);
@@ -242,10 +207,6 @@ const NoOptionsMessage = ({isFetching, isError}: NoOptions) => {
     <span>{t('selector.error')}</span> : 
     <span>{t('selector.noResults')}</span>
   )
-}
-
-interface CustomOptionProps extends OptionProps {
-  data: unknown;
 }
 
 const CustomOption = (props: CustomOptionProps) => {

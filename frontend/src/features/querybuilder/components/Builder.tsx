@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {
   setActiveQuery, 
@@ -13,45 +13,34 @@ import * as queries from '../helpers/queries';
 import {EntitySelector, PropertySelector} from './Selector';
 import {Filter, typeMap} from './Filter';
 import {useTranslation} from 'react-i18next';
-
-export type Entity = {
-  label: string; // appears in the dropdown
-  value: string; // this is the uri (value from c)
-  uuid: string;
-}
-
-export type Property = {
-  label: string; // appears in the dropdown
-  value: string; // this is the uri or filter
-  uuid: string; // unique id/key for use in array map
-  ot?: string; // value of ot
-  propertyType?: string;
-  dataType?: string; // derived from optional dt
-  additionalFilter?: string; // for date/number filtering 
-  labelForQuery?: string; // value that gets passed as a label to the sparql query
-}
+import {AnimatePresence} from 'framer-motion';
+import {FadeDiv} from '../../animations/Animations';
 
 export const Builder = () => {
+  const [sync, setSync] = useState(true);
   const dispatch = useAppDispatch();
   const currentQuery = useAppSelector(selectActiveQuery);
   const selectedEntity = useAppSelector(selectSelectedEntity);
   const selectedProperties = useAppSelector(selectSelectedProperties);
   const selectedLimit = useAppSelector(selectSelectedLimit);
   const {t} = useTranslation(['querybuilder']);
-  const theQuery = queries.resultQuery(selectedEntity, selectedProperties, selectedLimit);
 
   // Set query in code editor when one of these values changes
   useEffect(() => {
-    dispatch(setActiveQuery(selectedEntity.value ? theQuery : ''));
-  }, [selectedEntity, dispatch, theQuery]);
+    dispatch(setActiveQuery(selectedEntity.value ? queries.resultQuery(selectedEntity, selectedProperties, selectedLimit) : ''));
+  }, [selectedEntity, selectedProperties, selectedLimit, dispatch]);
 
-  // Keep track of sync between QB and Editor. Warn user when editor is out of sync with builder.
-  const isSynced = theQuery === currentQuery || !currentQuery;
+  // Keep track of sync between QB and Editor. Warn user when editor (currentQuery) has been changed and is out of sync with QB.
+  useEffect(() => {
+    setSync(currentQuery === queries.resultQuery(selectedEntity, selectedProperties, selectedLimit) || !currentQuery)
+  }, [currentQuery])
 
   return (
     <div className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
-      {!isSynced && <p className={styles.warning}>{t('builder.warning')}</p>}
+      <AnimatePresence>
+        {!sync && <FadeDiv key="sync"><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
+      </AnimatePresence>
       <EntitySelector />
       {selectedEntity.value.length > 0 &&
         <PropertySelector
