@@ -29,3 +29,16 @@
   background: none !important;
   border-bottom: 4px solid var(--bs-gray-500) !important;
 }
+
+.pane {
+  transition: opacity 0.2s linear !important;
+}
+
+:global {
+  .tab-pane {
+    &.active,
+    &.show {
+      transition: opacity 0.4s linear 0.3s !important;
+    }
+  }
+}

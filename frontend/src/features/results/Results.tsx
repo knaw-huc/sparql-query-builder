@@ -14,7 +14,7 @@ import {useAppSelector} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {selectSentDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
-import {FadeDiv, SlideDiv} from '../animations/Animations';
+import {FadeDiv, SlideInDiv} from '../animations/Animations';
 import './DataTableTheme';
 import {useTranslation} from 'react-i18next';
 import type {ResultsObject, FilterProps, CellProps} from '../../types/results';
@@ -97,7 +97,7 @@ export function Results() {
   return (
     <AnimatePresence>
       {( data || isFetching || isError ) &&
-      <SlideDiv key="results-container">
+      <SlideInDiv key="results-container">
         <Container fluid className={styles.container}>
           <Row>
             <Col lg={12}>
@@ -131,7 +131,7 @@ export function Results() {
             </Col>
           </Row>
         </Container>
-      </SlideDiv>
+      </SlideInDiv>
       }
     </AnimatePresence>
   );

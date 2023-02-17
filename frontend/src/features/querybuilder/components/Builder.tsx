@@ -13,7 +13,7 @@ import * as queries from '../helpers/queries';
 import {EntitySelector, PropertySelector} from './Selector';
 import {Filter, typeMap} from './Filter';
 import {useTranslation} from 'react-i18next';
-import {AnimatePresence} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import {FadeDiv} from '../../animations/Animations';
 
 export const Builder = () => {
@@ -28,59 +28,66 @@ export const Builder = () => {
   // Set query in code editor when one of these values changes
   useEffect(() => {
     dispatch(setActiveQuery(selectedEntity.value ? queries.resultQuery(selectedEntity, selectedProperties, selectedLimit) : ''));
-  }, [selectedEntity, selectedProperties, selectedLimit, dispatch]);
+  }, [selectedEntity, selectedProperties, selectedLimit]);
 
   // Keep track of sync between QB and Editor. Warn user when editor (currentQuery) has been changed and is out of sync with QB.
   useEffect(() => {
     setSync(currentQuery === queries.resultQuery(selectedEntity, selectedProperties, selectedLimit) || !currentQuery)
-  }, [currentQuery])
+  }, [currentQuery]);
 
   return (
     <div className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
-      <AnimatePresence>
-        {!sync && <FadeDiv key="sync"><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
-      </AnimatePresence>
-      <EntitySelector />
-      {selectedEntity.value.length > 0 &&
-        <PropertySelector
-          key={selectedEntity.value}
-          selector={selectedEntity}
-          multiSelect={true}
-          level={0} />
-      }
-      {selectedProperties.map((propertyArray, i) =>
-        ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
-        // Only show this if there's an OT or filterable datatype
-        <div 
-          key={`group-${propertyArray[0].uuid}`}
-          className={styles.propertyGroup}>
-          {propertyArray.map((property, j) => [
-            property.ot && 
+      <motion.div layout="position" layoutRoot>
+        <AnimatePresence>
+          {!sync && <FadeDiv key="sync" layout><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
+          <FadeDiv layout key="entity" >
+            <EntitySelector />
+          </FadeDiv>
+          {selectedEntity.value.length > 0 &&
+            <FadeDiv layout key={selectedEntity.value}>
               <PropertySelector
-                key={property.uuid}
-                selector={property}
-                multiSelect={false}
-                propertyArrayIndex={i}
-                level={j+1} />,
-            property.dataType && typeMap[property.dataType] &&
-              <Filter 
-                key={`filter-${property.uuid}`}
-                level={j+1}
-                selector={property}
-                propertyArrayIndex={i} />
-            ]
+                selector={selectedEntity}
+                multiSelect={true}
+                level={0} />
+            </FadeDiv>
+          }
+          {selectedProperties.map((propertyArray, i) =>
+            ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
+            // Only show this if there's an OT or filterable datatype
+            <FadeDiv layout key={`group-${propertyArray[0].uuid}`} className={styles.propertyGroup}>
+              {propertyArray.map((property, j) => [
+                property.ot && 
+                  <FadeDiv layout key={property.uuid}>
+                    <PropertySelector
+                      key={property.uuid}
+                      selector={property}
+                      multiSelect={false}
+                      propertyArrayIndex={i}
+                      level={j+1} />
+                  </FadeDiv>,
+                property.dataType && typeMap[property.dataType] &&
+                  <FadeDiv layout key={`filter-${property.uuid}`}>
+                    <Filter 
+                      key={`filter-${property.uuid}`}
+                      level={j+1}
+                      selector={property}
+                      propertyArrayIndex={i} />
+                  </FadeDiv>
+                ]
+              )}
+            </FadeDiv>
           )}
-        </div>
-      )}
-      <div className={styles.limit}>
-        <label className={styles.label}>{t('builder.limit')}</label>
-        <input 
-          className={styles.limitInput} 
-          type="number" value={selectedLimit} 
-          onChange={e => dispatch(setSelectedLimit(parseInt(e.target.value) || 1000))}
-        />
-      </div>
+          <FadeDiv layout key="limit" className={styles.limit}>
+            <label className={styles.label}>{t('builder.limit')}</label>
+            <input 
+              className={styles.limitInput} 
+              type="number" value={selectedLimit} 
+              onChange={e => dispatch(setSelectedLimit(parseInt(e.target.value) || 1000))}
+            />
+          </FadeDiv>
+        </AnimatePresence>
+      </motion.div>
     </div>
   )
 }

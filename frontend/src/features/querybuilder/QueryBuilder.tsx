@@ -18,6 +18,7 @@ import {addNotification} from '../notifications/notificationsSlice';
 import {selectSelectedDatasets, selectSentDatasets, setSentDatasets} from '../datasets/datasetsSlice';
 import {useTranslation} from 'react-i18next';
 import {useRefetchErroredQueryMutation, selectCurrentResults} from '../sparql/sparqlApi';
+import {LayoutGroup, motion} from 'framer-motion';
 
 export function QueryBuilder() {
   const [key, setKey] = useState('querybuilder');
@@ -75,45 +76,50 @@ export function QueryBuilder() {
     <Container fluid="lg">
       <Row className="justify-content-md-center">
         <Col md={8}>
-          <Tab.Container 
-            activeKey={key}
-            onSelect={(k) => setKey(k!) }>
-            <Nav variant="tabs" className={styles.nav} >
-              <Nav.Item>
-                <Nav.Link 
-                  eventKey="querybuilder" 
-                  className={key === 'querybuilder' ? styles.activeItem : styles.item}>
-                  {t('queryBuilder.tabBuilder')}
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item>
-                <Nav.Link 
-                  eventKey="editor" 
-                  className={key === 'editor' ? styles.activeItem : styles.item}>
-                  {t('queryBuilder.tabEditor')}
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
-            <Tab.Content className={styles.tabContent}>
-              <Tab.Pane eventKey="querybuilder" className={styles.pane}>
-                <Builder />
-              </Tab.Pane>
-              <Tab.Pane eventKey="editor" className={styles.pane}>
-                <Editor />
-              </Tab.Pane>
-            </Tab.Content>
-          </Tab.Container>
-          <ButtonToolbar className={styles.buttonBar}>
-            <ButtonGroup>
-              <Button 
-                variant="primary"
-                size="lg"
-                onClick={sendQuery}>
-                {t('queryBuilder.sendQuery')}
-              </Button>
-            </ButtonGroup>
-            <QueryCookies setKey={setKey} />
-          </ButtonToolbar>
+          <LayoutGroup>
+            <Tab.Container 
+              activeKey={key}
+              onSelect={(k) => setKey(k!)}
+            >
+              <Nav variant="tabs" className={styles.nav} >
+                <Nav.Item>
+                  <Nav.Link 
+                    eventKey="querybuilder" 
+                    className={key === 'querybuilder' ? styles.activeItem : styles.item}>
+                    {t('queryBuilder.tabBuilder')}
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link 
+                    eventKey="editor" 
+                    className={key === 'editor' ? styles.activeItem : styles.item}>
+                    {t('queryBuilder.tabEditor')}
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
+              <Tab.Content className={styles.tabContent}>
+                <Tab.Pane key="qb" eventKey="querybuilder" className={styles.pane}>
+                  <Builder />
+                </Tab.Pane>
+                <Tab.Pane key="ed" eventKey="editor" className={styles.pane}>
+                  <Editor />
+                </Tab.Pane>
+              </Tab.Content>
+            </Tab.Container>
+            <motion.div layout="position">
+              <ButtonToolbar className={styles.buttonBar}>
+                <ButtonGroup>
+                  <Button 
+                    variant="primary"
+                    size="lg"
+                    onClick={sendQuery}>
+                    {t('queryBuilder.sendQuery')}
+                  </Button>
+                </ButtonGroup>
+                <QueryCookies setKey={setKey} />
+              </ButtonToolbar>
+            </motion.div>
+          </LayoutGroup>
         </Col>
         {dataSetEnabled &&
           <Col md={4}>

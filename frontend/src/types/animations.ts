@@ -1,6 +1,7 @@
+import {HTMLMotionProps} from 'framer-motion';
 import type {ReactNode, Ref} from 'react';
 
-export type MotionProps = {
+export interface MotionDivProps extends HTMLMotionProps<'div'> {
   children: ReactNode;
   refProps?: Ref<HTMLDivElement>;
   className?: string;

@@ -16,17 +16,14 @@ const FullScreenLoader = () =>
     <Spinner animation="border" variant="primary" />
   </div>
 
-function App() {
-  return (
-    <Suspense fallback={<FullScreenLoader/>}>
-      <div className="App">
-        <Topbar />
-        <QueryBuilder />
-        <Results />
-        <Notifications />
-      </div>
-    </Suspense>
-  );
-}
+const App = () =>
+  <Suspense fallback={<FullScreenLoader/>}>
+    <div className="App">
+      <Topbar />
+      <QueryBuilder />
+      <Results />
+      <Notifications />
+    </div>
+  </Suspense>
 
 export default App;

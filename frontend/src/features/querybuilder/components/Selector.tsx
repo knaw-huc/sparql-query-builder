@@ -6,12 +6,7 @@ import * as queries from '../helpers/queries';
 import {useSendSparqlQuery} from '../../sparql/sparqlApi';
 import {selectSelectedDatasets} from '../../datasets/datasetsSlice';
 import update from 'immutability-helper';
-import {
-  setSelectedEntity, 
-  setSelectedProperties, 
-  selectSelectedEntity,
-  selectSelectedProperties,
-} from '../queryBuilderSlice';
+import {setSelectedEntity, setSelectedProperties, selectSelectedEntity, selectSelectedProperties} from '../queryBuilderSlice';
 import Spinner from 'react-bootstrap/Spinner';
 import styles from './Selector.module.scss';
 import {selectorTheme} from '../helpers/themes';
@@ -109,7 +104,7 @@ export const PropertySelector = ({multiSelect, selector, level, propertyArrayInd
         <Trans
           i18nKey="selector.propertyLabel"
           ns="querybuilder"
-          values={{ parentLabel: selector.label}}
+          values={{parentLabel: selector.label}}
           components={{bold: <strong />}}
         />
       </label>
@@ -125,7 +120,13 @@ export const PropertySelector = ({multiSelect, selector, level, propertyArrayInd
         options={resultsOptions} 
         placeholder={t('selector.placeholder')}
         isMulti={multiSelect}
-        value={!propertyArrayIndex ? selectedProperties.map(property => property[0]) : selectedProperties[level][propertyArrayIndex+1]}
+        value={
+          propertyArrayIndex === undefined ? 
+          selectedProperties.map(property => property[0]) :
+          selectedProperties[propertyArrayIndex] ?
+          selectedProperties[propertyArrayIndex][level] :
+          ''
+        }
         isClearable={true}
         noOptionsMessage={() => <NoOptionsMessage isFetching={isFetching} isError={isError} />}
         onChange={(data, changedValue) => setProperties(data as Property, changedValue as ActionTypes, level, propertyArrayIndex)}
