@@ -7,6 +7,7 @@ import {useTranslation} from 'react-i18next';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {setSelectedProperties, selectSelectedProperties} from '../queryBuilderSlice';
 import type {DataTypeProps, FilterState} from '../../../types/queryBuilder';
+import {FadeDiv} from '../../animations/Animations';
 
 export const typeMap: {[key: string]: string;} = {
   string: 'text',
@@ -49,7 +50,7 @@ export const Filter = ({level, propertyArrayIndex, selector}: DataTypeProps) => 
   }, [currentFilter]);
 
   return (
-    <div style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
+    <FadeDiv style={{paddingLeft: `${level ? level * 2 - 2: 0}rem`}}>
       <label className={styles.label}><strong>{selector.label}</strong> {t(`filter.typeMap.${dataType}.label`)}</label>
       <div className={styles.inputWrapper}>
         {['gYear', 'gYearMonth', 'date', 'integer'].includes(dataType) &&
@@ -67,6 +68,6 @@ export const Filter = ({level, propertyArrayIndex, selector}: DataTypeProps) => 
           value={currentFilter.value}
           onChange={e => setCurrentFilter({...currentFilter, value: e.target.value})}/>
       </div>
-    </div>
+    </FadeDiv>
   )
 }

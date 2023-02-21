@@ -21,6 +21,7 @@ import type {
   NoOptions, 
   CustomOptionProps
 } from '../../../types/queryBuilder';
+import {FadeDiv} from '../../animations/Animations';
 
 export const PropertySelector = ({multiSelect, selector, level, propertyArrayIndex}: SelectorProps) => {
   const dispatch = useAppDispatch();
@@ -99,7 +100,10 @@ export const PropertySelector = ({multiSelect, selector, level, propertyArrayInd
   }
 
   return (
-    <div style={{paddingLeft: `${level !== undefined ? level * 2 - 2 : 0}rem`}} className={level !== undefined ? styles.level : ''}>
+    <FadeDiv
+      layout
+      style={{paddingLeft: `${level !== undefined ? level * 2 - 2 : 0}rem`}} 
+      className={level !== undefined ? styles.level : ''}>
       <label className={styles.label}>
         <Trans
           i18nKey="selector.propertyLabel"
@@ -131,7 +135,7 @@ export const PropertySelector = ({multiSelect, selector, level, propertyArrayInd
         noOptionsMessage={() => <NoOptionsMessage isFetching={isFetching} isError={isError} />}
         onChange={(data, changedValue) => setProperties(data as Property, changedValue as ActionTypes, level, propertyArrayIndex)}
         theme={selectorTheme} />
-    </div>
+    </FadeDiv>
   );
 }
 

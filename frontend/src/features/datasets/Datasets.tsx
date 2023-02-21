@@ -13,10 +13,12 @@ import {useTranslation} from 'react-i18next';
 import {Tip} from '../tooltip/Tooltip';
 import InfoCircle from "../../images/circle-info-solid.svg";
 
-// TODO: Should selecting/deselecting datasets reset the QB? Right now, the QB dropdown boxes get filled via a call to the API
-// that includes the dataset selection. So the app makes an API call on every dataset change, and dropdown content should change
-// depending on selected datasets. If the content disappears, we do need to reset the QB for the query to remain valid. 
-// We don't right now.
+// TODO / To think about: Should selecting/deselecting datasets reset the QB? 
+// Right now, the QB dropdown boxes get filled via a call to the API that 
+// includes the dataset selection. So the app makes an API call on every dataset 
+// change, and dropdown content should change depending on selected datasets. 
+// If the content disappears, we do need to reset the QB for the query to remain
+// valid. We don't right now.
 
 export const Datasets = () => {
   const {data, isFetching, isError} = useGetDatasetsQuery(undefined);

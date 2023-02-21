@@ -36,58 +36,51 @@ export const Builder = () => {
   }, [currentQuery]);
 
   return (
-    <div className={styles.builder}>
+    <motion.div layout="position" layoutRoot className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
-      <motion.div layout="position" layoutRoot>
-        <AnimatePresence>
-          {!sync && <FadeDiv key="sync" layout><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
-          <FadeDiv layout key="entity" >
-            <EntitySelector />
-          </FadeDiv>
-          {selectedEntity.value.length > 0 &&
-            <FadeDiv layout key={selectedEntity.value}>
-              <PropertySelector
-                selector={selectedEntity}
-                multiSelect={true}
-                level={0} />
-            </FadeDiv>
-          }
-          {selectedProperties.map((propertyArray, i) =>
-            ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
-            // Only show this if there's an OT or filterable datatype
-            <FadeDiv layout key={`group-${propertyArray[0].uuid}`} className={styles.propertyGroup}>
+      <AnimatePresence>
+        {!sync && <FadeDiv key="sync" layout><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
+        <EntitySelector />
+        {selectedEntity.value.length > 0 &&
+          <PropertySelector
+            key={selectedEntity.value}
+            selector={selectedEntity}
+            multiSelect={true}
+            level={0} />
+        }
+        {selectedProperties.map((propertyArray, i) =>
+          ((propertyArray[0].dataType && typeMap[propertyArray[0].dataType]) || propertyArray[0].ot) &&
+          // Only show this if there's an OT or filterable datatype
+          <FadeDiv layout key={`group-${propertyArray[0].uuid}`} className={styles.propertyGroup}>
+            <AnimatePresence>
               {propertyArray.map((property, j) => [
                 property.ot && 
-                  <FadeDiv layout key={property.uuid}>
-                    <PropertySelector
-                      key={property.uuid}
-                      selector={property}
-                      multiSelect={false}
-                      propertyArrayIndex={i}
-                      level={j+1} />
-                  </FadeDiv>,
+                  <PropertySelector
+                    key={`property-${property.uuid}`}
+                    selector={property}
+                    multiSelect={false}
+                    propertyArrayIndex={i}
+                    level={j+1} />,
                 property.dataType && typeMap[property.dataType] &&
-                  <FadeDiv layout key={`filter-${property.uuid}`}>
-                    <Filter 
-                      key={`filter-${property.uuid}`}
-                      level={j+1}
-                      selector={property}
-                      propertyArrayIndex={i} />
-                  </FadeDiv>
+                  <Filter 
+                    key={`filter-${property.uuid}`}
+                    level={j+1}
+                    selector={property}
+                    propertyArrayIndex={i} />
                 ]
               )}
-            </FadeDiv>
-          )}
-          <FadeDiv layout key="limit" className={styles.limit}>
-            <label className={styles.label}>{t('builder.limit')}</label>
-            <input 
-              className={styles.limitInput} 
-              type="number" value={selectedLimit} 
-              onChange={e => dispatch(setSelectedLimit(parseInt(e.target.value) || 1000))}
-            />
+            </AnimatePresence>
           </FadeDiv>
-        </AnimatePresence>
-      </motion.div>
-    </div>
+        )}
+        <FadeDiv layout key="limit" className={styles.limit}>
+          <label className={styles.label}>{t('builder.limit')}</label>
+          <input 
+            className={styles.limitInput} 
+            type="number" value={selectedLimit} 
+            onChange={e => dispatch(setSelectedLimit(parseInt(e.target.value) || 1000))}
+          />
+        </FadeDiv>
+      </AnimatePresence>
+    </motion.div>
   )
 }
