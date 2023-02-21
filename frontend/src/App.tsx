@@ -5,6 +5,7 @@ import {Results} from './features/results/Results';
 import {QueryBuilder} from './features/querybuilder/QueryBuilder';
 import {Notifications} from './features/notifications/Notifications';
 import Spinner from 'react-bootstrap/Spinner';
+import {LayoutGroup} from 'framer-motion';
 
 const FullScreenLoader = () => 
   <div style={{
@@ -20,8 +21,10 @@ const App = () =>
   <Suspense fallback={<FullScreenLoader/>}>
     <div className="App">
       <Topbar />
-      <QueryBuilder />
-      <Results />
+      <LayoutGroup>
+        <QueryBuilder />
+        <Results />
+      </LayoutGroup>
       <Notifications />
     </div>
   </Suspense>

@@ -18,6 +18,7 @@ import {FadeDiv, SlideInDiv} from '../animations/Animations';
 import './DataTableTheme';
 import {useTranslation} from 'react-i18next';
 import type {ResultsObject, FilterProps, CellProps} from '../../types/results';
+import {motion} from 'framer-motion';
 
 export function Results() {
   const [filterText, setFilterText] = useState('');
@@ -95,45 +96,47 @@ export function Results() {
   }, [filterText, resetPaginationToggle]);
 
   return (
-    <AnimatePresence>
-      {( data || isFetching || isError ) &&
-      <SlideInDiv key="results-container">
-        <Container fluid className={styles.container}>
-          <Row>
-            <Col lg={12}>
-              {isFetching ?
-              <FadeDiv key="results-spinner" className={styles.spinner}>
-                <Spinner animation="border" variant="primary" /><span>{t('fetchingResults')}</span>
-              </FadeDiv>
-              :
-              <FadeDiv key="results-table" refProps={resultsRef}>
-                {isError ?
-                  <p className={styles.error}>{t('error')}</p>
-                  :
-                  <DataTable
-                    columns={columns}
-                    data={filteredItems}
-                    pagination 
-                    paginationResetDefaultPage={resetPaginationToggle}
-                    title={<h5>{t('tableHeader', {items: filteredItems.length})}</h5>}
-                    subHeader
-                    subHeaderComponent={headerComponentMemo}
-                    subHeaderWrap
-                    theme="huc"
-                    striped
-                    highlightOnHover
-                    paginationPerPage={20}
-                    paginationRowsPerPageOptions={[20, 50, 100]} 
-                  />
+    <motion.div layout="position">
+      <AnimatePresence>
+        {( data || isFetching || isError ) &&
+        <SlideInDiv key="results-container">
+          <Container fluid className={styles.container}>
+            <Row>
+              <Col lg={12}>
+                {isFetching ?
+                <FadeDiv key="results-spinner" className={styles.spinner}>
+                  <Spinner animation="border" variant="primary" /><span>{t('fetchingResults')}</span>
+                </FadeDiv>
+                :
+                <FadeDiv key="results-table" refProps={resultsRef}>
+                  {isError ?
+                    <p className={styles.error}>{t('error')}</p>
+                    :
+                    <DataTable
+                      columns={columns}
+                      data={filteredItems}
+                      pagination 
+                      paginationResetDefaultPage={resetPaginationToggle}
+                      title={<h5>{t('tableHeader', {items: filteredItems.length})}</h5>}
+                      subHeader
+                      subHeaderComponent={headerComponentMemo}
+                      subHeaderWrap
+                      theme="huc"
+                      striped
+                      highlightOnHover
+                      paginationPerPage={20}
+                      paginationRowsPerPageOptions={[20, 50, 100]} 
+                    />
+                  }
+                </FadeDiv>
                 }
-              </FadeDiv>
-              }
-            </Col>
-          </Row>
-        </Container>
-      </SlideInDiv>
-      }
-    </AnimatePresence>
+              </Col>
+            </Row>
+          </Container>
+        </SlideInDiv>
+        }
+      </AnimatePresence>
+    </motion.div>
   );
 }
 
