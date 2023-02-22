@@ -11,7 +11,7 @@ import type {Dataset} from '../../types/datasets';
 import {FadeDiv} from '../animations/Animations';
 import {useTranslation} from 'react-i18next';
 import {Tip} from '../tooltip/Tooltip';
-import InfoCircle from "../../images/circle-info-solid.svg";
+import InfoCircle from '../../images/circle-info-solid.svg';
 
 // TODO / To think about: Should selecting/deselecting datasets reset the QB? 
 // Right now, the QB dropdown boxes get filled via a call to the API that 

@@ -13,7 +13,7 @@ import * as queries from '../helpers/queries';
 import {EntitySelector, PropertySelector} from './Selector';
 import {Filter, typeMap} from './Filter';
 import {useTranslation} from 'react-i18next';
-import {AnimatePresence, motion} from 'framer-motion';
+import {AnimatePresence} from 'framer-motion';
 import {FadeDiv} from '../../animations/Animations';
 
 export const Builder = () => {
@@ -36,7 +36,7 @@ export const Builder = () => {
   }, [currentQuery]);
 
   return (
-    <motion.div layout="position" layoutRoot className={styles.builder}>
+    <div className={styles.builder}>
       <h5 className={styles.header}>{t('builder.header')}</h5>
       <AnimatePresence>
         {!sync && <FadeDiv key="sync" layout><p className={styles.warning}>{t('builder.warning')}</p></FadeDiv>}
@@ -81,6 +81,6 @@ export const Builder = () => {
           />
         </FadeDiv>
       </AnimatePresence>
-    </motion.div>
+    </div>
   )
 }

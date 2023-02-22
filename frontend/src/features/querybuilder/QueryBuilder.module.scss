@@ -1,3 +1,7 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/_breakpoints";
+
 .buttonBar {
   margin: 2rem 0;
   justify-content: space-between;
@@ -18,11 +22,17 @@
 .activeItem  {
   border: 0 !important;
   margin-right: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 0.25rem 0.5rem;
   font-weight: 700;
   margin-bottom: -4px !important;
   position: relative;
   z-index: 2;
+  font-size: 90%;
+
+  @include media-breakpoint-up(md) {
+    padding: 0.5rem 1rem;
+    font-size: 100%;
+  }
 }
 
 .activeItem {
@@ -31,14 +41,5 @@
 }
 
 .pane {
-  transition: opacity 0.2s linear !important;
-}
-
-:global {
-  .tab-pane {
-    &.active,
-    &.show {
-      transition: opacity 0.4s linear 0.3s !important;
-    }
-  }
+  transition: opacity 0.2s ease 0.2s !important;
 }

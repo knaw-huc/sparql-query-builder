@@ -14,11 +14,10 @@ import {useAppSelector} from '../../app/hooks';
 import {selectSentQuery} from '../querybuilder/queryBuilderSlice';
 import {selectSentDatasets} from '../datasets/datasetsSlice';
 import {Download} from '../download/Download';
-import {FadeDiv, SlideInDiv} from '../animations/Animations';
+import {FadeDiv, SlideInDiv, LayoutMotionDiv} from '../animations/Animations';
 import './DataTableTheme';
 import {useTranslation} from 'react-i18next';
 import type {ResultsObject, FilterProps, CellProps} from '../../types/results';
-import {motion} from 'framer-motion';
 
 export function Results() {
   const [filterText, setFilterText] = useState('');
@@ -96,7 +95,7 @@ export function Results() {
   }, [filterText, resetPaginationToggle]);
 
   return (
-    <motion.div layout="position">
+    <LayoutMotionDiv>
       <AnimatePresence>
         {( data || isFetching || isError ) &&
         <SlideInDiv key="results-container">
@@ -108,7 +107,7 @@ export function Results() {
                   <Spinner animation="border" variant="primary" /><span>{t('fetchingResults')}</span>
                 </FadeDiv>
                 :
-                <FadeDiv key="results-table" refProps={resultsRef}>
+                <FadeDiv key="results-table" ref={resultsRef}>
                   {isError ?
                     <p className={styles.error}>{t('error')}</p>
                     :
@@ -136,7 +135,7 @@ export function Results() {
         </SlideInDiv>
         }
       </AnimatePresence>
-    </motion.div>
+    </LayoutMotionDiv>
   );
 }
 
