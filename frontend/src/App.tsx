@@ -6,6 +6,16 @@ import {QueryBuilder} from './features/querybuilder/QueryBuilder';
 import {Notifications} from './features/notifications/Notifications';
 import Spinner from 'react-bootstrap/Spinner';
 import {LayoutGroup} from 'framer-motion';
+import { MatchMediaBreakpoints } from 'react-hook-breakpoints';
+
+const breakpoints = {
+  small: 576,
+  medium: 768,
+  large: 992,
+  xlarge: 1200,
+  xxlarge: 1400,
+};
+
 
 const FullScreenLoader = () => 
   <div style={{
@@ -18,15 +28,17 @@ const FullScreenLoader = () =>
   </div>
 
 const App = () =>
-  <Suspense fallback={<FullScreenLoader/>}>
-    <div className="App">
-      <Topbar />
-      <LayoutGroup>
-        <QueryBuilder />
-        <Results />
-      </LayoutGroup>
-      <Notifications />
-    </div>
-  </Suspense>
+  <MatchMediaBreakpoints breakpoints={breakpoints}>
+    <Suspense fallback={<FullScreenLoader/>}>
+      <div className="App">
+        <Topbar />
+        <LayoutGroup>
+          <QueryBuilder />
+          <Results />
+        </LayoutGroup>
+        <Notifications />
+      </div>
+    </Suspense>
+  </MatchMediaBreakpoints>
 
 export default App;

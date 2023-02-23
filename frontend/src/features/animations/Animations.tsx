@@ -33,10 +33,25 @@ export const SlideInDiv = forwardRef(({children, ...props}: HTMLMotionProps<'div
   </motion.div>
 );
 
-export const LayoutMotionDiv = ({children, ...props}: HTMLMotionProps<'div'>) =>
+export const SlideDownDiv = forwardRef(({children, ...props}: HTMLMotionProps<'div'>, ref: Ref<HTMLDivElement>) =>
   <motion.div
     {...props}
-    layout="position"
+    initial={{y: "-100%", opacity: 0}}
+    animate={{y: 0, opacity: 1}}
+    exit={{y: "-100%", opacity: 0}}
+    ref={ref}
+    transition={{
+      duration: 0.2,
+      ease: "easeOut",
+    }}>
+    {children}
+  </motion.div>
+);
+
+export const LayoutMotionDiv = ({children, layout, ...props}: HTMLMotionProps<'div'>) =>
+  <motion.div
+    {...props}
+    layout={layout ? layout : "position"}
     transition={{
       duration: 0.2,
       ease: "easeOut",
