@@ -124,7 +124,7 @@ const Toggle = ({title, open, onClick, id}: ToggleProps) =>
 
 const Menu = ({children, closeMenu, open, isSmall}: MenuProps) => {
   const menuRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
@@ -132,21 +132,20 @@ const Menu = ({children, closeMenu, open, isSmall}: MenuProps) => {
   }, []);
 
   useEffect(() => {
-    const handleClickOutside = (el: any) => {
-      const target = el.target;
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
       if (
         menuRef.current && !menuRef.current.contains(target) &&
         target.id.indexOf('menu-toggler') === -1
       ) {
+        document.removeEventListener('click', handleClickOutside, true);
         closeMenu();
       }
     };
     if(open) {
       document.addEventListener('click', handleClickOutside, true);
-    } else {
-      document.removeEventListener('click', handleClickOutside, true);
     } 
-  }, [open, closeMenu]);
+  });
 
   return (
     <div 
