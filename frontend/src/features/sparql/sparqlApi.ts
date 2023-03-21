@@ -36,7 +36,7 @@ export const sparqlApi = createApi({
           datasets: JSON.stringify(datasets),
         });
         return ({
-          url: 'sparql', // to change, see datasets api and .env files
+          url: '', //'sparql', // to change, see datasets api and .env files
           method: 'POST',
           body: params,
         })
