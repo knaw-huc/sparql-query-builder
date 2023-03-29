@@ -9,11 +9,11 @@ export function getLabel(schema: string) {
 
 export const entityQuery = `
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  SELECT DISTINCT ?c ?l ?p
+  SELECT DISTINCT ?c ?l
   WHERE {
     {?s a ?c .}
     OPTIONAL {?c rdfs:label ?l}
-    OPTIONAL {?c rdfs:subClassOf ?p}
+    FILTER (!isBlank(?c))
   }
 `;
 
