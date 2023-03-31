@@ -65,6 +65,7 @@
     "entityLabel": "Pick an entity you wish to explore",
     "propertyLabel": "Select properties for <bold>{{parentLabel}}</bold>",
     "placeholder": "Select...",
+    "placeholderLoading": "Loading...",
     "error": "Something's gone wrong with fetching the data",
     "noResults": "Nothing found"
   }

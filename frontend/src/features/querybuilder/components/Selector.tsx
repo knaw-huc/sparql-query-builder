@@ -186,7 +186,7 @@ export const EntitySelector = () => {
         }
         className={styles.select}
         options={resultsOptions} 
-        placeholder={t('selector.placeholder')}
+        placeholder={isFetching ? t('selector.placeholderLoading') : t('selector.placeholder')}
         value={selectedEntity.label ? selectedEntity : ''}
         isClearable={true}
         noOptionsMessage={() => <NoOptionsMessage isFetching={isFetching} isError={isError} />}
