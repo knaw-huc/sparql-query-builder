@@ -1,0 +1,5 @@
+requests==2.28.2
+flask==2.2.3
+flask_cors==3.0.10
+sparqlwrapper==2.0.0
+gunicorn==20.1.0
