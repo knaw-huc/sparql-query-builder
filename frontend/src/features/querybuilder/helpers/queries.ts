@@ -38,7 +38,7 @@ export const propertyQuery = (schema: string) => `
 const getFilterValue = (filterType: string, labelForQuery: string, value: string, equalityOperator: string) => {
   switch(filterType) {
     case 'stringFilter':
-      return `FILTER(CONTAINS(LCASE(?${labelForQuery}), "${value.toLowerCase()}"))`;
+      return `FILTER(CONTAINS(LCASE(STR(?${labelForQuery})), "${value.toLowerCase()}"))`;
     case 'dateFilter':
       return `FILTER(?${labelForQuery} ${equalityOperator} "${value}"^^xsd:date)`;
     case 'integerFilter':
