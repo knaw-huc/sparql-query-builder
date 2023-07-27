@@ -1,38 +1,5 @@
-# This repo is under development
+SPARQL Query Builder
+====================
+User Interface to assist in building a basic SPARQL query by 1) determining the entities, 2) determining the properties of a selected entity and 3) filtering for a specific value in case of a DataProperty or continuing again with 2) case of an ObjectProperty.
 
-Consider the following text as personal notes.
-
-## Firing up the backend
-
-Prerequisites:
-* Java 11
-* Maven
-
-Steps:
-1. Clone and install `net2apl`
-2. Install back-end
-3. Startup back-end with configuration file (`.toml` files to be found in ~/configs)
-4. Verify
-
-```bash
-$ cd ../../ # Make sure to clone Net2APL outside of this repository
-$ git clone https://bitbucket.org/goldenagents/net2apl.git
-
-$ cd net2apl
-$ mvn -U clean install
-
-$ cd ../golden-agents/backend/
-$ mvn -U clean install
-
-$ java -jar target/*.jar --configuration <path-to-config-file>
-```
-
-Here's a more concrete example of starting the backend:
-```bash
-$ java -jar target/golden-agents-backend-0.0.2-alpha-SNAPSHOT.jar --configuration ../configs/ecartico-onstage.toml
-```
-
-You can verify if the backend is up and running by opening up your favorite browser and browse to:
-```
-http://127.0.0.1:8080/actuator
-```
+Any SPARQL endpoint can be used by setting the `REACT_APP_API` environment variable. Optionally a cache can be put inbetween, so the list of entities will be cached instead of being requested from the endpoint over and over again. 

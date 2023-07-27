@@ -1,0 +1,38 @@
+version: "2"
+
+networks:
+  ga-wp3-network:
+    external: false
+#    external:
+#      name: nginxproxynetwork
+      
+services:
+  ga-wp3-qb:
+    image: registry.diginfra.net/tsd/ga-wp3-qb:latest
+    build: ./frontend
+    restart: always
+#    environment:
+#      - VIRTUAL_HOST=ga-wp3-qb.sd.di.huc.knaw.nl
+    ports:
+      - 80:80
+    networks:
+      - ga-wp3-network
+
+  ga-wp3-adapter-cache:
+    image: registry.diginfra.net/tsd/ga-wp3-adapter-cache:latest
+    build: ./adapter_cache
+    restart: always
+    environment:
+      - API_URL=https://sparql2.goldenagents.org/ga-wp3
+      - DB_PATH=/data/ga_cache.db
+#      - VIRTUAL_HOST=ga-wp3-adapter.sd.di.huc.knaw.nl
+    ports:
+      - 8080:5000
+    volumes:
+      - ga-wp3-adapter-cache-data:/data
+    networks:
+      - ga-wp3-network
+
+volumes:
+  ga-wp3-adapter-cache-data:
+    driver: local

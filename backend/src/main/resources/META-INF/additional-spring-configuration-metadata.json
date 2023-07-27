@@ -1,9 +1,0 @@
-{
-  "properties": [
-    {
-      "name": "golden-agents-version",
-      "type": "java.lang.String",
-      "description": "The version of the Golden Agents backend software."
-    }
-  ]
-}
